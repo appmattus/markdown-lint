@@ -1,0 +1,25 @@
+package com.appmattus.markdown.rules
+
+import com.appmattus.markdown.MarkdownDocument
+import com.appmattus.markdown.Rule
+
+class MD033 : Rule("NoInlineHtml") {
+    override val description = "Inline HTML"
+    override val tags = listOf("html")
+
+    override fun visitDocument(document: MarkdownDocument) {
+        document.htmlElements.forEach {
+            reportError(it.startOffset, it.endOffset, description)
+        }
+    }
+}
+
+/*
+rule "MD033", "Inline HTML" do
+  tags :html
+  aliases 'no-inline-html'
+  check do |doc|
+    doc.element_linenumbers(doc.find_type(:html_element))
+  end
+end
+ */
