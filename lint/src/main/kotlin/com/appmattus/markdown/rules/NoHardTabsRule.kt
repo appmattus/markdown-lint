@@ -4,7 +4,7 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
-class MD010(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoHardTabs") {
+class NoHardTabsRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoHardTabs") {
     override val description = "Hard tabs"
     override val tags = listOf("whitespace", "hard_tab")
 

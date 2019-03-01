@@ -10,7 +10,7 @@ import com.android.tools.lint.detector.api.OtherFileScanner
 import com.android.tools.lint.detector.api.Scope
 import com.android.tools.lint.detector.api.Severity
 import com.android.tools.lint.detector.api.endsWith
-import com.appmattus.markdown.rules.MD010
+import com.appmattus.markdown.rules.NoHardTabsRule
 
 
 class MarkdownDetector : Detector(), OtherFileScanner {
@@ -22,7 +22,7 @@ class MarkdownDetector : Detector(), OtherFileScanner {
 
             val document = parser.parse(context.getContents().toString())
 
-            MD010().apply {
+            NoHardTabsRule().apply {
                 visitDocument(MarkdownDocument(context.file.name, document))
             }.errors.map {
 
