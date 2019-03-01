@@ -1,6 +1,6 @@
 Some text
 
-  * Item {MD006}
+  * Item {UlStartLeftRule}
     * Item
     * Item
       * Item
@@ -10,5 +10,5 @@ Some text
 
 Some more text
 
-  * Item {MD006}
+  * Item {UlStartLeftRule}
     * Item

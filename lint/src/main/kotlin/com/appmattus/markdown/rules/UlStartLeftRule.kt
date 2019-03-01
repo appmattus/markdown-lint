@@ -5,7 +5,7 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.extentions.indent
 
-class MD006(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("UlStartLeft") {
+class UlStartLeftRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("UlStartLeft") {
 
     override val description = "Consider starting bulleted lists at the beginning of the line"
     override val tags = listOf("bullet", "ul", "indentation")
@@ -20,7 +20,7 @@ class MD006(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("UlSt
 }
 
 /*
-rule "MD006", "Consider starting bulleted lists at the beginning of the line" do
+rule "", "Consider starting bulleted lists at the beginning of the line" do
   # Starting at the beginning of the line means that indendation for each
   # bullet level can be identical.
   tags :bullet, :ul, :indentation
