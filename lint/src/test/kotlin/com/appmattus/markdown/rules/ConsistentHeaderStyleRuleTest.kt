@@ -4,7 +4,7 @@ import com.appmattus.markdown.rules.config.HeaderStyle
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
-object MD003Test : Spek({
+object ConsistentHeaderStyleRuleTest : Spek({
     Feature("ConsistentHeaderStyleRule") {
         FileRuleScenario(listOf("headers_good_setext_with_atx.md")) { ConsistentHeaderStyleRule(HeaderStyle.SetextWithAtx) }
 

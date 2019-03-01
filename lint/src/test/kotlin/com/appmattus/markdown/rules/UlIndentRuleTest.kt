@@ -3,7 +3,7 @@ package com.appmattus.markdown.rules
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
-object MD007Test : Spek({
+object UlIndentRuleTest : Spek({
     Feature("UlIndentRule") {
         FileRuleScenario(listOf("bulleted_list_2_space_indent.md")) { UlIndentRule(indent = 4) }
 

@@ -11,7 +11,7 @@
    * list {UlIndentRule}
   * list #{ListIndentRule}
 
-	{MD009} {MD010} 
+	{NoTrailingSpacesRule} {MD010} 
 
 (name)[link] {MD011} {MD042}
 

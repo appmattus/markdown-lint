@@ -4,7 +4,7 @@ import com.appmattus.markdown.rules.config.UnorderedListStyle
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
-object MD004Test : Spek({
+object ConsistentUlStyleRuleTest : Spek({
     Feature("ConsistentUlStyleRule") {
         FileRuleScenario(listOf("incorrect_bullet_style_asterisk.md")) { ConsistentUlStyleRule(UnorderedListStyle.Asterisk) }
 
