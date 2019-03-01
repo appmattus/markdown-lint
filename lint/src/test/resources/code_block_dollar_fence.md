@@ -26,4 +26,5 @@ $ code
 
 text
 
-{MD014:3} {MD014:9} {MD014:15} {MD014:22}
+{CommandsShowOutputRule:3} {CommandsShowOutputRule:9}
+{CommandsShowOutputRule:15} {CommandsShowOutputRule:22}

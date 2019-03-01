@@ -1,6 +1,6 @@
 The following code block shouldn't have $ before the commands:
 
-    $ ls {MD014}
+    $ ls {CommandsShowOutputRule}
     $ less foo
 
     $ cat bar

@@ -20,7 +20,7 @@
 
 long line long line long line long line long line long line long line long line long line {LineLengthRule}
 
-    $ dollar {MD014}
+    $ dollar {CommandsShowOutputRule}
 
 #Heading 4 {MD018}
 
