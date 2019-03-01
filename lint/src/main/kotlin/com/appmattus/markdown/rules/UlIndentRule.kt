@@ -6,12 +6,12 @@ import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.extentions.indent
 import com.appmattus.markdown.rules.extentions.level
 
-class MD007(
+class UlIndentRule(
     private val indent: Int = 2,
     override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule("UlStartLeft") {
+) : Rule("UlIndent") {
 
-    override val description = "Consider starting bulleted lists at the beginning of the line"
+    override val description = "Unordered list indentation"
     override val tags = listOf("bullet", "ul", "indentation")
 
     override fun visitDocument(document: MarkdownDocument) {

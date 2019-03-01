@@ -1,4 +1,4 @@
 * Item
-    * Item {MD007}
+    * Item {UlIndentRule}
   * Item {ListIndentRule}
     * Item

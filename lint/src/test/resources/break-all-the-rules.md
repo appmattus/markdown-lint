@@ -5,10 +5,10 @@
 # Heading 3 {ConsistentHeaderStyleRule} {MD043} #
 
 * list {MD032}
- +  list {ConsistentUlStyleRule} {ListIndentRule} {UlStartLeftRule} {MD007} {MD030} {MD032} {MD013}
+ +  list {ConsistentUlStyleRule} {ListIndentRule} {UlStartLeftRule} {UlIndentRule} {MD030} {MD032} {MD013}
 
 * list
-   * list {MD007}
+   * list {UlIndentRule}
   * list #{ListIndentRule}
 
 	{MD009} {MD010} 

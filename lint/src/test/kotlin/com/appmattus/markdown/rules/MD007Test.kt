@@ -4,11 +4,10 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
 object MD007Test : Spek({
-    Feature("MD007") {
+    Feature("UlIndentRule") {
+        FileRuleScenario(listOf("bulleted_list_2_space_indent.md")) { UlIndentRule(indent = 4) }
 
-        FileRuleScenario(listOf("bulleted_list_2_space_indent.md")) { MD007(indent = 4) }
-
-        FileRuleScenario(listOf("spaces_after_list_marker.md")) { MD007(indent = 4) }
+        FileRuleScenario(listOf("spaces_after_list_marker.md")) { UlIndentRule(indent = 4) }
 
         FileRuleScenario(
             exclude = listOf(
@@ -16,6 +15,6 @@ object MD007Test : Spek({
                 "spaces_after_list_marker.md",
                 "bulleted_list_not_at_beginning_of_line.md"
             )
-        ) { MD007() }
+        ) { UlIndentRule() }
     }
 })

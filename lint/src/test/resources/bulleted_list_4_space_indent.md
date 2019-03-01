@@ -1,3 +1,3 @@
 * Test X
-    * Test Y {MD007}
-        * Test Z {MD007}
+    * Test Y {UlIndentRule}
+        * Test Z {UlIndentRule}
