@@ -6,7 +6,7 @@ import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.config.HeaderStyle
 import com.appmattus.markdown.rules.extentions.style
 
-class MD021(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoMultipleSpaceClosedAtx") {
+class NoMultipleSpaceClosedAtxRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoMultipleSpaceClosedAtx") {
 
     override val description = "Multiple spaces inside hashes on closed atx style header"
     override val tags = listOf("headers", "atx_closed", "spaces")

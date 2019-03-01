@@ -27,7 +27,7 @@ long line long line long line long line long line long line long line long line 
 #  Heading 5 {NoMultipleSpaceAtxRule}
 
 #Heading 6 {ConsistentHeaderStyleRule} {NoMissingSpaceClosedAtxRule} {MD022} #
- #  Heading 7 {MD021} {MD022} {MD023} {ConsistentHeaderStyleRule}  #
+ #  Heading 7 {NoMultipleSpaceClosedAtxRule} {MD022} {MD023} {ConsistentHeaderStyleRule} {LineLengthRule}  #
 
 # Heading 8
 
