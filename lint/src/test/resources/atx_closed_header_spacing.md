@@ -1,8 +1,8 @@
-#Header 1 {MD020} #
+#Header 1 {NoMissingSpaceClosedAtxRule} #
 
-## Header 2 {MD020}##
+## Header 2 {NoMissingSpaceClosedAtxRule}##
 
-##Header 3 {MD020}##
+##Header 3 {NoMissingSpaceClosedAtxRule}##
 
 ##  Header 4 {MD021} ##
 
