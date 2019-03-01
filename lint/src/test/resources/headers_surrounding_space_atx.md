@@ -9,6 +9,6 @@ Some text
 ## Header 5
 
 * This shouldn't trigger, but does because the parser treats
-  #catch as a header {MissingSpaceAtxRule}.
+  #catch as a header {NoMissingSpaceAtxRule}.
 
 ## Header 6

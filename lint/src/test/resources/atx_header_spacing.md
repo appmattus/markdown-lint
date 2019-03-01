@@ -1,5 +1,5 @@
-#Header 1 {MissingSpaceAtxRule}
+#Header 1 {NoMissingSpaceAtxRule}
 
-##  Header 2 {MD019}
+##  Header 2 {NoMultipleSpaceAtxRule}
 
-##   Header 3 {MD019}
+##   Header 3 {NoMultipleSpaceAtxRule}

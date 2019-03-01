@@ -4,7 +4,7 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
 object MissingSpaceAtxRuleTest : Spek({
-    Feature("MissingSpaceAtxRule") {
-        FileRuleScenario { MissingSpaceAtxRule() }
+    Feature("NoMissingSpaceAtxRule") {
+        FileRuleScenario { NoMissingSpaceAtxRule() }
     }
 })

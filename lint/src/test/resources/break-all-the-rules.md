@@ -22,9 +22,9 @@ long line long line long line long line long line long line long line long line 
 
     $ dollar {CommandsShowOutputRule}
 
-#Heading 4 {MissingSpaceAtxRule}
+#Heading 4 {NoMissingSpaceAtxRule}
 
-#  Heading 5 {MD019}
+#  Heading 5 {NoMultipleSpaceAtxRule}
 
 #Heading 6 {ConsistentHeaderStyleRule} {MD020} {MD022} #
  #  Heading 7 {MD021} {MD022} {MD023} {ConsistentHeaderStyleRule}  #
