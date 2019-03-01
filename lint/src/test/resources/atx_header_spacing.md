@@ -1,4 +1,4 @@
-#Header 1 {MD018}
+#Header 1 {MissingSpaceAtxRule}
 
 ##  Header 2 {MD019}
 
