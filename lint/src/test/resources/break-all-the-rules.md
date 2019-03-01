@@ -1,8 +1,8 @@
-## Heading 1 {MD002} {MD041}
+## Heading 1 {FirstHeaderH1Rule} {MD041}
 
 #### Heading 2 {HeaderIncrementRule}
 
-# Heading 3 {MD003} {MD043} #
+# Heading 3 {ConsistentHeaderStyleRule} {MD043} #
 
 * list {MD032}
  +  list {MD004} {MD005} {MD006} {MD007} {MD030} {MD032}
@@ -26,8 +26,8 @@ long line long line long line long line long line long line long line long line 
 
 #  Heading 5 {MD019}
 
-#Heading 6 {MD003} {MD020} {MD022} #
- #  Heading 7 {MD021} {MD022} {MD023} {MD003}  #
+#Heading 6 {ConsistentHeaderStyleRule} {MD020} {MD022} #
+ #  Heading 7 {MD021} {MD022} {MD023} {ConsistentHeaderStyleRule}  #
 
 # Heading 8
 
@@ -35,7 +35,7 @@ long line long line long line long line long line long line long line long line 
 
 {MD024:34}
 
-Note: Can not break MD025 and MD002 in the same file
+Note: Can not break MD025 and FirstHeaderH1 in the same file
 
 # Heading 9 {MD026}.
 

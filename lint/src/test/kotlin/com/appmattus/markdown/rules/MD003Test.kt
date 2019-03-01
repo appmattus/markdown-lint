@@ -5,14 +5,14 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
 object MD003Test : Spek({
-    Feature("MD003") {
-        FileRuleScenario(listOf("headers_good_setext_with_atx.md")) { MD003(HeaderStyle.SetextWithAtx) }
+    Feature("ConsistentHeaderStyleRule") {
+        FileRuleScenario(listOf("headers_good_setext_with_atx.md")) { ConsistentHeaderStyleRule(HeaderStyle.SetextWithAtx) }
 
-        FileRuleScenario(listOf("incorrect_header_atx_closed.md")) { MD003(HeaderStyle.AtxClosed) }
+        FileRuleScenario(listOf("incorrect_header_atx_closed.md")) { ConsistentHeaderStyleRule(HeaderStyle.AtxClosed) }
 
-        FileRuleScenario(listOf("incorrect_header_atx.md")) { MD003(HeaderStyle.Atx) }
+        FileRuleScenario(listOf("incorrect_header_atx.md")) { ConsistentHeaderStyleRule(HeaderStyle.Atx) }
 
-        FileRuleScenario(listOf("incorrect_header_setext.md")) { MD003(HeaderStyle.Setext) }
+        FileRuleScenario(listOf("incorrect_header_setext.md")) { ConsistentHeaderStyleRule(HeaderStyle.Setext) }
 
         FileRuleScenario(
             exclude = listOf(
@@ -22,6 +22,6 @@ object MD003Test : Spek({
                 "incorrect_header_setext.md",
                 "headers_with_spaces_at_the_beginning.md"
             )
-        ) { MD003() }
+        ) { ConsistentHeaderStyleRule() }
     }
 })

@@ -3,6 +3,8 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
+import com.appmattus.markdown.rules.extentions.indent
+import com.appmattus.markdown.rules.extentions.level
 
 class MD007(
     private val indent: Int = 2,

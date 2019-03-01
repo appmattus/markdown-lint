@@ -4,9 +4,9 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
 object MD002Test : Spek({
-    Feature("MD002") {
-        FileRuleScenario(listOf("alternate_top_level_header.md")) { MD002(level = 2) }
+    Feature("FirstHeaderH1Rule") {
+        FileRuleScenario(listOf("alternate_top_level_header.md")) { FirstHeaderH1Rule(level = 2) }
 
-        FileRuleScenario(exclude = listOf("alternate_top_level_header.md")) { MD002() }
+        FileRuleScenario(exclude = listOf("alternate_top_level_header.md")) { FirstHeaderH1Rule() }
     }
 })

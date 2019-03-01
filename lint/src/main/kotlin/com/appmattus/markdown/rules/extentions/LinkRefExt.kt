@@ -1,4 +1,4 @@
-package com.appmattus.markdown.rules
+package com.appmattus.markdown.rules.extentions
 
 import com.vladsch.flexmark.ast.LinkRef
 

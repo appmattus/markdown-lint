@@ -1,8 +1,8 @@
 package com.appmattus.markdown
 
 import com.appmattus.markdown.rules.config.HeaderStyle
-import com.appmattus.markdown.rules.MD002
-import com.appmattus.markdown.rules.MD003
+import com.appmattus.markdown.rules.FirstHeaderH1Rule
+import com.appmattus.markdown.rules.ConsistentHeaderStyleRule
 import kotlin.reflect.KClass
 
 @DslMarker
@@ -84,9 +84,9 @@ fun hi() {
 
     markdownlint {
         rules {
-            +MD003(HeaderStyle.Atx)
+            +ConsistentHeaderStyleRule(HeaderStyle.Atx)
 
-            +MD002(level = 5) {
+            +FirstHeaderH1Rule(level = 5) {
                 /*suppress {
                     files(
                             "",

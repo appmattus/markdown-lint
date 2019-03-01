@@ -3,6 +3,7 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
+import com.appmattus.markdown.rules.extentions.indent
 
 class MD006(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("UlStartLeft") {
 

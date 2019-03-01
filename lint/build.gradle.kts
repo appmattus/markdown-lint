@@ -30,6 +30,7 @@ dependencies {
     testImplementation("junit:junit:4.12")
     testImplementation("org.assertj:assertj-core:3.11.1")
     testImplementation("org.mockito:mockito-core:2.24.0")
+    testImplementation("com.flextrade.jfixture:jfixture:2.7.2")
     testImplementation("com.android.tools.lint:lint:26.3.0")
     testImplementation("com.android.tools.lint:lint-tests:26.3.0")
     testImplementation("com.android.tools:testutils:26.3.0")
@@ -51,8 +52,8 @@ dependencies {
 tasks.withType<Jar> {
     manifest {
         attributes(
-                "Manifest-Version" to 1.0,
-                "Lint-Registry-v2" to "com.appmattus.markdown.MarkdownIssueRegistry"
+            "Manifest-Version" to 1.0,
+            "Lint-Registry-v2" to "com.appmattus.markdown.MarkdownIssueRegistry"
         )
     }
 }

@@ -1,6 +1,6 @@
 package com.appmattus.markdown
 
-import com.appmattus.markdown.rules.splitIntoLines
+import com.appmattus.markdown.rules.extentions.splitIntoLines
 import com.vladsch.flexmark.ast.AutoLink
 import com.vladsch.flexmark.ast.BlockQuote
 import com.vladsch.flexmark.ast.BulletList
@@ -59,7 +59,7 @@ class MarkdownDocument(val filename: String, val document: Document) {
     val topLevelParagraphs: List<Paragraph> by lazy { document.find(Paragraph::class, visitChildren = false) }
     val allText by lazy { document.find(Text::class) }
 
-    val chars: BasedSequence = document.chars
+    val chars: BasedSequence by lazy { document.chars }
     val lines by lazy { document.chars.splitIntoLines() }
 
     fun getLineNumber(offset: Int) = document.getLineNumber(offset)

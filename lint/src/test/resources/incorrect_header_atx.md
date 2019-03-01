@@ -1,6 +1,6 @@
-# Header 1 {MD003} #
+# Header 1 {ConsistentHeaderStyleRule} #
 
 ## Header 2
 
-Header 3 {MD003}
-----------------
+Header 3 {ConsistentHeaderStyleRule}
+------------------------------------

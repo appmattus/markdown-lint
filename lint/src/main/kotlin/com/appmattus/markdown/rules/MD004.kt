@@ -4,6 +4,7 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.config.UnorderedListStyle
+import com.appmattus.markdown.rules.extentions.style
 
 class MD004(
     val style: UnorderedListStyle = UnorderedListStyle.Consistent,

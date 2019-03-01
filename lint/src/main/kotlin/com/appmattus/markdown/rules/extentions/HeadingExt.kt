@@ -1,4 +1,4 @@
-package com.appmattus.markdown.rules
+package com.appmattus.markdown.rules.extentions
 
 import com.appmattus.markdown.rules.config.HeaderStyle
 import com.vladsch.flexmark.ast.Heading

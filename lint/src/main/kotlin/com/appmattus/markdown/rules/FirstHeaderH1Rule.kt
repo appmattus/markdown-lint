@@ -4,7 +4,7 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
-class MD002(val level: Int = 1, override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("FirstHeaderH1") {
+class FirstHeaderH1Rule(val level: Int = 1, override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("FirstHeaderH1") {
 
     override val description = "First header should be a top level header"
     override val tags = listOf("headers")

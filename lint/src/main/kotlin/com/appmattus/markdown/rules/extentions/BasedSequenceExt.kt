@@ -1,4 +1,4 @@
-package com.appmattus.markdown.rules
+package com.appmattus.markdown.rules.extentions
 
 import com.vladsch.flexmark.util.sequence.BasedSequence
 import com.vladsch.flexmark.util.sequence.BasedSequence.WHITESPACE_CHARS

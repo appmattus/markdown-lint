@@ -3,6 +3,7 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
+import com.appmattus.markdown.rules.extentions.splitIntoLines
 
 class MD013(
     val lineLength: Int = 80,

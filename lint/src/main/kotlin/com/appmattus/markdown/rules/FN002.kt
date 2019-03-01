@@ -9,8 +9,10 @@ class FN002(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoSp
     override val description = "Filenames must not contain spaces"
     override val tags = listOf("file_name")
 
+    private val whitespace = "\\s".toRegex()
+
     override fun visitDocument(document: MarkdownDocument) {
-        if (document.filename.contains(" ")) {
+        if (document.filename.contains(whitespace)) {
             reportError(0, 0, description)
         }
     }

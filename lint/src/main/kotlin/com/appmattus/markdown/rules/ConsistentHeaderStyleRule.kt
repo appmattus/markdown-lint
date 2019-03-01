@@ -4,11 +4,12 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.config.HeaderStyle
+import com.appmattus.markdown.rules.extentions.style
 
-class MD003(
+class ConsistentHeaderStyleRule(
     val style: HeaderStyle = HeaderStyle.Consistent,
     override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule("HeaderStyle") {
+) : Rule("ConsistentHeaderStyle") {
 
     override val description = "Header style"
     override val tags = listOf("headers")

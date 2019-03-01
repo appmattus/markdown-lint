@@ -1,2 +1,2 @@
-Header {MD002}
---------------
+Header {FirstHeaderH1Rule}
+--------------------------
