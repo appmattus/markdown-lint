@@ -21,6 +21,8 @@ fun FeatureBody.FileRuleScenario(
             Regex("\\{${Regex.escape(rule::class.java.simpleName)}(:[0-9]+)?}").findAll(document.chars).count()
 
         Scenario(filename) {
+            Given("the file $filename") {}
+
             When("we run the ${rule.name} rule") {
                 rule.visitDocument(document)
             }

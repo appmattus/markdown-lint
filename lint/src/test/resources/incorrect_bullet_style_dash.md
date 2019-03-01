@@ -1,3 +1,3 @@
-* Item {MD004}
+* Item {ConsistentUlStyleRule}
   - Item
-  + Item {MD004}
+  + Item {ConsistentUlStyleRule}

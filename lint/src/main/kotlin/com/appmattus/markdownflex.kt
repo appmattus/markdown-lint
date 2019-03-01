@@ -2,7 +2,7 @@ package com.appmattus
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.ParserFactory
-import com.appmattus.markdown.rules.MD005
+import com.appmattus.markdown.rules.ListIndentRule
 import com.appmattus.markdown.rules.MD010
 
 val list2 = """1. A
@@ -23,7 +23,7 @@ fun main() {
 
     val document = parser.parse(list2)
 
-    val rules = listOf(MD005(), MD010())
+    val rules = listOf(ListIndentRule(), MD010())
 
     rules.forEach {
         it.visitDocument(MarkdownDocument("temp", document))

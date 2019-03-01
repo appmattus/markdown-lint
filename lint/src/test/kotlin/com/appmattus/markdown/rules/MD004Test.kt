@@ -5,12 +5,12 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
 object MD004Test : Spek({
-    Feature("MD004") {
-        FileRuleScenario(listOf("incorrect_bullet_style_asterisk.md")) { MD004(UnorderedListStyle.Asterisk) }
+    Feature("ConsistentUlStyleRule") {
+        FileRuleScenario(listOf("incorrect_bullet_style_asterisk.md")) { ConsistentUlStyleRule(UnorderedListStyle.Asterisk) }
 
-        FileRuleScenario(listOf("incorrect_bullet_style_dash.md")) { MD004(UnorderedListStyle.Dash) }
+        FileRuleScenario(listOf("incorrect_bullet_style_dash.md")) { ConsistentUlStyleRule(UnorderedListStyle.Dash) }
 
-        FileRuleScenario(listOf("incorrect_bullet_style_plus.md")) { MD004(UnorderedListStyle.Plus) }
+        FileRuleScenario(listOf("incorrect_bullet_style_plus.md")) { ConsistentUlStyleRule(UnorderedListStyle.Plus) }
 
         FileRuleScenario(
             exclude = listOf(
@@ -19,6 +19,6 @@ object MD004Test : Spek({
                 "incorrect_bullet_style_plus.md",
                 "lists_without_blank_lines.md"
             )
-        ) { MD004() }
+        ) { ConsistentUlStyleRule() }
     }
 })

@@ -4,7 +4,7 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
 object MD005Test : Spek({
-    Feature("MD005") {
-        FileRuleScenario { MD005() }
+    Feature("ListIndentRule") {
+        FileRuleScenario { ListIndentRule() }
     }
 })

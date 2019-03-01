@@ -6,7 +6,7 @@ import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.extentions.indent
 import com.appmattus.markdown.rules.extentions.level
 
-class MD005(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("ListIndent") {
+class ListIndentRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("ListIndent") {
 
     override val description = "Inconsistent indentation for list items at the same level"
     override val tags = listOf("bullet", "ul", "indentation")

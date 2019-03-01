@@ -6,7 +6,7 @@ import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.config.UnorderedListStyle
 import com.appmattus.markdown.rules.extentions.style
 
-class MD004(
+class ConsistentUlStyleRule(
     val style: UnorderedListStyle = UnorderedListStyle.Consistent,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule("UlStyle") {
