@@ -2,9 +2,11 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.ast.ListItem
 
-class MD023 : Rule("HeaderStartLeft") {
+class MD023(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("HeaderStartLeft") {
+
     override val description = "Headers must start at the beginning of the line"
     override val tags = listOf("headers", "spaces")
 

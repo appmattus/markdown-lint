@@ -2,9 +2,14 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.ast.ListItem
 
-class MD024(private val allowDifferentNesting: Boolean = false) : Rule("NoDuplicateHeader") {
+class MD024(
+    private val allowDifferentNesting: Boolean = false,
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule("NoDuplicateHeader") {
+
     override val description = "Multiple headers with the same content"
     override val tags = listOf("headers")
 

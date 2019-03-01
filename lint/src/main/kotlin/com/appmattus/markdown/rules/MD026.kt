@@ -2,9 +2,14 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.ast.ListItem
 
-class MD026(private val punctuation: String = ".,;:!?") : Rule("NoTrailingPunctuation") {
+class MD026(
+    private val punctuation: String = ".,;:!?",
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule("NoTrailingPunctuation") {
+
     override val description = "Trailing punctuation in header"
     override val tags = listOf("headers")
 

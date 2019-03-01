@@ -2,9 +2,11 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.util.sequence.BasedSequence
 
-class MD032 : Rule("BlanksAroundLists") {
+class MD032(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("BlanksAroundLists") {
+
     override val description = "Lists should be surrounded by blank lines"
     override val tags = listOf("bullet", "ul", "ol", "blank_lines")
 

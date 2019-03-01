@@ -2,9 +2,15 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 
-class MD013(val lineLength: Int = 80, val codeBlocks: Boolean = true, val tables: Boolean = true) :
-    Rule("LineLength") {
+class MD013(
+    val lineLength: Int = 80,
+    val codeBlocks: Boolean = true,
+    val tables: Boolean = true,
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule("LineLength") {
+
     override val description = "Line length"
     override val tags = listOf("line_length")
 

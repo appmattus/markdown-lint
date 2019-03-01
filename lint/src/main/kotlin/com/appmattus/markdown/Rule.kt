@@ -10,4 +10,9 @@ abstract class Rule(val name: String) {
     fun reportError(startOffset: Int, endOffset: Int, errorMessage: String) {
         errors.add(Error(startOffset, endOffset, errorMessage, javaClass.simpleName))
     }
+
+    protected abstract val config: RuleSetup.Builder.() -> Unit
+
+    val configuration
+        get() = RuleSetup.Builder(this::class).apply(config).build()
 }

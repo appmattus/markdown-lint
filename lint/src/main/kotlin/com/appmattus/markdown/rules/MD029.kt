@@ -2,9 +2,15 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
+import com.appmattus.markdown.rules.config.OrderedListStyle
 import com.vladsch.flexmark.ast.OrderedList
 
-class MD029(val style: OrderedListStyle = OrderedListStyle.One) : Rule("OlPrefix") {
+class MD029(
+    val style: OrderedListStyle = OrderedListStyle.One,
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule("OlPrefix") {
+
     override val description = "Ordered list item prefix"
     override val tags = listOf("ol")
 

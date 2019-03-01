@@ -14,6 +14,10 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib-jdk7"))
+    implementation(kotlin("compiler"))
+    implementation(kotlin("script-util"))
+    implementation(kotlin("script-runtime"))
+
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1")
 
     implementation("com.vladsch.flexmark:flexmark-all:0.40.16")
@@ -47,8 +51,8 @@ dependencies {
 tasks.withType<Jar> {
     manifest {
         attributes(
-            "Manifest-Version" to 1.0,
-            "Lint-Registry-v2" to "com.appmattus.markdown.MarkdownIssueRegistry"
+                "Manifest-Version" to 1.0,
+                "Lint-Registry-v2" to "com.appmattus.markdown.MarkdownIssueRegistry"
         )
     }
 }

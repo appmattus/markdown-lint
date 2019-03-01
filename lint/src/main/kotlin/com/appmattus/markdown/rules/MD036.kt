@@ -2,11 +2,16 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.ast.Emphasis
 import com.vladsch.flexmark.ast.StrongEmphasis
 import com.vladsch.flexmark.ast.Text
 
-class MD036(private val punctuation: String = ".,;:!?") : Rule("NoEmphasisAsHeader") {
+class MD036(
+    private val punctuation: String = ".,;:!?",
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule("NoEmphasisAsHeader") {
+
     override val description = "Emphasis used instead of a header"
     override val tags = listOf("headers", "emphasis")
 

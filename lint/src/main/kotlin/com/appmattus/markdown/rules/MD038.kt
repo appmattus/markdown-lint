@@ -2,8 +2,10 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 
-class MD038 : Rule("NoSpaceInCode") {
+class MD038(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoSpaceInCode") {
+
     override val description = "Spaces inside code span elements"
     override val tags = listOf("whitespace", "code")
 

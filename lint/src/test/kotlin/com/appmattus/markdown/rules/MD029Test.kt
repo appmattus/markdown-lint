@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.rules.config.OrderedListStyle
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 

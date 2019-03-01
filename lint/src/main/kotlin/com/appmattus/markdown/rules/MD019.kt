@@ -2,8 +2,11 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
+import com.appmattus.markdown.rules.config.HeaderStyle
 
-class MD019 : Rule("NoMultipleSpaceAtx") {
+class MD019(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoMultipleSpaceAtx") {
+
     override val description = "Multiple spaces after hash on atx style header"
     override val tags = listOf("headers", "atx", "spaces")
 

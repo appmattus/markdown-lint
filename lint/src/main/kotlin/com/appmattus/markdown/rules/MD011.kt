@@ -2,8 +2,10 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 
-class MD011 : Rule("NoReversedLinks") {
+class MD011(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoReversedLinks") {
+
     override val description = "Reversed link syntax"
     override val tags = listOf("links")
 
@@ -19,15 +21,6 @@ class MD011 : Rule("NoReversedLinks") {
                 } ?: reportError(linkRef.startOffset, linkRef.endOffset, description)
             }
         }
-        /*document.linkRefs.forEach { linkRef ->
-            if (linkRef.chars.startsWith("[") && linkRef.chars.endsWith("]")) {
-                linkRef.previous?.let {
-                    regex.find(it.chars)?.let { match ->
-                        reportError(it.startOffset + match.range.start, linkRef.endOffset, description)
-                    }
-                }
-            }
-        }*/
     }
 }
 

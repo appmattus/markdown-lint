@@ -2,9 +2,11 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.ast.ListItem
 
-class MD022 : Rule("BlanksAroundHeaders") {
+class MD022(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("BlanksAroundHeaders") {
+
     override val description = "Headers should be surrounded by blank lines"
     override val tags = listOf("headers", "blank_lines")
 

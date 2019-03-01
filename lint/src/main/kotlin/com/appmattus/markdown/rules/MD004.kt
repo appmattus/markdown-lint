@@ -2,8 +2,14 @@ package com.appmattus.markdown.rules;
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
+import com.appmattus.markdown.rules.config.UnorderedListStyle
 
-class MD004(val style: UnorderedListStyle = UnorderedListStyle.Consistent) : Rule("UlStyle") {
+class MD004(
+    val style: UnorderedListStyle = UnorderedListStyle.Consistent,
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule("UlStyle") {
+
     override val description = "Unordered list style"
     override val tags = listOf("bullet", "ul")
 

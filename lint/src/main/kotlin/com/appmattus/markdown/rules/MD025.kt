@@ -2,10 +2,15 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.ast.ListItem
 import com.vladsch.flexmark.util.ast.Document
 
-class MD025(private val level: Int = 1) : Rule("SingleH1") {
+class MD025(
+    private val level: Int = 1,
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule("SingleH1") {
+
     override val description = "Multiple top level headers in the same document"
     override val tags = listOf("headers")
 

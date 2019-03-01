@@ -2,8 +2,14 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
+import com.appmattus.markdown.rules.config.FilenameStyle
 
-class FN003(style: FilenameStyle = FilenameStyle.Consistent) : Rule("ConsistentFilenameSeparator") {
+class FN003(
+    style: FilenameStyle = FilenameStyle.Consistent,
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule("ConsistentFilenameSeparator") {
+
     override val description = "Filenames must not contain spaces"
     override val tags = listOf("file_name")
 

@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.rules.config.UnorderedListStyle
 import com.vladsch.flexmark.ast.BulletListItem
 
 fun BulletListItem.style(): UnorderedListStyle = when (openingMarker.toString()) {

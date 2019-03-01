@@ -2,8 +2,13 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 
-class MD009(private val brSpaces: Int = 2) : Rule("NoTrailingSpaces") {
+class MD009(
+    private val brSpaces: Int = 2,
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule("NoTrailingSpaces") {
+
     override val description = "Trailing spaces"
     override val tags = listOf("whitespace")
 

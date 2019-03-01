@@ -2,9 +2,9 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
-import com.vladsch.flexmark.util.ast.Document
+import com.appmattus.markdown.RuleSetup
 
-class MD010 : Rule("NoHardTabs") {
+class MD010(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoHardTabs") {
     override val description = "Hard tabs"
     override val tags = listOf("whitespace", "hard_tab")
 

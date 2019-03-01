@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.rules.config.HeaderStyle
 import com.vladsch.flexmark.ast.Heading
 
 fun Heading.style(): HeaderStyle = when {

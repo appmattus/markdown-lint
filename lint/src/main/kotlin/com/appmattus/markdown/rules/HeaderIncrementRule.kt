@@ -2,8 +2,10 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 
-class MD001 : Rule("HeaderIncrement") {
+class HeaderIncrementRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("HeaderIncrementRule") {
+
     override val description = "Header levels should only increment by one level at a time"
     override val tags = listOf("headers")
 

@@ -2,8 +2,10 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 
-class MD033 : Rule("NoInlineHtml") {
+class MD033(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoInlineHtml") {
+
     override val description = "Inline HTML"
     override val tags = listOf("html")
 

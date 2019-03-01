@@ -2,8 +2,10 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 
-class MD014 : Rule("CommandsShowOutput") {
+class MD014(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("CommandsShowOutput") {
+
     override val description = "Dollar signs used before commands without showing output"
     override val tags = listOf("code")
 

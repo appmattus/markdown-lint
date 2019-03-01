@@ -2,6 +2,7 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.ast.BulletList
 import com.vladsch.flexmark.ast.ListItem
 import com.vladsch.flexmark.ast.OrderedList
@@ -10,8 +11,10 @@ class MD030(
     val ulSingle: Int = 1,
     val olSingle: Int = 1,
     val ulMulti: Int = 1,
-    val olMulti: Int = 1
+    val olMulti: Int = 1,
+    override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule("ListMarkerSpace") {
+
     override val description = "Spaces after list markers"
     override val tags = listOf("ol", "ul", "whitespace")
 

@@ -2,8 +2,10 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 
-class MD006 : Rule("UlStartLeft") {
+class MD006(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("UlStartLeft") {
+
     override val description = "Consider starting bulleted lists at the beginning of the line"
     override val tags = listOf("bullet", "ul", "indentation")
 

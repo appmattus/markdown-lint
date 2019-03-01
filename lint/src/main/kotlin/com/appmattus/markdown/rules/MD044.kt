@@ -2,6 +2,7 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.ast.AutoLink
 import com.vladsch.flexmark.ast.Code
 import com.vladsch.flexmark.ast.Link
@@ -17,8 +18,10 @@ class MD044(
         "npm",
         "Internet Explorer"
     ),
-    private val codeBlocks: Boolean = false
+    private val codeBlocks: Boolean = false,
+    override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule("ProperNames") {
+
     override val description = "Proper names should have the correct capitalization"
     override val tags = listOf("spelling")
 

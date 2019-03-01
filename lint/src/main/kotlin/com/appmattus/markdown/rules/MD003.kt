@@ -2,8 +2,14 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
+import com.appmattus.markdown.rules.config.HeaderStyle
 
-class MD003(private val style: HeaderStyle = HeaderStyle.Consistent) : Rule("HeaderStyle") {
+class MD003(
+    val style: HeaderStyle = HeaderStyle.Consistent,
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule("HeaderStyle") {
+
     override val description = "Header style"
     override val tags = listOf("headers")
 

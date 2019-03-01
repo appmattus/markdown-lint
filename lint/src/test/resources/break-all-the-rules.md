@@ -1,6 +1,6 @@
 ## Heading 1 {MD002} {MD041}
 
-#### Heading 2 {MD001}
+#### Heading 2 {HeaderIncrementRule}
 
 # Heading 3 {MD003} {MD043} #
 

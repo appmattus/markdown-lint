@@ -2,8 +2,10 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 
-class MD037 : Rule("NoSpaceInEmphasis") {
+class MD037(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoSpaceInEmphasis") {
+
     override val description = "Spaces inside emphasis markers"
     override val tags = listOf("whitespace", "emphasis")
 

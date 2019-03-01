@@ -2,8 +2,13 @@ package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
+import com.appmattus.markdown.RuleSetup
 
-class MD041(private val level: Int = 1) : Rule("FirstLineH1") {
+class MD041(
+    private val level: Int = 1,
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule("FirstLineH1") {
+
     override val description = "First line in file should be a top level header"
     override val tags = listOf("headers")
 
