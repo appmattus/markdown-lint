@@ -4,7 +4,7 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
-class MD012(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoMultipleBlanks") {
+class NoMultipleBlanksRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoMultipleBlanks") {
 
     override val description = "Multiple consecutive blank lines"
     override val tags = listOf("whitespace", "blank_lines")

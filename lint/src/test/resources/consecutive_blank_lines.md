@@ -1,7 +1,7 @@
 Some text
 
 
-Some text {MD012:3}
+Some text {NoMultipleBlanksRule:3}
 
     This is a code block
 

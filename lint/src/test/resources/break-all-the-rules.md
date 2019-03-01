@@ -16,7 +16,7 @@
 (name)[link] {NoReversedLinksRule} {MD042}
 
 
-{MD012:18}
+{NoMultipleBlanksRule:18}
 
 long line long line long line long line long line long line long line long line long line {MD013}
 

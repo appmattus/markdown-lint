@@ -28,4 +28,4 @@ Expected errors:
 
 {MD028:5} {MD028:8} {MD028:10} {MD028:17}
 {NoTrailingSpacesRule:10} (trailing space is intentional)
-{MD012:8} (multiple blank lines are intentional)
+{NoMultipleBlanksRule:8} (multiple blank lines are intentional)
