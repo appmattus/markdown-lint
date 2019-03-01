@@ -5,7 +5,7 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.extentions.splitIntoLines
 
-class MD013(
+class LineLengthRule(
     val lineLength: Int = 80,
     val codeBlocks: Boolean = true,
     val tables: Boolean = true,

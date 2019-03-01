@@ -1,6 +1,6 @@
 This is a short line.
 
-This is a very very very very very very very very very very very very very very very very very very very very long line. {MD013}
+This is a very very very very very very very very very very very very very very very very very very very very long line. {LineLengthRule}
 
 This is a short line.
 
@@ -29,7 +29,7 @@ This is a short line.
 | Footer Cell   | Footer Cell   | Footer Cell   | Footer Cell   | Footer Cell   | Footer Cell   |
 {: rules="groups"}
 
-This is a very very very very very very very very very very very very very very very very very very very very long line. {MD013}
+This is a very very very very very very very very very very very very very very very very very very very very long line. {LineLengthRule}
 
 Another line.
 

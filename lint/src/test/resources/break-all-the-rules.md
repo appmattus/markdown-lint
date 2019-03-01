@@ -5,7 +5,7 @@
 # Heading 3 {ConsistentHeaderStyleRule} {MD043} #
 
 * list {MD032}
- +  list {ConsistentUlStyleRule} {ListIndentRule} {UlStartLeftRule} {UlIndentRule} {MD030} {MD032} {MD013}
+ +  list {ConsistentUlStyleRule} {ListIndentRule} {UlStartLeftRule} {UlIndentRule} {MD030} {MD032} {LineLengthRule}
 
 * list
    * list {UlIndentRule}
@@ -18,7 +18,7 @@
 
 {NoMultipleBlanksRule:18}
 
-long line long line long line long line long line long line long line long line long line {MD013}
+long line long line long line long line long line long line long line long line long line {LineLengthRule}
 
     $ dollar {MD014}
 
