@@ -1,4 +1,4 @@
-Go to (this website)[http://www.example.com] {MD011}
+Go to (this website)[http://www.example.com] {NoReversedLinksRule}
 
 However, this shouldn't trigger inside code blocks:
 

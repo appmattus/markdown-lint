@@ -13,7 +13,7 @@
 
 	{NoTrailingSpacesRule} {NoHardTabsRule} 
 
-(name)[link] {MD011} {MD042}
+(name)[link] {NoReversedLinksRule} {MD042}
 
 
 {MD012:18}

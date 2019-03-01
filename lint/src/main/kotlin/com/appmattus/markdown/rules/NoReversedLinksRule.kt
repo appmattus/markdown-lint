@@ -4,7 +4,7 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
-class MD011(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoReversedLinks") {
+class NoReversedLinksRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoReversedLinks") {
 
     override val description = "Reversed link syntax"
     override val tags = listOf("links")
