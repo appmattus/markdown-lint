@@ -44,7 +44,7 @@ Note: Can not break SingleH1Rule and FirstHeaderH1Rule in the same file
 > {NoBlanksBlockquoteRule:43}
 
 1. list
-3. list {MD029}
+3. list {OlPrefixRule}
 
 ```js
 ```

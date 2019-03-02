@@ -7,7 +7,7 @@ import com.appmattus.markdown.rules.config.OrderedListStyle
 import com.appmattus.markdown.rules.extentions.index
 import com.vladsch.flexmark.ast.OrderedList
 
-class MD029(
+class OlPrefixRule(
     val style: OrderedListStyle = OrderedListStyle.One,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule("OlPrefix") {
