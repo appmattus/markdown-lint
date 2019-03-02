@@ -10,4 +10,4 @@
 
 ### Bug fixes
 
-{MD024:11}
+{NoDuplicateHeaderRule:11}

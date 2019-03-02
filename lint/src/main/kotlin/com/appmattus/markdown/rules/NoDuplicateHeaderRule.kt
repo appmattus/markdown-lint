@@ -5,7 +5,7 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.ast.ListItem
 
-class MD024(
+class NoDuplicateHeaderRule(
     private val allowDifferentNesting: Boolean = false,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule("NoDuplicateHeader") {

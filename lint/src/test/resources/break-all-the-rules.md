@@ -33,7 +33,7 @@ long line long line long line long line long line long line long line long line 
 
 # Heading 8
 
-{MD024:34}
+{NoDuplicateHeaderRule:34}
 
 Note: Can not break MD025 and FirstHeaderH1 in the same file
 

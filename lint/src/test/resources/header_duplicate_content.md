@@ -8,4 +8,4 @@
 
 ## Header 3
 
-{MD024:5} {MD024:7}
+{NoDuplicateHeaderRule:5} {NoDuplicateHeaderRule:7}
