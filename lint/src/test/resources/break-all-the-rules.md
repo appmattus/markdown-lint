@@ -39,7 +39,7 @@ Note: Can not break SingleH1Rule and FirstHeaderH1Rule in the same file
 
 # Heading 9 {NoTrailingPunctuationRule}.
 
->  {MD027}
+>  {NoMultipleSpaceBlockquoteRule}
 
 > {MD028:43}
 

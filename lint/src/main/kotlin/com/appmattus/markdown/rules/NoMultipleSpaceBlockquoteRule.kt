@@ -5,7 +5,7 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.ast.Paragraph
 
-class MD027(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoMultipleSpaceBlockquote") {
+class NoMultipleSpaceBlockquoteRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoMultipleSpaceBlockquote") {
 
     override val description = "Multiple spaces after blockquote symbol"
     override val tags = listOf("blockquote", "whitespace", "indentation")
