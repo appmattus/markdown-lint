@@ -7,7 +7,7 @@ import com.vladsch.flexmark.ast.BulletList
 import com.vladsch.flexmark.ast.ListItem
 import com.vladsch.flexmark.ast.OrderedList
 
-class MD030(
+class ListMarkerSpaceRule(
     val ulSingle: Int = 1,
     val olSingle: Int = 1,
     val ulMulti: Int = 1,

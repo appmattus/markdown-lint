@@ -5,7 +5,7 @@
 # Heading 3 {ConsistentHeaderStyleRule} {MD043} #
 
 * list {MD032}
- +  list {ConsistentUlStyleRule} {ListIndentRule} {UlStartLeftRule} {UlIndentRule} {MD030} {MD032} {LineLengthRule}
+ +  list {ConsistentUlStyleRule} {ListIndentRule} {UlStartLeftRule} {UlIndentRule} {ListMarkerSpaceRule} {MD032} {LineLengthRule}
 
 * list
    * list {UlIndentRule}

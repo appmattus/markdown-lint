@@ -6,14 +6,14 @@ Normal list
 
 List with incorrect spacing
 
-*  Foo {MD030}
-*  Bar {MD030}
-*   Baz {MD030}
+*  Foo {ListMarkerSpaceRule}
+*  Bar {ListMarkerSpaceRule}
+*   Baz {ListMarkerSpaceRule}
 
 List with children:
 
-* Foo {MD030}
-    * Bar {MD030}
+* Foo {ListMarkerSpaceRule}
+    * Bar {ListMarkerSpaceRule}
         * Baz
 
 List with children and correct spacing:
@@ -32,11 +32,11 @@ List with Multiple paragraphs and correct spacing
 
 List with multiple paragraphs and incorrect spacing
 
-*  Foo {MD030}
+*  Foo {ListMarkerSpaceRule}
 
    Here is the second paragraph
 
-*    Bar {MD030}
+*    Bar {ListMarkerSpaceRule}
 
 List with code blocks:
 
@@ -54,16 +54,16 @@ Ordered lists:
 
 And with incorrect spacing:
 
-1.  Foo {MD030}
-1.  Bar {MD030}
-1.  Baz {MD030}
+1.  Foo {ListMarkerSpaceRule}
+1.  Bar {ListMarkerSpaceRule}
+1.  Baz {ListMarkerSpaceRule}
 
 Ordered lists with children:
 
-1. Foo {MD030}
+1. Foo {ListMarkerSpaceRule}
     * Hi
-1. Bar {MD030}
-1. Baz {MD030}
+1. Bar {ListMarkerSpaceRule}
+1. Baz {ListMarkerSpaceRule}
 
 Ordered lists with children (correct spacing), and with something other than
 the first item determining that the entire list has children:
