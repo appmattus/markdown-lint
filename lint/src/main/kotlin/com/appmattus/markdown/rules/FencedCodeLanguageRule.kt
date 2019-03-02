@@ -4,7 +4,7 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
-class MD040(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("FencedCodeLanguage") {
+class FencedCodeLanguageRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("FencedCodeLanguage") {
 
     override val description = "Fenced code blocks should have a language specified"
     override val tags = listOf("code", "language")

@@ -1,14 +1,14 @@
-[foo ](http://bar/) {MD039}
+[foo ](http://bar/) {NoSpaceInLinksRule}
 
-[ foo](http://bar/) {MD039}
+[ foo](http://bar/) {NoSpaceInLinksRule}
 
-[ foo ](http://bar/) {MD039}
+[ foo ](http://bar/) {NoSpaceInLinksRule}
 
-[ "foo" ](http://bar/) {MD039}
+[ "foo" ](http://bar/) {NoSpaceInLinksRule}
 
-[ `foo` ](http://bar/) {MD039}
+[ `foo` ](http://bar/) {NoSpaceInLinksRule}
 
-[ *foo* ](http://bar/) {MD039}
+[ *foo* ](http://bar/) {NoSpaceInLinksRule}
 
 [foo](http://bar/)
 

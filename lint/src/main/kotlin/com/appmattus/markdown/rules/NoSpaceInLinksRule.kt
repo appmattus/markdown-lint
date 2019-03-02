@@ -4,7 +4,7 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
-class MD039(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoSpaceInLinks") {
+class NoSpaceInLinksRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoSpaceInLinks") {
 
     override val description = "Spaces inside link text"
     override val tags = listOf("whitespace", "links")
