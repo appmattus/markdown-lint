@@ -3,8 +3,8 @@ package com.appmattus.markdown.rules
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
-object MD031Test : Spek({
-    Feature("MD031") {
-        FileRuleScenario { MD031() }
+object BlanksAroundFencesRuleTest : Spek({
+    Feature("BlanksAroundFencesRule") {
+        FileRuleScenario { BlanksAroundFencesRule() }
     }
 })

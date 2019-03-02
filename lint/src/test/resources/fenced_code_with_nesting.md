@@ -1,73 +1,73 @@
 # header
 
 text
-```fence {MD031}
+```fence {BlanksAroundFencesRule}
 code
-``` {MD031}
+``` {BlanksAroundFencesRule}
 text
-~~~fence {MD031}
+~~~fence {BlanksAroundFencesRule}
 code
-~~~ {MD031}
+~~~ {BlanksAroundFencesRule}
 text
-```fence {MD031}
+```fence {BlanksAroundFencesRule}
 ~~~fence
 code
 ~~~
-``` {MD031}
+``` {BlanksAroundFencesRule}
 text
-~~~fence {MD031}
+~~~fence {BlanksAroundFencesRule}
 ```fence
 code
 ```
-~~~ {MD031}
+~~~ {BlanksAroundFencesRule}
 text
-```fence {MD031}
+```fence {BlanksAroundFencesRule}
 
 ~~~fence
 code
 ~~~
 
-``` {MD031}
+``` {BlanksAroundFencesRule}
 text
-~~~fence {MD031}
+~~~fence {BlanksAroundFencesRule}
 
 ```fence
 code
 ```
 
-~~~ {MD031}
+~~~ {BlanksAroundFencesRule}
 text
-```fence {MD031}
+```fence {BlanksAroundFencesRule}
 code
 ~~~
-``` {MD031}
+``` {BlanksAroundFencesRule}
 text
-~~~fence {MD031}
+~~~fence {BlanksAroundFencesRule}
 code
 ```
-~~~ {MD031}
+~~~ {BlanksAroundFencesRule}
 text
-````fence {MD031}
+````fence {BlanksAroundFencesRule}
 ```fence
 code
 ```
-```` {MD031}
+```` {BlanksAroundFencesRule}
 text
-~~~~fence {MD031}
+~~~~fence {BlanksAroundFencesRule}
 ~~~fence
 code
 ~~~
-~~~~ {MD031}
+~~~~ {BlanksAroundFencesRule}
 text
-````fence {MD031}
+````fence {BlanksAroundFencesRule}
 ```fence
 code
 ```
-````` {MD031}
+````` {BlanksAroundFencesRule}
 text
-~~~~fence {MD031}
+~~~~fence {BlanksAroundFencesRule}
 ~~~fence
 code
 ~~~
-~~~~~ {MD031}
+~~~~~ {BlanksAroundFencesRule}
 text

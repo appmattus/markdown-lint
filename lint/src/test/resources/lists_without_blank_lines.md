@@ -5,21 +5,21 @@ text
 * list
 
 text
-* list {MD032}
+* list {BlanksAroundListsRule}
 text
-+ list {MD032}
++ list {BlanksAroundListsRule}
 text
-- list {MD032}
+- list {BlanksAroundListsRule}
 text
-1. list {MD032}
+1. list {BlanksAroundListsRule}
 text
 
 * list
-* list {MD032}
+* list {BlanksAroundListsRule}
 text
 
 text
-10. list {MD032}
+10. list {BlanksAroundListsRule}
 20. list
 
 text
@@ -37,7 +37,7 @@ text
 * list
   with hanging indent
 
-Note: list without hanging indent violates MD032
+Note: list without hanging indent violates BlanksAroundListsRule
 
 * list
 
@@ -58,8 +58,8 @@ text
 
 text
 
-* list {MD032}
-``` {MD031}
+* list {BlanksAroundListsRule}
+``` {BlanksAroundFencesRule}
 code
 ```
 
@@ -67,8 +67,8 @@ text
 
 ```js
 code
-``` {MD031}
-* list {MD032}
+``` {BlanksAroundFencesRule}
+* list {BlanksAroundListsRule}
 
 text
 

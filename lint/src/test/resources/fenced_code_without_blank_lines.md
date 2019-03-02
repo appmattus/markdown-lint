@@ -9,18 +9,18 @@ code
 ```
 
 text
-``` {MD031}
+``` {BlanksAroundFencesRule}
 code
-``` {MD031}
+``` {BlanksAroundFencesRule}
 text
 
 ```
 code
-``` {MD031}
+``` {BlanksAroundFencesRule}
 text
 
 text
-``` {MD031}
+``` {BlanksAroundFencesRule}
 code
 ```
 

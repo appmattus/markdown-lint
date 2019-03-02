@@ -5,7 +5,7 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.util.sequence.BasedSequence
 
-class MD031(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("BlanksAroundFences") {
+class BlanksAroundFencesRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("BlanksAroundFences") {
 
     override val description = "Fenced code blocks should be surrounded by blank lines"
     override val tags = listOf("code", "blank_lines")

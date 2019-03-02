@@ -4,8 +4,8 @@
 
 # Heading 3 {ConsistentHeaderStyleRule} {MD043} #
 
-* list {MD032}
- +  list {ConsistentUlStyleRule} {ListIndentRule} {UlStartLeftRule} {UlIndentRule} {ListMarkerSpaceRule} {MD032} {LineLengthRule}
+* list {BlanksAroundListsRule}
+ +  list {ConsistentUlStyleRule} {ListIndentRule} {UlStartLeftRule} {UlIndentRule} {ListMarkerSpaceRule} {BlanksAroundListsRule} {LineLengthRule}
 
 * list
    * list {UlIndentRule}
@@ -48,9 +48,9 @@ Note: Can not break SingleH1Rule and FirstHeaderH1Rule in the same file
 
 ```js
 ```
-* list {MD032}
+* list {BlanksAroundListsRule}
 
-{MD031:50}
+{BlanksAroundFencesRule:50}
 
 <br/> {MD033}
 
