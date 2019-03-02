@@ -5,7 +5,7 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.ast.BlockQuote
 
-class MD028(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoBlanksBlockquote") {
+class NoBlanksBlockquoteRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoBlanksBlockquote") {
 
     override val description = "Blank line inside blockquote"
     override val tags = listOf("blockquote", "whitespace")
