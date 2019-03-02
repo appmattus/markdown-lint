@@ -3,8 +3,8 @@ package com.appmattus.markdown.rules
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
-object MD034Test : Spek({
-    Feature("MD034") {
-        FileRuleScenario { MD034() }
+object NoBareUrlsRuleTest : Spek({
+    Feature("NoBareUrlsRule") {
+        FileRuleScenario { NoBareUrlsRule() }
     }
 })

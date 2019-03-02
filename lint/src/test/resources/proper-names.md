@@ -64,7 +64,7 @@ Link to [GitHub](https://github.com/).
 
 Link to [markdownlint](https://github.com/DavidAnson/MARKDOWNLINT).
 
-Bare URL exempt https://github.com/DavidAnson/MARKDOWNLINT {MD034}
+Bare URL exempt https://github.com/DavidAnson/MARKDOWNLINT {NoBareUrlsRule}
 
 A short paragraph
 about node.js and {MD044}

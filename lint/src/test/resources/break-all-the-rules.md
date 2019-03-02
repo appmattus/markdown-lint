@@ -54,13 +54,13 @@ Note: Can not break SingleH1Rule and FirstHeaderH1Rule in the same file
 
 <br/> {NoInlineHtmlRule}
 
-http://example.com/page {MD034}
+http://example.com/page {NoBareUrlsRule}
 
 ---
 
 ***
 
-{MD035:61}
+{HrStyleRule:61}
 
 _Section {MD036} Heading_
 

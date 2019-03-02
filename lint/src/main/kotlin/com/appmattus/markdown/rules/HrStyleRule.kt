@@ -5,7 +5,7 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.config.HorizontalRuleStyle
 
-class MD035(
+class HrStyleRule(
     val style: HorizontalRuleStyle = HorizontalRuleStyle.Consistent,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule("HrStyle") {

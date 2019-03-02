@@ -18,5 +18,6 @@ _____
 
 ***
 
-{MD035:1} {MD035:3} {MD035:5} {MD035:9} {MD035:11} {MD035:13} {MD035:15}
-{MD035:17} {MD035:19}
+{HrStyleRule:1} {HrStyleRule:3} {HrStyleRule:5} {HrStyleRule:9}
+{HrStyleRule:11} {HrStyleRule:13} {HrStyleRule:15}
+{HrStyleRule:17} {HrStyleRule:19}

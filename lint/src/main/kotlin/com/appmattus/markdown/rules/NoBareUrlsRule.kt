@@ -4,7 +4,7 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
-class MD034(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoBareUrls") {
+class NoBareUrlsRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoBareUrls") {
 
     override val description = "Bare URL used"
     override val tags = listOf("links", "url")
