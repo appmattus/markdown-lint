@@ -6,7 +6,7 @@ This is text.
 And here is more text
 
 ```
-This is {MD046:8} also a code block.
+This is {CodeBlockStyleRule:8} also a code block.
 ```
 
 But we'll do another:

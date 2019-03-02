@@ -8,7 +8,7 @@ import com.vladsch.flexmark.ast.FencedCodeBlock
 import com.vladsch.flexmark.ast.IndentedCodeBlock
 import com.vladsch.flexmark.util.ast.Block
 
-class MD046(
+class CodeBlockStyleRule(
     private val style: CodeBlockStyle = CodeBlockStyle.Fenced,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule("CodeBlockStyle") {

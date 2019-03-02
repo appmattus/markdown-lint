@@ -1,6 +1,6 @@
 This is text.
 
-    This is a {MD046}
+    This is a {CodeBlockStyleRule}
     code block.
 
 And here is more text
@@ -11,7 +11,7 @@ This is a code block that won't trigger.
 
 But we'll do another:
 
-    And this {MD046}
+    And this {CodeBlockStyleRule}
     will.
 
 Final text is here
