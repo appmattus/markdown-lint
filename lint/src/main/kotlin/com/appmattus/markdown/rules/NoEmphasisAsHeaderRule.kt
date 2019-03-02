@@ -7,7 +7,7 @@ import com.vladsch.flexmark.ast.Emphasis
 import com.vladsch.flexmark.ast.StrongEmphasis
 import com.vladsch.flexmark.ast.Text
 
-class MD036(
+class NoEmphasisAsHeaderRule(
     private val punctuation: String = ".,;:!?",
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule("NoEmphasisAsHeader") {

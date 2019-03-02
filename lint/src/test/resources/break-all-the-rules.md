@@ -62,7 +62,7 @@ http://example.com/page {NoBareUrlsRule}
 
 {HrStyleRule:61}
 
-_Section {MD036} Heading_
+_Section {NoEmphasisAsHeaderRule} Heading_
 
 Emphasis *with * space {MD037}
 
