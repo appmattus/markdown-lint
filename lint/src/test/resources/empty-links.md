@@ -2,13 +2,13 @@
 
 ## Empty links
 
-[text]() {MD042}
+[text]() {NoEmptyLinksRule}
 
-[text](<>) {MD042}
+[text](<>) {NoEmptyLinksRule}
 
-[text](#) {MD042}
+[text](#) {NoEmptyLinksRule}
 
-[text][frag] {MD042}
+[text][frag] {NoEmptyLinksRule}
 
 [frag]: #
 

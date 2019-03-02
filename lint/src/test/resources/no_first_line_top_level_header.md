@@ -1,1 +1,1 @@
-## Second level header {MD041} {FirstHeaderH1Rule}
+## Second level header {FirstLineH1Rule} {FirstHeaderH1Rule}

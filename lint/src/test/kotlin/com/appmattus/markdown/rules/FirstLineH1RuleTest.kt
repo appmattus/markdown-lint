@@ -3,9 +3,9 @@ package com.appmattus.markdown.rules
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
-object MD041Test : Spek({
-    Feature("MD041") {
-        FileRuleScenario(listOf("alternate_top_level_header.md")) { MD041(level = 2) }
+object FirstLineH1RuleTest : Spek({
+    Feature("FirstLineH1Rule") {
+        FileRuleScenario(listOf("alternate_top_level_header.md")) { FirstLineH1Rule(level = 2) }
 
         FileRuleScenario(
             listOf(
@@ -20,7 +20,7 @@ object MD041Test : Spek({
                 "no_first_line_top_level_header.md"
 
             )
-        ) { MD041() }
+        ) { FirstLineH1Rule() }
 
     }
 })

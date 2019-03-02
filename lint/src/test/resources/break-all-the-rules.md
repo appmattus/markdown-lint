@@ -1,4 +1,4 @@
-## Heading 1 {FirstHeaderH1Rule} {MD041}
+## Heading 1 {FirstHeaderH1Rule} {FirstLineH1Rule}
 
 #### Heading 2 {HeaderIncrementRule}
 
@@ -13,7 +13,7 @@
 
 	{NoTrailingSpacesRule} {NoHardTabsRule} 
 
-(name)[link] {NoReversedLinksRule} {MD042}
+(name)[link] {NoReversedLinksRule} {NoEmptyLinksRule}
 
 
 {NoMultipleBlanksRule:18}
@@ -74,7 +74,7 @@ Code `with ` space {NoSpaceInCodeRule}
 code fence without language {FencedCodeLanguageRule:73}
 ```
 
-[empty link]() {MD042}
+[empty link]() {NoEmptyLinksRule}
 
 markdownLint {MD044}
 

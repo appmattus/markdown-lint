@@ -7,7 +7,7 @@ import com.appmattus.markdown.rules.extentions.referenceUrl
 import com.vladsch.flexmark.ast.LinkRef
 import com.vladsch.flexmark.ast.Reference
 
-class MD042(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoEmptyLinks") {
+class NoEmptyLinksRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoEmptyLinks") {
 
     override val description = "No empty links"
     override val tags = listOf("links")

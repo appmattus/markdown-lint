@@ -4,7 +4,7 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
-class MD041(
+class FirstLineH1Rule(
     private val level: Int = 1,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule("FirstLineH1") {
