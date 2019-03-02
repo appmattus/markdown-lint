@@ -37,7 +37,7 @@ long line long line long line long line long line long line long line long line 
 
 Note: Can not break SingleH1Rule and FirstHeaderH1Rule in the same file
 
-# Heading 9 {MD026}.
+# Heading 9 {NoTrailingPunctuationRule}.
 
 >  {MD027}
 

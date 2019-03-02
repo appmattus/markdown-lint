@@ -5,7 +5,7 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.ast.ListItem
 
-class MD026(
+class NoTrailingPunctuationRule(
     private val punctuation: String = ".,;:!?",
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule("NoTrailingPunctuation") {

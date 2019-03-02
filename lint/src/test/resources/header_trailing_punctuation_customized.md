@@ -1,12 +1,12 @@
-# Heading 1 {MD026}.
+# Heading 1 {NoTrailingPunctuationRule}.
 
-## Heading 2 {MD026},
+## Heading 2 {NoTrailingPunctuationRule},
 
-## Heading 3 {MD026}!
+## Heading 3 {NoTrailingPunctuationRule}!
 
-## Heading 4 {MD026}:
+## Heading 4 {NoTrailingPunctuationRule}:
 
-## Heading 5 {MD026};
+## Heading 5 {NoTrailingPunctuationRule};
 
 ## Heading 6?
 
