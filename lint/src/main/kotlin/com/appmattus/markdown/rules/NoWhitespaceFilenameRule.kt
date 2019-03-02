@@ -4,9 +4,9 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
-class FN002(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoSpaceInName") {
+class NoWhitespaceFilenameRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoWhitespaceFilename") {
 
-    override val description = "Filenames must not contain spaces"
+    override val description = "Filenames must not contain whitespace"
     override val tags = listOf("file_name")
 
     private val whitespace = "\\s".toRegex()
