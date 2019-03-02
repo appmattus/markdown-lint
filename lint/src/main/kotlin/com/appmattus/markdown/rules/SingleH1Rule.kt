@@ -6,7 +6,7 @@ import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.ast.ListItem
 import com.vladsch.flexmark.util.ast.Document
 
-class MD025(
+class SingleH1Rule(
     private val level: Int = 1,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule("SingleH1") {

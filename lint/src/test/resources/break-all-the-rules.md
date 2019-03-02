@@ -35,7 +35,7 @@ long line long line long line long line long line long line long line long line 
 
 {NoDuplicateHeaderRule:34}
 
-Note: Can not break MD025 and FirstHeaderH1 in the same file
+Note: Can not break SingleH1Rule and FirstHeaderH1Rule in the same file
 
 # Heading 9 {MD026}.
 

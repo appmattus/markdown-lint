@@ -4,10 +4,10 @@ Header 1
 Header 2 {BlanksAroundHeadersRule}
 ----------------
 Some text
-Header 3 {BlanksAroundHeadersRule} {MD025}
+Header 3 {BlanksAroundHeadersRule} {SingleH1Rule}
 ========================
 Some text
-Header 4 {BlanksAroundHeadersRule} {MD025}
+Header 4 {BlanksAroundHeadersRule} {SingleH1Rule}
 ========================
 Some text
 
