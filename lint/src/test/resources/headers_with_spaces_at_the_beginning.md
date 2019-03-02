@@ -1,20 +1,20 @@
 Some text
 
- # Header 1 {MD023}
+ # Header 1 {HeaderStartLeftRule}
 
- Setext style fully indented {MD023}
- ===================================
+ Setext style fully indented {HeaderStartLeftRule}
+ =================================================
 
- Setext style title only indented {MD023}
-=========================================
+ Setext style title only indented {HeaderStartLeftRule}
+=======================================================
 
-* Test situations in which MD023 shouldn't be triggered.
+* Test situations in which HeaderStartLeftRule shouldn't be triggered.
 
   ```rb
-  # This shouldn't trigger MD023 as it is a code comment.
+  # This shouldn't trigger HeaderStartLeftRule as it is a code comment.
   foo = "And here is some code"
   ```
 
-* This is another case where MD023 shouldn't be triggered
+* This is another case where HeaderStartLeftRule shouldn't be triggered
   # Test
     # Test
