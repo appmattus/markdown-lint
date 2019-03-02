@@ -3,12 +3,10 @@ package com.appmattus.markdown.rules
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
-object MD044Test : Spek({
-    Feature("MD044") {
-        //FileRuleScenario(listOf("proper-names.md")) { MD044() }
-
+object ProperNamesRuleTest : Spek({
+    Feature("ProperNamesRule") {
         FileRuleScenario(listOf("proper-names-projects.md")) {
-            MD044(
+            ProperNamesRule(
                 names = listOf(
                     "GitHub",
                     "github.com",
@@ -23,7 +21,7 @@ object MD044Test : Spek({
             )
         }
 
-        FileRuleScenario(exclude = listOf("proper-names-projects.md")) { MD044() }
+        FileRuleScenario(exclude = listOf("proper-names-projects.md")) { ProperNamesRule() }
 
     }
 })

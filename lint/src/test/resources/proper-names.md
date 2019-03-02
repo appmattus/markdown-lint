@@ -1,24 +1,24 @@
 # markdownlint test file
 
-Markdownlint is a tool {MD044}
+Markdownlint is a tool {ProperNamesRule}
 
-Quoted "Markdownlint" {MD044}
+Quoted "Markdownlint" {ProperNamesRule}
 
-Emphasized *Markdownlint* {MD044}
+Emphasized *Markdownlint* {ProperNamesRule}
 
-Emphasized _Markdownlint_ {MD044}
+Emphasized _Markdownlint_ {ProperNamesRule}
 
 JavaScript is a language
 
 JavaScript is not Java
 
-Nor is it Javascript. {MD044}
+Nor is it Javascript. {ProperNamesRule}
 
 markdownlint runs on Node.js via npm
 
 Node is an environment
 
-Install into it with NPM {MD044}
+Install into it with NPM {ProperNamesRule}
 
 Node.JSX is not a real thing
 
@@ -26,39 +26,39 @@ Nor is nodesjs or NPMI
 
 npm can npm stand npm for npm many npm things
 
-Writing npm is right, but NPM is wrong {MD044}
+Writing npm is right, but NPM is wrong {ProperNamesRule}
 
-Get excited about Github! {MD044}
+Get excited about Github! {ProperNamesRule}
 
 Share code on GitHub via Git
 
 Internet Explorer is a web browser
 
-OTOH, "internet explorer" is a job {MD044}
+OTOH, "internet explorer" is a job {ProperNamesRule}
 
-## node.js instructions {MD044}
+## node.js instructions {ProperNamesRule}
 
-Code in `javascript` {MD044}
+Code in `javascript` {ProperNamesRule}
 
-Execute `via the node.js engine` {MD044}
+Execute `via the node.js engine` {ProperNamesRule}
 
-HTML <u>javascript</u> {NoInlineHtmlRule} {MD044} {NoInlineHtmlRule}
+HTML <u>javascript</u> {NoInlineHtmlRule} {ProperNamesRule} {NoInlineHtmlRule}
 
-* Use NPM {MD044}
+* Use NPM {ProperNamesRule}
 
-> Run Markdownlint on your README {MD044}
+> Run Markdownlint on your README {ProperNamesRule}
 
-    javascript is code {MD044}
-    node.js is runtime {MD044}
+    javascript is code {ProperNamesRule}
+    node.js is runtime {ProperNamesRule}
 
 ```js
-javascript is code {MD044}
-node.js is runtime {MD044}
+javascript is code {ProperNamesRule}
+node.js is runtime {ProperNamesRule}
 ```
 
-Upload the code (to github) {MD044}
+Upload the code (to github) {ProperNamesRule}
 
-Link to [github](https://github.com/). {MD044}
+Link to [github](https://github.com/). {ProperNamesRule}
 
 Link to [GitHub](https://github.com/).
 
@@ -67,5 +67,5 @@ Link to [markdownlint](https://github.com/DavidAnson/MARKDOWNLINT).
 Bare URL exempt https://github.com/DavidAnson/MARKDOWNLINT {NoBareUrlsRule}
 
 A short paragraph
-about node.js and {MD044}
-javascript. {MD044}
+about node.js and {ProperNamesRule}
+javascript. {ProperNamesRule}

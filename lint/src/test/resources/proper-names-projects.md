@@ -2,7 +2,7 @@
 
 The site GitHub
 
-Not github {MD044}
+Not github {ProperNamesRule}
 
 Link to [GitHub](https://github.com/)
 
@@ -20,19 +20,19 @@ The project Vue
 
 AKA Vue.js
 
-Not vue {MD044}
+Not vue {ProperNamesRule}
 
-Or vue.js {MD044}
+Or vue.js {ProperNamesRule}
 
 The file `vue.js` (code block)
 
 The library Vuex
 
-Not vuex {MD044}
+Not vuex {ProperNamesRule}
 
 The library vue-router
 
-Not Vue-router {MD044}
+Not Vue-router {ProperNamesRule}
 
 Or vue-router-extra
 
@@ -44,4 +44,4 @@ Emphasized *Vue* and *vue-router*
 
 Call it npm
 Or NPM
-But not Npm {MD044}
+But not Npm {ProperNamesRule}

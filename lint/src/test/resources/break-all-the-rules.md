@@ -76,6 +76,6 @@ code fence without language {FencedCodeLanguageRule:73}
 
 [empty link]() {NoEmptyLinksRule}
 
-markdownLint {MD044}
+markdownLint {ProperNamesRule}
 
 ![](image.jpg) {MD045}

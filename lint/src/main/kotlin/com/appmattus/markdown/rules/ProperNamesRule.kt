@@ -9,7 +9,7 @@ import com.vladsch.flexmark.ast.Link
 import com.vladsch.flexmark.util.sequence.BasedSequence
 import org.nibor.autolink.LinkExtractor
 
-class MD044(
+class ProperNamesRule(
     private val names: List<String> = listOf(
         "markdownlint",
         "JavaScript",
