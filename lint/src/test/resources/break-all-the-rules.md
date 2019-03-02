@@ -52,7 +52,7 @@ Note: Can not break SingleH1Rule and FirstHeaderH1Rule in the same file
 
 {BlanksAroundFencesRule:50}
 
-<br/> {MD033}
+<br/> {NoInlineHtmlRule}
 
 http://example.com/page {MD034}
 

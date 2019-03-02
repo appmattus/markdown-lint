@@ -42,7 +42,7 @@ Code in `javascript` {MD044}
 
 Execute `via the node.js engine` {MD044}
 
-HTML <u>javascript</u> {MD033} {MD044} {MD033}
+HTML <u>javascript</u> {NoInlineHtmlRule} {MD044} {NoInlineHtmlRule}
 
 * Use NPM {MD044}
 

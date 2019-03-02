@@ -3,8 +3,8 @@ package com.appmattus.markdown.rules
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
-object MD033Test : Spek({
-    Feature("MD033") {
-        FileRuleScenario { MD033() }
+object NoInlineHtmlRuleTest : Spek({
+    Feature("NoInlineHtmlRule") {
+        FileRuleScenario { NoInlineHtmlRule() }
     }
 })

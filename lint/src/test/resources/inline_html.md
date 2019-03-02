@@ -1,8 +1,8 @@
 # Regular header
 
-<h1>Inline HTML Header {MD033}</h1>
+<h1>Inline HTML Header {NoInlineHtmlRule}</h1>
 
-<p>More inline HTML {MD033}
+<p>More inline HTML {NoInlineHtmlRule}
 but this time on multiple lines
 </p>
 
@@ -12,6 +12,6 @@ but this time on multiple lines
 <p>Neither should this as it's also in a code block</p>
 ```
 
-sample <b>sample</b> sample {MD033}{MD033}
+sample <b>sample</b> sample {NoInlineHtmlRule}{NoInlineHtmlRule}
 
-<a /> {MD033}
+<a /> {NoInlineHtmlRule}
