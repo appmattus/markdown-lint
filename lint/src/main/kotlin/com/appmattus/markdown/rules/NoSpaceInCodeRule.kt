@@ -5,7 +5,7 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.extentions.canTrim
 
-class MD038(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoSpaceInCode") {
+class NoSpaceInCodeRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoSpaceInCode") {
 
     override val description = "Spaces inside code span elements"
     override val tags = listOf("whitespace", "code")

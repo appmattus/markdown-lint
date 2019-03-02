@@ -64,9 +64,9 @@ http://example.com/page {NoBareUrlsRule}
 
 _Section {NoEmphasisAsHeaderRule} Heading_
 
-Emphasis *with * space {MD037}
+Emphasis *with * space {NoSpaceInEmphasisRule}
 
-Code `with ` space {MD038}
+Code `with ` space {NoSpaceInCodeRule}
 
 [link with space ](link) {MD039}
 
