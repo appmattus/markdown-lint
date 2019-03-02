@@ -1,10 +1,10 @@
 # Header 1
 
-## Header 2 {MD022}
+## Header 2 {BlanksAroundHeadersRule}
 Some text
-## Header 3 {MD022}
+## Header 3 {BlanksAroundHeadersRule}
 Some text
-## Header 4 {MD022}
+## Header 4 {BlanksAroundHeadersRule}
 
 ## Header 5
 
