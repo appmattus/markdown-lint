@@ -1,7 +1,11 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.loadDocument
+import com.vladsch.flexmark.util.ast.Document
+import org.assertj.core.api.Assertions
+import org.mockito.Mockito
 import org.spekframework.spek2.style.gherkin.FeatureBody
 import kotlin.test.assertEquals
 import kotlin.test.fail
@@ -58,6 +62,38 @@ fun FeatureBody.FileRuleScenario(
                         fail(failures.joinToString())
                     }
                 }
+            }
+        }
+    }
+}
+
+fun FeatureBody.FilenameScenario(description: String, errors: Int, rules: () -> Rule, filename: () -> String) {
+    val _filename = filename()
+    val mockDocument = Mockito.mock(Document::class.java)
+    val rule by memoized { rules() }
+
+    Scenario(description) {
+        lateinit var document: MarkdownDocument
+
+        Given("a document with filename \"$_filename\"") {
+            document = MarkdownDocument(_filename, mockDocument)
+        }
+
+        When("we visit the document") {
+            rule.visitDocument(document)
+        }
+
+        if (errors == 0) {
+            Then("we have no errors") {
+                Assertions.assertThat(rule.errors).isEmpty()
+            }
+        } else if (errors == 1) {
+            Then("we have 1 error") {
+                Assertions.assertThat(rule.errors).size().isOne
+            }
+        } else {
+            Then("we have $errors errors") {
+                Assertions.assertThat(rule.errors).size().isEqualTo(errors)
             }
         }
     }

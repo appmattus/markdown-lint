@@ -15,8 +15,9 @@ class NoPunctuationFilenameRule(
     private val punctuationRegex = Regex("[${Regex.escape(punctuation)}]")
 
     override fun visitDocument(document: MarkdownDocument) {
+        val filename = document.filename.replace(Regex("\\.(md|markdown)$"), "")
 
-        if (document.filename.contains(punctuationRegex)) {
+        if (filename.contains(punctuationRegex)) {
             reportError(0, 0, description)
         }
     }

@@ -16,6 +16,8 @@ markdownlint {
         html()
         checkstyle()
     }
+
+    // file extensions .md & .markdown
 }
 
 // type safe configuration of rules

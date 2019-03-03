@@ -1,68 +1,38 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.MarkdownDocument
 import com.flextrade.jfixture.JFixture
-import com.vladsch.flexmark.util.ast.Document
-import org.assertj.core.api.Assertions.assertThat
-import org.mockito.Mockito
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import java.util.UUID
 
 object NoWhitespaceFilenameRuleTest : Spek({
-
     Feature("NoWhitespaceFilenameRule") {
-        val rule by memoized { NoWhitespaceFilenameRule() }
-        val mockDocument = Mockito.mock(Document::class.java)
+        val rule = { NoWhitespaceFilenameRule() }
 
-        Scenario("no whitespace filename") {
-            lateinit var document: MarkdownDocument
-
-            Given("a document with no whitespace filename") {
-                val filename = UUID.randomUUID().toString().toLowerCase()
-                document = MarkdownDocument(filename, mockDocument)
-            }
-
-            When("we visit the document") {
-                rule.visitDocument(document)
-            }
-
-            Then("we have no errors") {
-                assertThat(rule.errors).isEmpty()
-            }
+        FilenameScenario("no whitespace filename", 0, rule) {
+            UUID.randomUUID().toString().toLowerCase()
         }
 
-        Scenario("whitespace in filename") {
-            lateinit var document: MarkdownDocument
-
-            Given("a document with whitespace in filename") {
-                val whitespace = JFixture().create().fromList(" ", "\t", "\n", "\r")
-                document = MarkdownDocument("hello${whitespace}world.md", mockDocument)
-            }
-
-            When("we visit the document") {
-                rule.visitDocument(document)
-            }
-
-            Then("we have 1 error") {
-                assertThat(rule.errors).size().isOne
-            }
+        FilenameScenario("whitespace in filename", 1, rule) {
+            val whitespace = JFixture().create().fromList(" ", "\t", "\n", "\r")
+            "hello${whitespace}world.md"
         }
 
-        Scenario("empty filename") {
-            lateinit var document: MarkdownDocument
+        FilenameScenario("whitespace in filename before extension", 1, rule) {
+            val whitespace = JFixture().create().fromList(" ", "\t", "\n", "\r")
+            "hello-world${whitespace}.md"
+        }
 
-            Given("a document with empty filename") {
-                document = MarkdownDocument("", mockDocument)
-            }
+        FilenameScenario("no whitespace filename", 0, rule) {
+            UUID.randomUUID().toString().toLowerCase()
+        }
 
-            When("we visit the document") {
-                rule.visitDocument(document)
-            }
+        FilenameScenario("empty filename without extension", 0, rule) {
+            ""
+        }
 
-            Then("we have no errors") {
-                assertThat(rule.errors).isEmpty()
-            }
+        FilenameScenario("empty filename with markdown extension", 0, rule) {
+            ".md"
         }
     }
 })
