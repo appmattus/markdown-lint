@@ -15,7 +15,9 @@ object MyTest : Spek({
                 val kts = MarkdownDocument::class.java.classLoader.getResource("markdown-lint.kts")
                     .readText(Charsets.UTF_8)
 
-                println(Kts.eval(kts))
+                val result = Kts.eval(kts)
+
+                println(result)
             }
         }
     }

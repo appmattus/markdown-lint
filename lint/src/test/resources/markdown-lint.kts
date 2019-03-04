@@ -1,13 +1,13 @@
 import com.appmattus.markdown.markdownlint
-import com.appmattus.markdown.rules.FirstHeaderH1Rule
 import com.appmattus.markdown.rules.ConsistentHeaderStyleRule
+import com.appmattus.markdown.rules.FirstHeaderH1Rule
 
 markdownlint {
     rules {
-        FirstHeaderH1Rule(level = 5) {
+        +FirstHeaderH1Rule(level = 5) {
             active = false
         }
-        ConsistentHeaderStyleRule {
+        +ConsistentHeaderStyleRule {
             active = true
         }
     }

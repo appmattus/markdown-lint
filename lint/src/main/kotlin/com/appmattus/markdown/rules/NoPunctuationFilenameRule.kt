@@ -5,7 +5,7 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
 class NoPunctuationFilenameRule(
-    private val punctuation: String = ".,;:!?_",
+    punctuation: String = ".,;:!?_",
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule("NoPunctuationFilename") {
 

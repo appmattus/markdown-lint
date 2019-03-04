@@ -1,9 +1,8 @@
 package com.appmattus.markdown
 
-import com.appmattus.markdown.rules.config.HeaderStyle
-import com.appmattus.markdown.rules.FirstHeaderH1Rule
 import com.appmattus.markdown.rules.ConsistentHeaderStyleRule
-import kotlin.reflect.KClass
+import com.appmattus.markdown.rules.FirstHeaderH1Rule
+import com.appmattus.markdown.rules.config.HeaderStyle
 
 @DslMarker
 annotation class MarkdownDsl
@@ -13,47 +12,40 @@ data class MarkdownLintConfig(val rules: List<Rule>, val reports: Set<Report>) {
     @MarkdownDsl
     class Builder {
         private var reports: Set<Report> = setOf(Report.Html, Report.Checkstyle)
+        private var rules: List<Rule> = emptyList()
 
         fun reports(body: Report.Builder.() -> Unit) = apply {
             reports = Report.Builder().apply(body).build()
         }
 
-        fun rules(body: RuleConfig.Builder.() -> Unit) = apply {
-            //reports = RuleConfig.Builder().apply(body).build()
+        fun rules(body: RulesBuilder.() -> Unit) = apply {
+            rules = RulesBuilder().apply(body).build()
         }
 
         internal fun build(): MarkdownLintConfig {
-
-
-            return MarkdownLintConfig(emptyList(), reports)
+            return MarkdownLintConfig(rules, reports)
         }
     }
 }
 
-class RuleConfig {
-    class Builder {
-        private val rules = mutableListOf<Rule>()
+class RulesBuilder {
+    private val rules = mutableListOf<Rule>()
 
-        operator fun Rule.unaryPlus() {
-            rules += this
-        }
-
-        internal fun build() {
-
-        }
+    operator fun Rule.unaryPlus() {
+        rules += this
     }
+
+    internal fun build(): List<Rule> = rules.toList()
 }
 
-data class RuleSetup(val ruleClass: KClass<out Rule>, val active: Boolean) {
+data class RuleSetup(val active: Boolean) {
 
-    class Builder(private val ruleClass: KClass<out Rule>) {
+    class Builder() {
         var active = true
 
-
-        internal fun build() = RuleSetup(ruleClass, active)
+        internal fun build() = RuleSetup(active)
     }
 }
-
 
 enum class Report {
     Html, Checkstyle;

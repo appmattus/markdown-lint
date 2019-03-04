@@ -3,9 +3,9 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.loadDocument
+import com.nhaarman.mockitokotlin2.mock
 import com.vladsch.flexmark.util.ast.Document
 import org.assertj.core.api.Assertions
-import org.mockito.Mockito
 import org.spekframework.spek2.style.gherkin.FeatureBody
 import kotlin.test.assertEquals
 import kotlin.test.fail
@@ -69,7 +69,7 @@ fun FeatureBody.FileRuleScenario(
 
 fun FeatureBody.FilenameScenario(description: String, errors: Int, rules: () -> Rule, filename: () -> String) {
     val _filename = filename()
-    val mockDocument = Mockito.mock(Document::class.java)
+    val mockDocument = mock<Document>()
     val rule by memoized { rules() }
 
     Scenario(description) {

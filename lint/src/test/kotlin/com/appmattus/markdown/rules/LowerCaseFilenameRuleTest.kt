@@ -1,9 +1,9 @@
 package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.MarkdownDocument
+import com.nhaarman.mockitokotlin2.mock
 import com.vladsch.flexmark.util.ast.Document
 import org.assertj.core.api.Assertions.assertThat
-import org.mockito.Mockito
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import java.util.UUID
@@ -12,7 +12,7 @@ object LowerCaseFilenameRuleTest : Spek({
 
     Feature("LowerCaseFilenameRule") {
         val rule by memoized { LowerCaseFilenameRule() }
-        val mockDocument = Mockito.mock(Document::class.java)
+        val mockDocument = mock<Document>()
 
         Scenario("all lowercase filename") {
             lateinit var document: MarkdownDocument

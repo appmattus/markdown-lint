@@ -14,5 +14,5 @@ abstract class Rule(val name: String) {
     protected abstract val config: RuleSetup.Builder.() -> Unit
 
     val configuration
-        get() = RuleSetup.Builder(this::class).apply(config).build()
+        get() = RuleSetup.Builder().apply(config).build()
 }
