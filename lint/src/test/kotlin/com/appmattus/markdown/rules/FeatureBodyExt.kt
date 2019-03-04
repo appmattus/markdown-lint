@@ -5,9 +5,8 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.loadDocument
 import com.nhaarman.mockitokotlin2.mock
 import com.vladsch.flexmark.util.ast.Document
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.style.gherkin.FeatureBody
-import kotlin.test.assertEquals
 import kotlin.test.fail
 
 fun FeatureBody.FileRuleScenario(
@@ -32,8 +31,7 @@ fun FeatureBody.FileRuleScenario(
             }
 
             Then("we expect $expectedErrorCount errors") {
-                //rule.errors.forEach(::println)
-                assertEquals(expectedErrorCount, rule.errors.size, "Number of errors")
+                assertThat(rule.errors.size).isEqualTo(expectedErrorCount).describedAs("Number of errors")
             }
 
             if (expectedErrorCount > 0) {
@@ -85,15 +83,15 @@ fun FeatureBody.FilenameScenario(description: String, errors: Int, rules: () -> 
 
         if (errors == 0) {
             Then("we have no errors") {
-                Assertions.assertThat(rule.errors).isEmpty()
+                assertThat(rule.errors).isEmpty()
             }
         } else if (errors == 1) {
             Then("we have 1 error") {
-                Assertions.assertThat(rule.errors).size().isOne
+                assertThat(rule.errors).size().isOne
             }
         } else {
             Then("we have $errors errors") {
-                Assertions.assertThat(rule.errors).size().isEqualTo(errors)
+                assertThat(rule.errors).size().isEqualTo(errors)
             }
         }
     }

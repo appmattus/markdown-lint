@@ -13,28 +13,20 @@ plugins {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk7"))
+    implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("compiler"))
     implementation(kotlin("script-util"))
     implementation(kotlin("script-runtime"))
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1")
-
     implementation("com.vladsch.flexmark:flexmark-all:0.40.16")
 
-    //implementation(project(":flexmark"))
-    implementation("com.android.tools.lint:lint:26.3.0")
-    implementation("com.android.tools.lint:lint-api:26.3.0")
-    implementation("com.android.tools.lint:lint-checks:26.3.0")
-
+    testImplementation(kotlin("test"))
     testImplementation("junit:junit:4.12")
     testImplementation("org.assertj:assertj-core:3.11.1")
     testImplementation("org.mockito:mockito-core:2.24.0")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
     testImplementation("com.flextrade.jfixture:jfixture:2.7.2")
-    testImplementation("com.android.tools.lint:lint:26.3.0")
-    testImplementation("com.android.tools.lint:lint-tests:26.3.0")
-    testImplementation("com.android.tools:testutils:26.3.0")
 
     testImplementation("org.junit.platform:junit-platform-engine:1.2.0")
     testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.0") {
