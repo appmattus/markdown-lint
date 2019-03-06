@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -8,9 +9,9 @@ class NoHardTabsRule(override val config: RuleSetup.Builder.() -> Unit = {}) : R
     override val description = "Hard tabs"
     override val tags = listOf("whitespace", "hard_tab")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.chars.indexOfAll("\t").forEach {
-            reportError(it, it + 1, description)
+            errorReporter.reportError(it, it + 1, description)
         }
     }
 }

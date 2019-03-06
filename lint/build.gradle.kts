@@ -9,7 +9,7 @@ plugins {
 
     id("com.novoda.bintray-release")
 
-    id("io.gitlab.arturbosch.detekt") version "1.0.0-RC12"
+    id("io.gitlab.arturbosch.detekt") version "1.0.0-RC14"
 }
 
 dependencies {
@@ -19,23 +19,25 @@ dependencies {
     implementation(kotlin("script-runtime"))
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1")
-    implementation("com.vladsch.flexmark:flexmark-all:0.40.16")
+    api("com.vladsch.flexmark:flexmark-all:0.40.20")
+
+    implementation("com.puppycrawl.tools:checkstyle:8.18")
 
     testImplementation(kotlin("test"))
     testImplementation("junit:junit:4.12")
-    testImplementation("org.assertj:assertj-core:3.11.1")
-    testImplementation("org.mockito:mockito-core:2.24.0")
+    testImplementation("org.assertj:assertj-core:3.12.1")
+    testImplementation("org.mockito:mockito-core:2.24.5")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
     testImplementation("com.flextrade.jfixture:jfixture:2.7.2")
 
-    testImplementation("org.junit.platform:junit-platform-engine:1.2.0")
-    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.0") {
+    //testImplementation("org.junit.platform:junit-platform-engine:1.4.0")
+    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.1")/* {
         exclude(group = "org.jetbrains.kotlin")
-    }
-    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.0") {
+    }*/
+    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.1")/* {
         exclude(group = "org.junit.platform")
         exclude(group = "org.jetbrains.kotlin")
-    }
+    }*/
 
     // spek requires kotlin-reflect, can be omitted if already in the classpath
     testRuntimeOnly(kotlin("reflect"))

@@ -95,6 +95,10 @@ class AllRules(private val config: MarkdownLintConfig) {
     )
 
     val rules: List<Rule> by lazy {
-        allRules.filterNot { rule -> config.rules.any { it::class == rule::class } } + config.rules.filter { it.configuration.active }
+        allRules.filterNot { rule ->
+            config.rules.any { it::class == rule::class }
+        } + config.rules.filter {
+            it.configuration.active
+        }
     }
 }

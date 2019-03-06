@@ -60,9 +60,11 @@ class MarkdownDocument(val filename: String, val document: Document) {
     val allText by lazy { document.find(Text::class) }
 
     val chars: BasedSequence by lazy { document.chars }
-    val lines by lazy { document.chars.splitIntoLines() }
+    val lines by lazy { chars.splitIntoLines() }
 
     fun getLineNumber(offset: Int) = document.getLineNumber(offset)
+
+    fun getColumnNumber(offset: Int) = chars.getColumnAtIndex(offset)
 
     private fun <T : Node> Document.find(vararg classes: KClass<out T>, visitChildren: Boolean = true): List<T> {
         val listItems = mutableListOf<T>()

@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -12,7 +13,7 @@ class BlanksAroundFencesRule(override val config: RuleSetup.Builder.() -> Unit =
 
     private val fenceRegEx = Regex("^(`{3,}|~{3,})")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         var inCode = false
         var fence: String? = null
@@ -29,7 +30,7 @@ class BlanksAroundFencesRule(override val config: RuleSetup.Builder.() -> Unit =
                     inCode = !inCode
 
                     if (surroundingLinesEmpty(inCode, lines, lineNum)) {
-                        reportError(line.startOffset, line.endOffset, description)
+                        errorReporter.reportError(line.startOffset, line.endOffset, description)
                     }
                 }
             }

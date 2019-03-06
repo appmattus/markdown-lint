@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -9,12 +10,12 @@ class CommandsShowOutputRule(override val config: RuleSetup.Builder.() -> Unit =
     override val description = "Dollar signs used before commands without showing output"
     override val tags = listOf("code")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.codeBlocks.forEach { block ->
             val lines = block.contentLines.filter { it.isNotBlank() }
 
             if (lines.isNotEmpty() && lines.all { it.startsWith("\$ ") }) {
-                reportError(block.startOffset, block.endOffset, description)
+                errorReporter.reportError(block.startOffset, block.endOffset, description)
             }
         }
     }

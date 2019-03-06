@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -10,9 +11,9 @@ class NoBlanksBlockquoteRule(override val config: RuleSetup.Builder.() -> Unit =
     override val description = "Blank line inside blockquote"
     override val tags = listOf("blockquote", "whitespace")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.blockQuotes.filter { it.next is BlockQuote }.forEach {
-            reportError(it.startOffset, it.next.startOffset, description)
+            errorReporter.reportError(it.startOffset, it.next.startOffset, description)
         }
     }
 }

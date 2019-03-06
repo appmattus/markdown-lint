@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -9,10 +10,10 @@ class FirstHeaderH1Rule(val level: Int = 1, override val config: RuleSetup.Build
     override val description = "First header should be a top level header"
     override val tags = listOf("headers")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.firstOrNull()?.let {
             if (it.level != level) {
-                reportError(it.startOffset, it.endOffset, description)
+                errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
         }
     }

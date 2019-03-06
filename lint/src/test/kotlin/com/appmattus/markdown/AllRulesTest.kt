@@ -2,13 +2,15 @@ package com.appmattus.markdown
 
 import com.appmattus.markdown.rules.BlanksAroundFencesRule
 import com.appmattus.markdown.rules.NoPunctuationFilenameRule
-import com.nhaarman.mockitokotlin2.mock
+import mockDocument
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
 object AllRulesTest : Spek({
     Feature("AllRules") {
+        val mockDocument = mockDocument()
+
         Scenario("empty configuration returns all rules") {
             lateinit var config: MarkdownLintConfig
             lateinit var rules: List<Rule>
@@ -77,20 +79,20 @@ object AllRulesTest : Spek({
 
             And("the specified rule does not trigger as expected") {
                 val rule = rules.filterIsInstance(NoPunctuationFilenameRule::class.java).first()
-                rule.visitDocument(MarkdownDocument("Z", mock()))
-                assertThat(rule.errors).size().isZero
+                val errors = rule.processDocument(MarkdownDocument("Z", mockDocument))
+                assertThat(errors).size().isZero
             }
 
             And("the specified rule triggers as expected") {
                 val rule = rules.filterIsInstance(NoPunctuationFilenameRule::class.java).first()
-                rule.visitDocument(MarkdownDocument("A", mock()))
-                assertThat(rule.errors).size().isOne
+                val errors = rule.processDocument(MarkdownDocument("A", mockDocument))
+                assertThat(errors).size().isOne
             }
 
             And("the specified rule result differs to default config") {
                 val rule = NoPunctuationFilenameRule()
-                rule.visitDocument(MarkdownDocument("A", mock()))
-                assertThat(rule.errors).size().isZero
+                val errors = rule.processDocument(MarkdownDocument("A", mockDocument))
+                assertThat(errors).size().isZero
             }
         }
     }

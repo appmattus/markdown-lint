@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -12,7 +13,7 @@ class BlanksAroundHeadersRule(override val config: RuleSetup.Builder.() -> Unit 
 
     private val whitespaceRegex = Regex("\\s*")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.filterNot { it.parent is ListItem }.forEach { heading ->
 
             var isValid = true
@@ -30,7 +31,7 @@ class BlanksAroundHeadersRule(override val config: RuleSetup.Builder.() -> Unit 
             }
 
             if (!isValid) {
-                reportError(heading.startOffset, heading.endOffset, description)
+                errorReporter.reportError(heading.startOffset, heading.endOffset, description)
             }
         }
     }

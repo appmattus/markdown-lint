@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -15,7 +16,7 @@ class LineLengthRule(
     override val description = "Line length"
     override val tags = listOf("line_length")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         var result = document.chars.splitIntoLines().filter {
             it.length > lineLength
         }.map {
@@ -45,7 +46,7 @@ class LineLengthRule(
         }
 
         result.forEach { range ->
-            reportError(range.start, range.endInclusive, description)
+            errorReporter.reportError(range.start, range.endInclusive, description)
         }
     }
 }

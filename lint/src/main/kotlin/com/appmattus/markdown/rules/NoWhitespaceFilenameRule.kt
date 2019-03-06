@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -11,9 +12,9 @@ class NoWhitespaceFilenameRule(override val config: RuleSetup.Builder.() -> Unit
 
     private val whitespace = "\\s".toRegex()
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         if (document.filename.contains(whitespace)) {
-            reportError(0, 0, description)
+            errorReporter.reportError(0, 0, description)
         }
     }
 }

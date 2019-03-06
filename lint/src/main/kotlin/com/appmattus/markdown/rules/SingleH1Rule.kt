@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -14,12 +15,12 @@ class SingleH1Rule(
     override val description = "Multiple top level headers in the same document"
     override val tags = listOf("headers")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val headers = document.headings.filterNot { it.parent is ListItem }.filter { it.level == level }
 
         if (headers.isNotEmpty() && headers[0].previous == null && headers[0].parent is Document) {
             headers.drop(1).forEach { heading ->
-                reportError(heading.startOffset, heading.endOffset, description)
+                errorReporter.reportError(heading.startOffset, heading.endOffset, description)
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -31,7 +32,7 @@ class ProperNamesRule(
     private val escapedList = names.sortedDescending().joinToString(separator = "|") { Regex.escape(it) }
     private val regex = Regex("\\S*\\b($escapedList)\\b\\S*", setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE))
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val elements = mutableListOf<BasedSequence>()
 
         elements.addAll(
@@ -61,7 +62,7 @@ class ProperNamesRule(
                 !names.contains(it.toString())
                 //it.toString() != name
             }.forEach {
-                reportError(it.startOffset, it.endOffset, description)
+                errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
         }
     }

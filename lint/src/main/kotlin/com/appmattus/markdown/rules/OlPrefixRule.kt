@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -15,12 +16,12 @@ class OlPrefixRule(
     override val description = "Ordered list item prefix"
     override val tags = listOf("ol")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         when (style) {
             OrderedListStyle.One -> {
                 document.orderedListItems.forEach {
                     if (it.openingMarker.toString() != "1.") {
-                        reportError(it.openingMarker.startOffset, it.openingMarker.endOffset, description)
+                        errorReporter.reportError(it.openingMarker.startOffset, it.openingMarker.endOffset, description)
                     }
                 }
             }
@@ -29,7 +30,7 @@ class OlPrefixRule(
                     val startIndex = (it.parent as OrderedList).startNumber
 
                     if (it.openingMarker.toString() != "${startIndex + it.index()}.") {
-                        reportError(it.openingMarker.startOffset, it.openingMarker.endOffset, description)
+                        errorReporter.reportError(it.openingMarker.startOffset, it.openingMarker.endOffset, description)
                     }
                 }
             }

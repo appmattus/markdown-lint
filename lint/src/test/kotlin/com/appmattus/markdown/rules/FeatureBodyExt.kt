@@ -1,10 +1,10 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.Error
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.loadDocument
-import com.nhaarman.mockitokotlin2.mock
-import com.vladsch.flexmark.util.ast.Document
+import mockDocument
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.style.gherkin.FeatureBody
 import kotlin.test.fail
@@ -24,20 +24,22 @@ fun FeatureBody.FileRuleScenario(
             Regex("\\{${Regex.escape(rule::class.java.simpleName)}(:[0-9]+)?}").findAll(document.chars).count()
 
         Scenario(filename) {
+            lateinit var ruleErrors: List<Error>
+
             Given("the file $filename") {}
 
             When("we run the ${rule.name} rule") {
-                rule.visitDocument(document)
+                ruleErrors = rule.processDocument(document)
             }
 
             Then("we expect $expectedErrorCount errors") {
-                assertThat(rule.errors.size).isEqualTo(expectedErrorCount).describedAs("Number of errors")
+                assertThat(ruleErrors.size).isEqualTo(expectedErrorCount).describedAs("Number of errors")
             }
 
             if (expectedErrorCount > 0) {
                 And("the location of errors match") {
                     val failures = mutableListOf<String>()
-                    rule.errors.forEach { error ->
+                    ruleErrors.forEach { error ->
                         val errorRange =
                             IntRange(document.getLineNumber(error.startOffset), document.getLineNumber(error.endOffset))
 
@@ -67,31 +69,33 @@ fun FeatureBody.FileRuleScenario(
 
 fun FeatureBody.FilenameScenario(description: String, errors: Int, rules: () -> Rule, filename: () -> String) {
     val _filename = filename()
-    val mockDocument = mock<Document>()
+    val mockDocument = mockDocument()
+
     val rule by memoized { rules() }
 
     Scenario(description) {
         lateinit var document: MarkdownDocument
+        lateinit var ruleErrors: List<Error>
 
         Given("a document with filename \"$_filename\"") {
             document = MarkdownDocument(_filename, mockDocument)
         }
 
         When("we visit the document") {
-            rule.visitDocument(document)
+            ruleErrors = rule.processDocument(document)
         }
 
         if (errors == 0) {
             Then("we have no errors") {
-                assertThat(rule.errors).isEmpty()
+                assertThat(ruleErrors).isEmpty()
             }
         } else if (errors == 1) {
             Then("we have 1 error") {
-                assertThat(rule.errors).size().isOne
+                assertThat(ruleErrors).size().isOne
             }
         } else {
             Then("we have $errors errors") {
-                assertThat(rule.errors).size().isEqualTo(errors)
+                assertThat(ruleErrors).size().isEqualTo(errors)
             }
         }
     }

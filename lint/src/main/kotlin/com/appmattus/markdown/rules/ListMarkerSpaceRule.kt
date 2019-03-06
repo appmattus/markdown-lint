@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -18,7 +19,7 @@ class ListMarkerSpaceRule(
     override val description = "Spaces after list markers"
     override val tags = listOf("ol", "ul", "whitespace")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         document.listBlocks.forEach { listBlock ->
             val single = listBlock.children.all {
@@ -36,7 +37,7 @@ class ListMarkerSpaceRule(
             listBlock.children.forEach {
                 it as ListItem
                 if (it.firstChild.startOffset - it.openingMarker.endOffset != indent) {
-                    reportError(it.startOffset, it.endOffset, description)
+                    errorReporter.reportError(it.startOffset, it.endOffset, description)
                 }
             }
         }

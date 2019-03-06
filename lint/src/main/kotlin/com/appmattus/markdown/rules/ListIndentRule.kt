@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -11,7 +12,7 @@ class ListIndentRule(override val config: RuleSetup.Builder.() -> Unit = {}) : R
     override val description = "Inconsistent indentation for list items at the same level"
     override val tags = listOf("bullet", "ul", "indentation")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         val bullets = document.listItems
 
@@ -28,7 +29,7 @@ class ListIndentRule(override val config: RuleSetup.Builder.() -> Unit = {}) : R
             if (!indentLevels.containsKey(b.level())) {
                 indentLevels[b.level()] = indentLevel
             } else if (indentLevel != indentLevels[b.level()]) {
-                reportError(b.startOffset, b.endOffset, description)
+                errorReporter.reportError(b.startOffset, b.endOffset, description)
             }
         }
     }

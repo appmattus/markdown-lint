@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -9,9 +10,9 @@ class NoInlineHtmlRule(override val config: RuleSetup.Builder.() -> Unit = {}) :
     override val description = "Inline HTML"
     override val tags = listOf("html")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.htmlElements.forEach {
-            reportError(it.startOffset, it.endOffset, description)
+            errorReporter.reportError(it.startOffset, it.endOffset, description)
         }
     }
 }

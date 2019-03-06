@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -13,7 +14,7 @@ class HrStyleRule(
     override val description = "Horizontal rule style"
     override val tags = listOf("hr")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val hr = document.horizontalRules
 
         if (hr.isNotEmpty()) {
@@ -24,7 +25,7 @@ class HrStyleRule(
 
             hr.forEach {
                 if (it.chars.toString() != expectedChars) {
-                    reportError(it.startOffset, it.endOffset, description)
+                    errorReporter.reportError(it.startOffset, it.endOffset, description)
                 }
             }
         }

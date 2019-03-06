@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -14,7 +15,7 @@ class ConsistentHeaderStyleRule(
     override val description = "Header style"
     override val tags = listOf("headers")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         val headings = document.headings
         if (headings.isEmpty()) {
@@ -26,11 +27,11 @@ class ConsistentHeaderStyleRule(
         headings.forEach {
             if (docStyle == HeaderStyle.SetextWithAtx) {
                 if (it.style() != HeaderStyle.Setext && !(it.style() == HeaderStyle.Atx && it.level > 2)) {
-                    reportError(it.startOffset, it.endOffset, description)
+                    errorReporter.reportError(it.startOffset, it.endOffset, description)
                 }
             } else {
                 if (it.style() != docStyle) {
-                    reportError(it.startOffset, it.endOffset, description)
+                    errorReporter.reportError(it.startOffset, it.endOffset, description)
                 }
             }
         }

@@ -1,9 +1,5 @@
 package com.appmattus.markdown
 
-import com.appmattus.markdown.rules.ConsistentHeaderStyleRule
-import com.appmattus.markdown.rules.FirstHeaderH1Rule
-import com.appmattus.markdown.rules.config.HeaderStyle
-
 @DslMarker
 annotation class MarkdownDsl
 
@@ -22,7 +18,7 @@ data class MarkdownLintConfig(val rules: List<Rule>, val reports: Set<Report>) {
             rules = RulesBuilder().apply(body).build()
         }
 
-        internal fun build(): MarkdownLintConfig {
+        fun build(): MarkdownLintConfig {
             return MarkdownLintConfig(rules, reports)
         }
     }
@@ -68,31 +64,4 @@ enum class Report {
     }
 }
 
-
 fun markdownlint(body: MarkdownLintConfig.Builder.() -> Unit) = MarkdownLintConfig.Builder().apply(body).build()
-
-
-fun hi() {
-
-    markdownlint {
-        rules {
-            +ConsistentHeaderStyleRule(HeaderStyle.Atx)
-
-            +FirstHeaderH1Rule(level = 5) {
-                /*suppress {
-                    files(
-                            "",
-                            ""
-                    )
-                    +"..."
-                }*/
-                active = true
-            }
-        }
-
-        reports {
-            html()
-            checkstyle()
-        }
-    }
-}

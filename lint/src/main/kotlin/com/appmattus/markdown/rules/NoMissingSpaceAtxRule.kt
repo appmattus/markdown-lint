@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -11,11 +12,11 @@ class NoMissingSpaceAtxRule(override val config: RuleSetup.Builder.() -> Unit = 
     override val description = "No space after hash on atx style header"
     override val tags = listOf("headers", "atx", "spaces")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.forEach { heading ->
             if (heading.style() == HeaderStyle.Atx) {
                 if (heading.openingMarker.endOffset == heading.text.startOffset) {
-                    reportError(heading.startOffset, heading.endOffset, description)
+                    errorReporter.reportError(heading.startOffset, heading.endOffset, description)
                 }
             }
         }

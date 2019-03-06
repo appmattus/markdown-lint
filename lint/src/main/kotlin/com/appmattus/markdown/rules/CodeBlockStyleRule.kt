@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -16,7 +17,7 @@ class CodeBlockStyleRule(
     override val description = "Code block style"
     override val tags = listOf("code")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val codeBlocks = document.codeBlocks
 
         if (codeBlocks.isEmpty()) {
@@ -34,7 +35,7 @@ class CodeBlockStyleRule(
 
         codeBlocks.forEach {
             if (!it.matchesStyle(mainStyle)) {
-                reportError(it.startOffset, it.endOffset, description)
+                errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
         }
     }

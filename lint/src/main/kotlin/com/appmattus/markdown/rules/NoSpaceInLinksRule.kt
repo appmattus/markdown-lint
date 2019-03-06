@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -9,12 +10,12 @@ class NoSpaceInLinksRule(override val config: RuleSetup.Builder.() -> Unit = {})
     override val description = "Spaces inside link text"
     override val tags = listOf("whitespace", "links")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.links.forEach {
             if (it.textOpeningMarker.endOffset != it.text.startOffset ||
                 it.textClosingMarker.startOffset != it.text.endOffset
             ) {
-                reportError(it.startOffset, it.endOffset, description)
+                errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
         }
     }

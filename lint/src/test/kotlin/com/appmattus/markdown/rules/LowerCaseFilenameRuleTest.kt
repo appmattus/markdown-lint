@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.Error
 import com.appmattus.markdown.MarkdownDocument
-import com.nhaarman.mockitokotlin2.mock
-import com.vladsch.flexmark.util.ast.Document
+import mockDocument
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
@@ -12,10 +12,11 @@ object LowerCaseFilenameRuleTest : Spek({
 
     Feature("LowerCaseFilenameRule") {
         val rule by memoized { LowerCaseFilenameRule() }
-        val mockDocument = mock<Document>()
+        val mockDocument = mockDocument()
 
         Scenario("all lowercase filename") {
             lateinit var document: MarkdownDocument
+            lateinit var ruleErrors: List<Error>
 
             Given("a document with lowercase filename") {
                 val filename = UUID.randomUUID().toString().toLowerCase()
@@ -23,16 +24,17 @@ object LowerCaseFilenameRuleTest : Spek({
             }
 
             When("we visit the document") {
-                rule.visitDocument(document)
+                ruleErrors = rule.processDocument(document)
             }
 
             Then("we have no errors") {
-                assertThat(rule.errors).isEmpty()
+                assertThat(ruleErrors).isEmpty()
             }
         }
 
         Scenario("uppercase in filename") {
             lateinit var document: MarkdownDocument
+            lateinit var ruleErrors: List<Error>
 
             Given("a document with uppercase filename") {
                 val filename = UUID.randomUUID().toString().toUpperCase()
@@ -40,27 +42,28 @@ object LowerCaseFilenameRuleTest : Spek({
             }
 
             When("we visit the document") {
-                rule.visitDocument(document)
+                ruleErrors = rule.processDocument(document)
             }
 
             Then("we have 1 error") {
-                assertThat(rule.errors).size().isOne
+                assertThat(ruleErrors).size().isOne
             }
         }
 
         Scenario("empty filename") {
             lateinit var document: MarkdownDocument
+            lateinit var ruleErrors: List<Error>
 
             Given("a document with empty filename") {
                 document = MarkdownDocument("", mockDocument)
             }
 
             When("we visit the document") {
-                rule.visitDocument(document)
+                ruleErrors = rule.processDocument(document)
             }
 
             Then("we have no errors") {
-                assertThat(rule.errors).isEmpty()
+                assertThat(ruleErrors).isEmpty()
             }
         }
     }

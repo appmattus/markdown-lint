@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -15,7 +16,7 @@ class NoEmphasisAsHeaderRule(
     override val description = "Emphasis used instead of a header"
     override val tags = listOf("headers", "emphasis")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         document.topLevelParagraphs.filter { it.lineCount == 1 }.filter { it.firstChild == it.lastChild }.forEach {
             val wrapper = it.firstChild
@@ -24,7 +25,7 @@ class NoEmphasisAsHeaderRule(
                 if (wrapper.firstChild == wrapper.lastChild && wrapper.firstChild is Text) {
                     // Check sentence doesn't end in punctuation
                     if (!punctuation.contains(wrapper.firstChild.chars.lastChar())) {
-                        reportError(wrapper.startOffset, wrapper.endOffset, description)
+                        errorReporter.reportError(wrapper.startOffset, wrapper.endOffset, description)
                     }
                 }
             }

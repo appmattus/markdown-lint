@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -11,7 +12,7 @@ class NoMultipleBlanksRule(override val config: RuleSetup.Builder.() -> Unit = {
 
     private val regex = Regex("^\\s*(\r?\n|\n)\\s*(\r?\n|\n|$)", RegexOption.MULTILINE)
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val codeBlocks = document.codeBlocks.map { IntRange(it.startLineNumber, it.endLineNumber) }
 
         regex.findAll(document.chars).map { match ->
@@ -19,7 +20,7 @@ class NoMultipleBlanksRule(override val config: RuleSetup.Builder.() -> Unit = {
         }.filter { range ->
             (codeBlocks.find { it.contains(document.getLineNumber(range.start)) } == null)
         }.forEach { range ->
-            reportError(range.start, range.endInclusive, description)
+            errorReporter.reportError(range.start, range.endInclusive, description)
         }
     }
 }

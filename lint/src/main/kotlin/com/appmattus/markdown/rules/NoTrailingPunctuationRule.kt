@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -13,11 +14,11 @@ class NoTrailingPunctuationRule(
     override val description = "Trailing punctuation in header"
     override val tags = listOf("headers")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.filterNot { it.parent is ListItem }.filter { heading ->
             punctuation.contains(heading.text.lastChar())
         }.forEach { heading ->
-            reportError(heading.startOffset, heading.endOffset, description)
+            errorReporter.reportError(heading.startOffset, heading.endOffset, description)
         }
     }
 }

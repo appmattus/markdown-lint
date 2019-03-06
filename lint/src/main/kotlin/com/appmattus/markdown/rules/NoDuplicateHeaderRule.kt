@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -13,12 +14,12 @@ class NoDuplicateHeaderRule(
     override val description = "Multiple headers with the same content"
     override val tags = listOf("headers")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         if (!allowDifferentNesting) {
             val headingsMap = mutableListOf<String>()
             document.headings.filterNot { it.parent is ListItem }.forEach { heading ->
                 if (headingsMap.contains(heading.text.toString())) {
-                    reportError(heading.startOffset, heading.endOffset, description)
+                    errorReporter.reportError(heading.startOffset, heading.endOffset, description)
                 } else {
                     headingsMap.add(heading.text.toString())
                 }
@@ -37,7 +38,7 @@ class NoDuplicateHeaderRule(
                 val text = heading.text.toString()
 
                 if ((0 until heading.level).any { stack[it].contains(text) }) {
-                    reportError(heading.startOffset, heading.endOffset, description)
+                    errorReporter.reportError(heading.startOffset, heading.endOffset, description)
                 } else {
                     stack[heading.level - 1].add(text)
                     @Suppress("MagicNumber")

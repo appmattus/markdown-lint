@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -11,11 +12,11 @@ class HeaderStartLeftRule(override val config: RuleSetup.Builder.() -> Unit = {}
     override val description = "Headers must start at the beginning of the line"
     override val tags = listOf("headers", "spaces")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.filterNot { it.parent is ListItem }.forEach { heading ->
 
             if (heading.indent() > 0) {
-                reportError(heading.startOffset, heading.endOffset, description)
+                errorReporter.reportError(heading.startOffset, heading.endOffset, description)
             }
         }
     }

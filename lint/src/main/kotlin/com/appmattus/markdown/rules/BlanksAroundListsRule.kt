@@ -1,5 +1,6 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.markdown.ErrorReporter
 import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
@@ -14,7 +15,7 @@ class BlanksAroundListsRule(override val config: RuleSetup.Builder.() -> Unit = 
     private val listRegEx = Regex("^([\\*\\+\\-]|(\\d+\\.))\\s")
     private val emptyRegEx = Regex("^(\\s|$)")
 
-    override fun visitDocument(document: MarkdownDocument) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         var inList = false
         var inCode = false
@@ -28,9 +29,9 @@ class BlanksAroundListsRule(override val config: RuleSetup.Builder.() -> Unit = 
                 val listMarker = listRegEx.find(line.trim())?.value
 
                 if (!inList && listMarker != null && !prevLine.contains(emptyRegEx)) {
-                    reportError(line.startOffset, line.endOffset, description)
+                    errorReporter.reportError(line.startOffset, line.endOffset, description)
                 } else if (inList && listMarker == null && !line.contains(emptyRegEx)) {
-                    reportError(prevLine.startOffset, prevLine.endOffset, description)
+                    errorReporter.reportError(prevLine.startOffset, prevLine.endOffset, description)
                 }
                 inList = listMarker != null
             }
