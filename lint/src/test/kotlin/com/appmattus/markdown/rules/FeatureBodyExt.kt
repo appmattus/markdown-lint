@@ -28,7 +28,7 @@ fun FeatureBody.FileRuleScenario(
 
             Given("the file $filename") {}
 
-            When("we run the ${rule.name} rule") {
+            When("we run ${rule.javaClass.simpleName}") {
                 ruleErrors = rule.processDocument(document)
             }
 

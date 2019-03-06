@@ -7,7 +7,27 @@ import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.config.HeaderStyle
 import com.appmattus.markdown.rules.extentions.style
 
-class NoMultipleSpaceAtxRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoMultipleSpaceAtx") {
+/**
+ * # Multiple spaces after hash on atx style header
+ *
+ * This rule is triggered when more than one space is used to separate the header text from the hash characters in an
+ * atx style header:
+ *
+ *     #  Header 1
+ *
+ *     ##  Header 2
+ *
+ * To fix this, separate the header text from the hash character by a single space:
+ *
+ *     # Header 1
+ *
+ *     ## Header 2
+ *
+ * Based on [MD019](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class NoMultipleSpaceAtxRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "Multiple spaces after hash on atx style header"
     override val tags = listOf("headers", "atx", "spaces")
@@ -22,15 +42,3 @@ class NoMultipleSpaceAtxRule(override val config: RuleSetup.Builder.() -> Unit =
         }
     }
 }
-
-/*
-rule "MD019", "Multiple spaces after hash on atx style header" do
-  tags :headers, :atx, :spaces
-  aliases 'no-multiple-space-atx'
-  check do |doc|
-    doc.find_type_elements(:header).select do |h|
-      doc.header_style(h) == :atx and doc.element_line(h).match(/^#+\s\s/)
-    end.map { |h| doc.element_linenumber(h) }
-  end
-end
- */

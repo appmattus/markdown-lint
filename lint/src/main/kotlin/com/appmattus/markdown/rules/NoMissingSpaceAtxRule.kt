@@ -7,7 +7,26 @@ import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.config.HeaderStyle
 import com.appmattus.markdown.rules.extentions.style
 
-class NoMissingSpaceAtxRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoMissingSpaceAtx") {
+/**
+ * # No space after hash on atx style header
+ *
+ * This rule is triggered when spaces are missing after the hash characters in an atx style header:
+ *
+ *     #Header 1
+ *
+ *     ##Header 2
+ *
+ * To fix this, separate the header text from the hash character by a single space:
+ *
+ *     # Header 1
+ *
+ *     ## Header 2
+ *
+ * Based on [MD018](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class NoMissingSpaceAtxRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "No space after hash on atx style header"
     override val tags = listOf("headers", "atx", "spaces")
@@ -22,15 +41,3 @@ class NoMissingSpaceAtxRule(override val config: RuleSetup.Builder.() -> Unit = 
         }
     }
 }
-
-/*
-rule "MD018", "No space after hash on atx style header" do
-  tags :headers, :atx, :spaces
-  aliases 'no-missing-space-atx'
-  check do |doc|
-    doc.find_type_elements(:header).select do |h|
-      doc.header_style(h) == :atx and doc.element_line(h).match(/^#+[^#\s]/)
-    end.map { |h| doc.element_linenumber(h) }
-  end
-end
- */

@@ -5,7 +5,29 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
-class NoMultipleBlanksRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoMultipleBlanks") {
+/**
+ * # Multiple consecutive blank lines
+ *
+ * This rule is triggered when there are multiple consecutive blank lines in the document:
+ *
+ *     Some text here
+ *
+ *
+ *     Some more text here
+ *
+ * To fix this, delete the offending lines:
+ *
+ *     Some text here
+ *
+ *     Some more text here
+ *
+ * Note: this rule will not be triggered if there are multiple consecutive blank lines inside code blocks.
+ *
+ * Based on [MD012](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class NoMultipleBlanksRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "Multiple consecutive blank lines"
     override val tags = listOf("whitespace", "blank_lines")
@@ -24,21 +46,3 @@ class NoMultipleBlanksRule(override val config: RuleSetup.Builder.() -> Unit = {
         }
     }
 }
-
-/*
-rule "MD012", "Multiple consecutive blank lines" do
-  tags :whitespace, :blank_lines
-  aliases 'no-multiple-blanks'
-  check do |doc|
-    # Every line in the document that is part of a code block. Blank lines
-    # inside of a code block are acceptable.
-    codeblock_lines = doc.find_type_elements(:codeblock).map{
-      |e| (doc.element_linenumber(e)..
-           doc.element_linenumber(e) + e.value.lines.count).to_a }.flatten
-    blank_lines = doc.matching_lines(/^\s*$/)
-    cons_blank_lines = blank_lines.each_cons(2).select{
-      |p, n| n - p == 1}.map{|p, n| n}
-    cons_blank_lines - codeblock_lines
-  end
-end
- */

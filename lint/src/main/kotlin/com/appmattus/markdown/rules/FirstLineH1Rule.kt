@@ -5,10 +5,31 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
+/**
+ * # First line in file should be a top level header
+ *
+ * This rule is triggered when the first line in the file isn't a top level (h1) header:
+ *
+ *     ```
+ *     This is a file without a header
+ *     ```
+ *
+ * To fix this, add a header to the top of your file:
+ *
+ *     ```
+ *     # File with header
+ *
+ *     This is a file with a top level header
+ *     ```
+ *
+ * Note: The [level] parameter can be used to change the top level (ex: to h2) in cases where an h1 is added externally.
+ *
+ * Based on [MD041](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
 class FirstLineH1Rule(
     private val level: Int = 1,
     override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule("FirstLineH1") {
+) : Rule() {
 
     override val description = "First line in file should be a top level header"
     override val tags = listOf("headers")
@@ -21,16 +42,3 @@ class FirstLineH1Rule(
         }
     }
 }
-
-/*
-rule "MD041", "First line in file should be a top level header" do
-  tags :headers
-  aliases 'first-line-h1'
-  params :level => 1
-  check do |doc|
-    first_header = doc.find_type(:header).first
-    [1] if first_header.nil? or first_header[:location] != 1 \
-      or first_header[:level] != params[:level]
-  end
-end
- */

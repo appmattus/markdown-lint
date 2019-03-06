@@ -5,7 +5,36 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
-class HeaderIncrementRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("HeaderIncrementRule") {
+/**
+ * # Header levels should only increment by one level at a time
+ *
+ * This rule is triggered when you skip header levels in a markdown document, for example:
+ *
+ *     # Header 1
+ *
+ *     ### Header 3
+ *
+ *     We skipped out a 2nd level header in this document
+ *
+ * When using multiple header levels, nested headers should increase by only one level at a time:
+ *
+ *     # Header 1
+ *
+ *     ## Header 2
+ *
+ *     ### Header 3
+ *
+ *     #### Header 4
+ *
+ *     ## Another Header 2
+ *
+ *     ### Another Header 3
+ *
+ * Based on [MD001](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class HeaderIncrementRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "Header levels should only increment by one level at a time"
     override val tags = listOf("headers")
@@ -21,22 +50,3 @@ class HeaderIncrementRule(override val config: RuleSetup.Builder.() -> Unit = {}
         }
     }
 }
-
-/*
-rule "MD001", "Header levels should only increment by one level at a time" do
-  tags :headers
-  aliases 'header-increment'
-  check do |doc|
-    headers = doc.find_type(:header)
-    old_level = nil
-    errors = []
-    headers.each do |h|
-      if old_level and h[:level] > old_level + 1
-        errors << h[:location]
-      end
-      old_level = h[:level]
-    end
-    errors
-  end
-end
- */

@@ -5,7 +5,22 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
-class NoSpaceInLinksRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoSpaceInLinks") {
+/**
+ * # Spaces inside link text
+ *
+ * This rule is triggered on links that have spaces surrounding the link text:
+ *
+ *     [ a link ](http://www.example.com/)
+ *
+ * To fix this, remove the spaces surrounding the link text:
+ *
+ *     [a link](http://www.example.com/)
+ *
+ * Based on [MD039](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class NoSpaceInLinksRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "Spaces inside link text"
     override val tags = listOf("whitespace", "links")
@@ -20,18 +35,3 @@ class NoSpaceInLinksRule(override val config: RuleSetup.Builder.() -> Unit = {})
         }
     }
 }
-
-/*
-rule "MD039", "Spaces inside link text" do
-  tags :whitespace, :links
-  aliases 'no-space-in-links'
-  check do |doc|
-    doc.element_linenumbers(
-      doc.find_type_elements(:a).select{|e|
-      e.children.first.type == :text && e.children.last.type == :text and (
-        e.children.first.value.start_with?(" ") or
-        e.children.last.value.end_with?(" "))}
-    )
-  end
-end
- */

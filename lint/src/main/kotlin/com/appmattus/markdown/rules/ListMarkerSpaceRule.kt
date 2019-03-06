@@ -8,13 +8,67 @@ import com.vladsch.flexmark.ast.BulletList
 import com.vladsch.flexmark.ast.ListItem
 import com.vladsch.flexmark.ast.OrderedList
 
+/**
+ * # Spaces after list markers
+ *
+ * This rule checks for the number of spaces between a list marker (e.g. '-', '*', '+' or '1.') and the text of the
+ * list item.
+ *
+ * The number of spaces checked for depends on the document style in use, but the default is 1 space after any list
+ * marker:
+ *
+ *     * Foo
+ *     * Bar
+ *     * Baz
+ *
+ *     1. Foo
+ *     1. Bar
+ *     1. Baz
+ *
+ *     1. Foo
+ *        * Bar
+ *     1. Baz
+ *
+ * A document style may change the number of spaces after unordered list items and ordered list items independently,
+ * as well as based on whether the content of every item in the list consists of a single paragraph, or multiple
+ * paragraphs (including sub-lists and code blocks).
+ *
+ * For example, the style guide at [Spaces after list marker](https://www.cirosantilli.com/markdown-style-guide/#spaces-after-list-marker)
+ * specifies that 1 space after the list marker should be used if every item in the list fits within a single paragraph,
+ * but to use 2 or 3 spaces (for ordered and unordered lists respectively) if there are multiple paragraphs of content
+ * inside the list:
+
+ *     * Foo
+ *     * Bar
+ *     * Baz
+ *
+ *     vs.
+ *
+ *     *   Foo
+ *
+ *         Second paragraph
+ *
+ *     *   Bar
+ *
+ *     or
+ *
+ *     1.  Foo
+ *
+ *         Second paragraph
+ *
+ *     1.  Bar
+ *
+ * To fix this, ensure the correct number of spaces are used after list marker for your selected document style.
+ *
+ * Based on [MD030](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
 class ListMarkerSpaceRule(
     val ulSingle: Int = 1,
     val olSingle: Int = 1,
     val ulMulti: Int = 1,
     val olMulti: Int = 1,
     override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule("ListMarkerSpace") {
+) : Rule() {
 
     override val description = "Spaces after list markers"
     override val tags = listOf("ol", "ul", "whitespace")
@@ -43,27 +97,3 @@ class ListMarkerSpaceRule(
         }
     }
 }
-
-/*
-rule "MD030", "Spaces after list markers" do
-  tags :ol, :ul, :whitespace
-  aliases 'list-marker-space'
-  params :ul_single => 1, :ol_single => 1, :ul_multi => 1, :ol_multi => 1
-  check do |doc|
-    errors = []
-    doc.find_type_elements([:ul, :ol]).each do |l|
-      list_type = l.type.to_s
-      items = doc.find_type_elements(:li, false, l.children)
-      # The entire list is to use the multi-paragraph spacing rule if any of
-      # the items in it have multiple paragraphs/other block items.
-      srule = items.map { |i| i.children.length }.max > 1 ? "multi" : "single"
-      items.each do |i|
-        actual_spaces = doc.element_line(i).match(/^\s*\S+(\s+)/)[1].length
-        required_spaces = params["#{list_type}_#{srule}".to_sym]
-        errors << doc.element_linenumber(i) if required_spaces != actual_spaces
-      end
-    end
-    errors
-  end
-end
- */

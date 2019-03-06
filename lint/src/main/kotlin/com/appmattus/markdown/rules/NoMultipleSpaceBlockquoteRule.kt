@@ -6,7 +6,24 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.ast.Paragraph
 
-class NoMultipleSpaceBlockquoteRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoMultipleSpaceBlockquote") {
+/**
+ * # Multiple spaces after blockquote symbol
+ *
+ * This rule is triggered when blockquotes have more than one space after the blockquote (>) symbol:
+ *
+ *     >  This is a block quote with bad indentation
+ *     >  there should only be one.
+ *
+ * To fix, remove any extraneous space:
+ *
+ *     > This is a blockquote with correct
+ *     > indentation.
+ *
+ * Based on [MD027](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class NoMultipleSpaceBlockquoteRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "Multiple spaces after blockquote symbol"
     override val tags = listOf("blockquote", "whitespace", "indentation")
@@ -22,22 +39,3 @@ class NoMultipleSpaceBlockquoteRule(override val config: RuleSetup.Builder.() ->
         }
     }
 }
-
-/*
-rule "MD027", "Multiple spaces after blockquote symbol" do
-  tags :blockquote, :whitespace, :indentation
-  aliases 'no-multiple-space-blockquote'
-  check do |doc|
-    errors = []
-    doc.find_type_elements(:blockquote).each do |e|
-      linenum = doc.element_linenumber(e)
-      lines = doc.extract_text(e, /^\s*> /)
-      lines.each do |line|
-        errors << linenum if line.start_with?(" ")
-        linenum += 1
-      end
-    end
-    errors
-  end
-end
- */

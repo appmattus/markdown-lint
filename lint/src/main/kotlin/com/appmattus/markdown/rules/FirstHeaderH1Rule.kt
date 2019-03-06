@@ -5,7 +5,27 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
-class FirstHeaderH1Rule(val level: Int = 1, override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("FirstHeaderH1") {
+/**
+ * # First header should be a top level header
+ *
+ * This rule is triggered when the first header in the document isn't a h1 header:
+ *
+ *     ## This isn't a H1 header
+ *
+ *     ### Another header
+ *
+ * The first header in the document should be a h1 header:
+ *
+ *     # Start with a H1 header
+ *
+ *     ## Then use a H2 for subsections
+ *
+ * Based on [MD002](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class FirstHeaderH1Rule(
+    val level: Int = 1,
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "First header should be a top level header"
     override val tags = listOf("headers")
@@ -18,15 +38,3 @@ class FirstHeaderH1Rule(val level: Int = 1, override val config: RuleSetup.Build
         }
     }
 }
-
-/*
-rule "MD002", "First header should be a top level header" do
-  tags :headers
-  aliases 'first-header-h1'
-  params :level => 1
-  check do |doc|
-    first_header = doc.find_type(:header).first
-    [first_header[:location]] if first_header and first_header[:level] != @params[:level]
-  end
-end
- */

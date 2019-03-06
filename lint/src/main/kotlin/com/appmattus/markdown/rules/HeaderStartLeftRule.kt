@@ -7,7 +7,29 @@ import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.extentions.indent
 import com.vladsch.flexmark.ast.ListItem
 
-class HeaderStartLeftRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("HeaderStartLeft") {
+/**
+ * # Headers must start at the beginning of the line
+ *
+ * This rule is triggered when a header is indented by one or more spaces:
+ *
+ *     Some text
+ *
+ *       # Indented header
+ *
+ * To fix this, ensure that all headers start at the beginning of the line:
+ *
+ *     Some text
+ *
+ *     # Header
+ *
+ * Rationale: Headers that don't start at the beginning of the line will not be parsed as headers, and will instead
+ * appear as regular text.
+ *
+ * Based on [MD023](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class HeaderStartLeftRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "Headers must start at the beginning of the line"
     override val tags = listOf("headers", "spaces")
@@ -21,38 +43,3 @@ class HeaderStartLeftRule(override val config: RuleSetup.Builder.() -> Unit = {}
         }
     }
 }
-
-/*
-rule "MD023", "Headers must start at the beginning of the line" do
-  tags :headers, :spaces
-  aliases 'header-start-left'
-  check do |doc|
-    errors = []
-    # The only type of header with spaces actually parsed as such is setext
-    # style where only the text is indented. We check for that first.
-    doc.find_type_elements(:header, false).each do |h|
-      errors << doc.element_linenumber(h) if doc.element_line(h).match(/^\s/)
-    end
-    # Next we have to look for things that aren't parsed as headers because
-    # they start with spaces.
-    doc.find_type_elements(:p, false).each do |p|
-      linenum = doc.element_linenumber(p)
-      lines = doc.extract_text(p)
-      prev_line = ""
-      lines.each do |line|
-        # First look for ATX style headers
-        if line.match(/^\s+\#{1,6}/)
-          errors << linenum
-        end
-        # Next, look for setext style
-        if line.match(/^\s+(-+|=+)\s*$/) and not prev_line.empty?
-          errors << linenum - 1
-        end
-        linenum += 1
-        prev_line = line
-      end
-    end
-    errors.sort
-  end
-end
- */

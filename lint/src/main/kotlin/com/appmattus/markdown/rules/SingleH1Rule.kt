@@ -7,10 +7,37 @@ import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.ast.ListItem
 import com.vladsch.flexmark.util.ast.Document
 
+/**
+ * # Multiple top level headers in the same document
+ *
+ * This rule is triggered when a top level header is in use (the first line of the file is a h1 header), and more than
+ * one h1 header is in use in the document:
+ *
+ *     # Top level header
+ *
+ *     # Another top level header
+ *
+ * To fix, structure your document so that there is a single h1 header that is the title for the document, and all
+ * later headers are h2 or lower level headers:
+ *
+ *     # Title
+ *
+ *     ## Header
+ *
+ *     ## Another header
+ *
+ * Rationale: A top level header is a h1 on the first line of the file, and serves as the title for the document. If
+ * this convention is in use, then there can not be more than one title for the document, and the entire document
+ * should be contained within this header.
+ *
+ * Note: The level parameter can be used to change the top level (ex: to h2) in cases where an h1 is added externally.
+ *
+ * Based on [MD025](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
 class SingleH1Rule(
     private val level: Int = 1,
     override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule("SingleH1") {
+) : Rule() {
 
     override val description = "Multiple top level headers in the same document"
     override val tags = listOf("headers")
@@ -25,17 +52,3 @@ class SingleH1Rule(
         }
     }
 }
-
-/*
-rule "MD025", "Multiple top level headers in the same document" do
-  tags :headers
-  aliases 'single-h1'
-  params :level => 1
-  check do |doc|
-    headers = doc.find_type(:header, false).select { |h| h[:level] == params[:level] }
-    if not headers.empty? and doc.element_linenumber(headers[0]) == 1
-      headers[1..-1].map { |h| doc.element_linenumber(h) }
-    end
-  end
-end
- */

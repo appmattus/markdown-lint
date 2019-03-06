@@ -1,6 +1,6 @@
 package com.appmattus.markdown
 
-abstract class Rule(val name: String) {
+abstract class Rule {
     abstract val description: String
     abstract val tags: List<String>
 

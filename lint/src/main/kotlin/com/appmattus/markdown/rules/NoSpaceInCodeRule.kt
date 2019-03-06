@@ -6,7 +6,26 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.extentions.canTrim
 
-class NoSpaceInCodeRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoSpaceInCode") {
+/**
+ * # Spaces inside code span elements
+ *
+ * This rule is triggered on code span elements that have spaces right inside the backticks:
+ *
+ *     ` some text `
+ *
+ *     `some text `
+ *
+ *     ` some text`
+ *
+ * To fix this, remove the spaces inside the codespan markers:
+ *
+ *     `some text`
+ *
+ * Based on [MD038](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class NoSpaceInCodeRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "Spaces inside code span elements"
     override val tags = listOf("whitespace", "code")
@@ -19,16 +38,3 @@ class NoSpaceInCodeRule(override val config: RuleSetup.Builder.() -> Unit = {}) 
         }
     }
 }
-
-/*
-rule "MD038", "Spaces inside code span elements" do
-  tags :whitespace, :code
-  aliases 'no-space-in-code'
-  check do |doc|
-    # We only want to check single line codespan elements and not fenced code
-    # block that happen to be parsed as code spans.
-    doc.element_linenumbers(doc.find_type_elements(:codespan).select{
-      |i| i.value.match(/(^\s|\s$)/) and not i.value.include?("\n")})
-  end
-end
- */

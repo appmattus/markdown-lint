@@ -6,12 +6,29 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.extentions.splitIntoLines
 
+/**
+ * # Line length
+ *
+ * This rule is triggered when there are lines that are longer than the configured line length (default: 80 characters).
+ * To fix this, split the line up into multiple lines.
+ *
+ * This rule has an exception where there is no whitespace beyond the configured line length. This allows you to still
+ * include items such as long URLs without being forced to break them in the middle.
+ *
+ * You also have the option to exclude this rule for code blocks and tables. To do this, set the [codeBlocks] and/or
+ * [tables] parameters to false.
+ *
+ * Code blocks are included in this rule by default since it is often a requirement for document readability, and
+ * tentatively compatible with code rules. Still, some languages do not lend themselves to short lines.
+ *
+ * Based on [MD013](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
 class LineLengthRule(
     val lineLength: Int = 80,
     val codeBlocks: Boolean = true,
     val tables: Boolean = true,
     override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule("LineLength") {
+) : Rule() {
 
     override val description = "Line length"
     override val tags = listOf("line_length")
@@ -50,29 +67,3 @@ class LineLengthRule(
         }
     }
 }
-
-/*
-rule "MD013", "Line length" do
-  tags :line_length
-  aliases 'line-length'
-  params :line_length => 80, :code_blocks => true, :tables => true
-  check do |doc|
-    # Every line in the document that is part of a code block.
-    codeblock_lines = doc.find_type_elements(:codeblock).map{
-      |e| (doc.element_linenumber(e)..
-           doc.element_linenumber(e) + e.value.lines.count).to_a }.flatten
-    # Every line in the document that is part of a table.
-    locations = doc.elements
-                .map { |e| [e.options[:location], e] }
-                .reject { |l, _| l.nil? }
-    table_lines = locations.map.with_index {
-      |(l, e), i| (i + 1 < locations.size ?
-                   (l..locations[i+1].first - 1) :
-                   (l..doc.lines.count)).to_a if e.type == :table }.flatten
-    overlines = doc.matching_lines(/^.{#{@params[:line_length]}}.*\s/)
-    overlines -= codeblock_lines unless params[:code_blocks]
-    overlines -= table_lines unless params[:tables]
-    overlines
-  end
-end
- */

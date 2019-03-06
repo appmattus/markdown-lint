@@ -8,7 +8,30 @@ import com.appmattus.markdown.rules.extentions.referenceUrl
 import com.vladsch.flexmark.ast.LinkRef
 import com.vladsch.flexmark.ast.Reference
 
-class NoEmptyLinksRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoEmptyLinks") {
+/**
+ * # No empty links
+ *
+ * This rule is triggered when an empty link is encountered:
+ *
+ *     [an empty link]()
+ *
+ * To fix the violation, provide a destination for the link:
+ *
+ *     [a valid link](https://example.com/)
+ *
+ * Empty fragments will trigger this rule:
+ *
+ *     [an empty fragment](#)
+ *
+ * But non-empty fragments will not:
+ *
+ *     [a valid fragment](#fragment)
+ *
+ * Based on [MD042](https://github.com/DavidAnson/markdownlint/blob/master/lib/md042.js)
+ */
+class NoEmptyLinksRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "No empty links"
     override val tags = listOf("links")
@@ -30,38 +53,3 @@ class NoEmptyLinksRule(override val config: RuleSetup.Builder.() -> Unit = {}) :
         }
     }
 }
-
-/*
-module.exports = {
-  "names": [ "MD042", "no-empty-links" ],
-  "description": "No empty links",
-  "tags": [ "links" ],
-  "function": function MD042(params, onError) {
-    shared.filterTokens(params, "inline", function forToken(token) {
-      let inLink = false;
-      let linkText = "";
-      let emptyLink = false;
-      token.children.forEach(function forChild(child) {
-        if (child.type === "link_open") {
-          inLink = true;
-          linkText = "";
-          child.attrs.forEach(function forAttr(attr) {
-            if (attr[0] === "href" && (!attr[1] || (attr[1] === "#"))) {
-              emptyLink = true;
-            }
-          });
-        } else if (child.type === "link_close") {
-          inLink = false;
-          if (emptyLink) {
-            shared.addErrorContext(onError, child.lineNumber,
-              "[" + linkText + "]()", null, null,
-              shared.rangeFromRegExp(child.line, emptyLinkRe));
-          }
-        } else if (inLink) {
-          linkText += child.content;
-        }
-      });
-    });
-  }
-};
- */

@@ -7,7 +7,28 @@ import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.extentions.indent
 import com.appmattus.markdown.rules.extentions.level
 
-class ListIndentRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("ListIndent") {
+/**
+ * # Inconsistent indentation for list items at the same level
+ *
+ * This rule is triggered when list items are parsed as being at the same level, but don't have the same indentation:
+ *
+ *     * Item 1
+ *         * Nested Item 1
+ *         * Nested Item 2
+ *        * A misaligned item
+ *
+ * Usually this rule will be triggered because of a typo. Correct the indentation for the list to fix it:
+ *
+ *     * Item 1
+ *      * Nested Item 1
+ *      * Nested Item 2
+ *      * Nested Item 3
+ *
+ * Based on [MD005](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class ListIndentRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "Inconsistent indentation for list items at the same level"
     override val tags = listOf("bullet", "ul", "indentation")
@@ -34,25 +55,3 @@ class ListIndentRule(override val config: RuleSetup.Builder.() -> Unit = {}) : R
         }
     }
 }
-
-/*
-rule "MD005", "Inconsistent indentation for list items at the same level" do
-  tags :bullet, :ul, :indentation
-  aliases 'list-indent'
-  check do |doc|
-    bullets = doc.find_type(:li)
-    errors = []
-    indent_levels = []
-    bullets.each do |b|
-      indent_level = doc.indent_for(doc.element_line(b))
-      if indent_levels[b[:element_level]].nil?
-        indent_levels[b[:element_level]] = indent_level
-      end
-      if indent_level != indent_levels[b[:element_level]]
-        errors << doc.element_linenumber(b)
-      end
-    end
-    errors
-  end
-end
- */

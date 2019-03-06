@@ -6,7 +6,42 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.extentions.indent
 
-class UlStartLeftRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("UlStartLeft") {
+/**
+ * Consider starting bulleted lists at the beginning of the line
+ *
+ * This rule is triggered when top level lists don't start at the beginning of a line:
+ *
+ *     Some text
+ *
+ *       * List item
+ *       * List item
+ *
+ * To fix, ensure that top level list items are not indented:
+ *
+ *     Some test
+ *
+ *     * List item
+ *     * List item
+ *
+ * Rationale: Starting lists at the beginning of the line means that nested list items can all be indented by the same
+ * amount when an editor's indent function or the tab key is used to indent. Starting a list 1 space in means that the
+ * indent of the first nested list is less than the indent of the second level (3 characters if you use 4 space tabs,
+ * or 1 character if you use 2 space tabs).
+ *
+ * Note: This rule is triggered for the following scenario because the unordered sublist is not recognized as such by
+ * the parser. Not being nested 3 characters as required by the outer ordered list, it creates a top-level unordered
+ * list instead.
+ *
+ *     1. List item
+ *       - List item
+ *       - List item
+ *     1. List item
+ *
+ * Based on [MD006](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class UlStartLeftRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "Consider starting bulleted lists at the beginning of the line"
     override val tags = listOf("bullet", "ul", "indentation")
@@ -19,16 +54,3 @@ class UlStartLeftRule(override val config: RuleSetup.Builder.() -> Unit = {}) : 
         }
     }
 }
-
-/*
-rule "", "Consider starting bulleted lists at the beginning of the line" do
-  # Starting at the beginning of the line means that indendation for each
-  # bullet level can be identical.
-  tags :bullet, :ul, :indentation
-  aliases 'ul-start-left'
-  check do |doc|
-    doc.find_type(:ul, false).select{
-      |e| doc.indent_for(doc.element_line(e)) != 0 }.map{ |e| e[:location] }
-  end
-end
- */

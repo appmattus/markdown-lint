@@ -7,10 +7,32 @@ import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.config.UnorderedListStyle
 import com.appmattus.markdown.rules.extentions.style
 
+/**
+ * # Unordered list style
+ *
+ * This rule is triggered when the symbols used in the document for unordered list items do not match the configured
+ * unordered list style:
+ *
+ *     * Item 1
+ *     + Item 2
+ *     - Item 3
+ *
+ * To fix this issue, use the configured style for list items throughout the document:
+ *
+ *      * Item 1
+ *      * Item 2
+ *      * Item 3
+ *
+ * Note: the configured list style can be a specific symbol to use ([UnorderedListStyle.Asterisk],
+ * [UnorderedListStyle.Plus], [UnorderedListStyle.Dash]), or simply require that the usage be
+ * [UnorderedListStyle.Consistent] within the document.
+ *
+ * Based on [MD004](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
 class ConsistentUlStyleRule(
     val style: UnorderedListStyle = UnorderedListStyle.Consistent,
     override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule("UlStyle") {
+) : Rule() {
 
     override val description = "Unordered list style"
     override val tags = listOf("bullet", "ul")
@@ -32,27 +54,3 @@ class ConsistentUlStyleRule(
         }
     }
 }
-
-/*
-rule "MD004", "Unordered list style" do
-  tags :bullet, :ul
-  aliases 'ul-style'
-  # :style can be one of :consistent, :asterisk, :plus, :dash
-  params :style => :consistent
-  check do |doc|
-    bullets = doc.find_type_elements(:ul).map {|l|
-      doc.find_type_elements(:li, false, l.children)}.flatten
-    if bullets.empty?
-      nil
-    else
-      if @params[:style] == :consistent
-        doc_style = doc.list_style(bullets.first)
-      else
-        doc_style = @params[:style]
-      end
-      bullets.map { |b| doc.element_linenumber(b) \
-                    if doc.list_style(b) != doc_style }.compact
-    end
-  end
-end
- */

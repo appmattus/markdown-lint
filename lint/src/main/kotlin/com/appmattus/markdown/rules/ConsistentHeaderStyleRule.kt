@@ -7,10 +7,45 @@ import com.appmattus.markdown.RuleSetup
 import com.appmattus.markdown.rules.config.HeaderStyle
 import com.appmattus.markdown.rules.extentions.style
 
+/**
+ * # Header style
+ *
+ * This rule is triggered when different header styles (atx, setext, and 'closed' atx) are used in the same document:
+ *
+ *     # ATX style H1
+ *
+ *     ## Closed ATX style H2 ##
+ *
+ *     Setext style H1
+ *     ===============
+ *
+ * Be consistent with the style of header used in a document:
+ *
+ *     # ATX style H1
+ *
+ *     ## ATX style H2
+ *
+ * The [HeaderStyle.SetextWithAtx] doc style allows atx-style headers of level 3 or more in documents with setext
+ * style headers:
+ *
+ *     Setext style H1
+ *     ===============
+ *
+ *     Setext style H2
+ *     ---------------
+ *
+ *     ### ATX style H3
+ *
+ * Note: the configured header style can be a specific style to use ([HeaderStyle.Atx], [HeaderStyle.AtxClosed],
+ * [HeaderStyle.Setext], [HeaderStyle.SetextWithAtx]), or simply require that the usage be [HeaderStyle.Consistent]
+ * within the document.
+ *
+ * Based on [MD003](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
 class ConsistentHeaderStyleRule(
     val style: HeaderStyle = HeaderStyle.Consistent,
     override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule("ConsistentHeaderStyle") {
+) : Rule() {
 
     override val description = "Header style"
     override val tags = listOf("headers")
@@ -37,35 +72,3 @@ class ConsistentHeaderStyleRule(
         }
     }
 }
-
-/*
-rule "MD003", "Header style" do
-  # Header styles are things like ### and adding underscores
-  # See http://daringfireball.net/projects/markdown/syntax#header
-  tags :headers
-  aliases 'header-style'
-  # :style can be one of :consistent, :atx, :atx_closed, :setext
-  params :style => :consistent
-  check do |doc|
-    headers = doc.find_type_elements(:header, false)
-    if headers.empty?
-      nil
-    else
-      if @params[:style] == :consistent
-        doc_style = doc.header_style(headers.first)
-      else
-        doc_style = @params[:style]
-      end
-      if doc_style == :setext_with_atx
-        headers.map { |h| doc.element_linenumber(h) \
-                      unless doc.header_style(h) == :setext or \
-                        (doc.header_style(h) == :atx and \
-                         h.options[:level] > 2) }.compact
-      else
-        headers.map { |h| doc.element_linenumber(h) \
-                      if doc.header_style(h) != doc_style }.compact
-      end
-    end
-  end
-end
- */

@@ -6,10 +6,45 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.ast.ListItem
 
+/**
+ * # Multiple headers with the same content
+ *
+ * This rule is triggered if there are multiple headers in the document that have the same text:
+ *
+ *     # Some text
+ *
+ *     ## Some text
+ *
+ * To fix this, ensure that the content of each header is different:
+ *
+ *     # Some text
+ *
+ *     ## Some more text
+ *
+ * Rationale: Some markdown parses generate anchors for headers based on the header name, and having headers with the
+ * same content can cause problems with this.
+ *
+ * If the parameter [allowDifferentNesting] is set to true, header duplication under different nesting is allowed, like
+ * it usually happens in change logs:
+ *
+ *     # Change log
+ *
+ *     ## 2.0.0
+ *
+ *     ### Bug fixes
+ *
+ *     ### Features
+ *
+ *     ## 1.0.0
+ *
+ *     ### Bug fixes
+ *
+ * Based on [MD024](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
 class NoDuplicateHeaderRule(
     private val allowDifferentNesting: Boolean = false,
     override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule("NoDuplicateHeader") {
+) : Rule() {
 
     override val description = "Multiple headers with the same content"
     override val tags = listOf("headers")
@@ -48,47 +83,3 @@ class NoDuplicateHeaderRule(
         }
     }
 }
-
-/*
-rule "MD024", "Multiple headers with the same content" do
-  tags :headers
-  aliases 'no-duplicate-header'
-  params :allow_different_nesting => false
-  check do |doc|
-    headers = doc.find_type(:header)
-    allow_different_nesting = params[:allow_different_nesting]
-
-    duplicates = headers.select do |h|
-      headers.any? do |e|
-        e[:location] < h[:location] &&
-          e[:raw_text] == h[:raw_text] &&
-          (allow_different_nesting == false || e[:level] != h[:level])
-      end
-    end.to_set
-
-    if allow_different_nesting
-      same_nesting_duplicates = Set.new
-      stack = []
-      current_level = 0
-      doc.find_type(:header).each do |header|
-        level = header[:level]
-        text = header[:raw_text]
-
-        if current_level > level
-          stack.pop
-        elsif current_level < level
-          stack.push([text])
-        else
-          same_nesting_duplicates.add(header) if stack.last.include?(text)
-        end
-
-        current_level = level
-      end
-
-      duplicates += same_nesting_duplicates
-    end
-
-    duplicates.map { |h| doc.element_linenumber(h) }
-  end
-end
- */

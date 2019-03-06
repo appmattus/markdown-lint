@@ -6,7 +6,40 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.ast.BlockQuote
 
-class NoBlanksBlockquoteRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoBlanksBlockquote") {
+/**
+ * # Blank line inside blockquote
+ *
+ * This rule is triggered when two blockquote blocks are separated by nothing except for a blank line:
+ *
+ *     > This is a blockquote
+ *     > which is immediately followed by
+ *
+ *     > this blockquote. Unfortunately
+ *     > In some parsers, these are treated as the same blockquote.
+ *
+ * To fix this, ensure that any blockquotes that are right next to each other have some text in between:
+ *
+ *     > This is a blockquote.
+ *
+ *     And Jimmy also said:
+ *
+ *     > This too is a blockquote.
+ *
+ * Alternatively, if they are supposed to be the same quote, then add the blockquote symbol at the beginning of the
+ * blank line:
+ *
+ *     > This is a blockquote.
+ *     >
+ *     > This is the same blockquote.
+ *
+ * Rationale: Some markdown parsers will treat two blockquotes separated by one or more blank lines as the same
+ * blockquote, while others will treat them as separate blockquotes.
+ *
+ * Based on [MD028](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class NoBlanksBlockquoteRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "Blank line inside blockquote"
     override val tags = listOf("blockquote", "whitespace")
@@ -17,29 +50,3 @@ class NoBlanksBlockquoteRule(override val config: RuleSetup.Builder.() -> Unit =
         }
     }
 }
-
-/*
-rule "MD028", "Blank line inside blockquote" do
-  tags :blockquote, :whitespace
-  aliases 'no-blanks-blockquote'
-  check do |doc|
-    def check_blockquote(errors, elements)
-      prev = [nil, nil, nil]
-      elements.each do |e|
-        prev.shift
-        prev << e.type
-        if prev == [:blockquote, :blank, :blockquote]
-          # The current location is the start of the second blockquote, so the
-          # line before will be a blank line in between the two, or at least the
-          # lowest blank line if there are more than one.
-          errors << e.options[:location] - 1
-        end
-        check_blockquote(errors, e.children)
-      end
-    end
-    errors = []
-    check_blockquote(errors, doc.elements)
-    errors
-  end
-end
- */

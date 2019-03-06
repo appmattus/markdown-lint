@@ -6,7 +6,48 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.util.sequence.BasedSequence
 
-class BlanksAroundListsRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("BlanksAroundLists") {
+/**
+ * # Lists should be surrounded by blank lines
+ *
+ * This rule is triggered when lists (of any kind) are either not preceded or not followed by a blank line:
+ *
+ *    Some text
+ *    * Some
+ *    * List
+ *
+ *    1. Some
+ *    2. List
+ *    Some text
+ *
+ * To fix this, ensure that all lists have a blank line both before and after (except where the block is at the
+ * beginning or end of the document):
+ *
+ *    Some text
+ *
+ *    * Some
+ *    * List
+ *
+ *    1. Some
+ *    2. List
+ *
+ *    Some text
+ *
+ * Rationale: Aside from aesthetic reasons, some parsers, including kramdown, will not parse lists that don't have
+ * blank lines before and after them.
+ *
+ * Note: List items without hanging indents are a violation of this rule; list items with hanging indents are okay:
+ *
+ *    * This is
+ *    not okay
+ *
+ *    * This is
+ *      okay
+ *
+ * Based on [MD032](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class BlanksAroundListsRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "Lists should be surrounded by blank lines"
     override val tags = listOf("bullet", "ul", "ol", "blank_lines")
@@ -47,38 +88,3 @@ class BlanksAroundListsRule(override val config: RuleSetup.Builder.() -> Unit = 
         }
     }
 }
-
-/*
-rule "MD032", "Lists should be surrounded by blank lines" do
-  tags :bullet, :ul, :ol, :blank_lines
-  aliases 'blanks-around-lists'
-  check do |doc|
-    errors = []
-    # Some parsers (including kramdown) have trouble detecting lists
-    # without surrounding whitespace, so examine the lines directly.
-    in_list = false
-    in_code = false
-    fence = nil
-    prev_line = ""
-    doc.lines.each_with_index do |line, linenum|
-      if not in_code
-        list_marker = line.strip.match(/^([\*\+\-]|(\d+\.))\s/)
-        if list_marker and not in_list and not prev_line.match(/^($|\s)/)
-          errors << linenum + 1
-        elsif not list_marker and in_list and not line.match(/^($|\s)/)
-          errors << linenum
-        end
-        in_list = list_marker
-      end
-      line.strip.match(/^(`{3,}|~{3,})/)
-      if $1 and (not in_code or $1.slice(0, fence.length) == fence)
-        fence = in_code ? nil : $1
-        in_code = !in_code
-        in_list = false
-      end
-      prev_line = line
-    end
-    errors.uniq
-  end
-end
- */

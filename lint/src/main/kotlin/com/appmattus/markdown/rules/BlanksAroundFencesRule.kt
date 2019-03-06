@@ -6,7 +6,44 @@ import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 import com.vladsch.flexmark.util.sequence.BasedSequence
 
-class BlanksAroundFencesRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("BlanksAroundFences") {
+/**
+ * # Fenced code blocks should be surrounded by blank lines
+ *
+ * This rule is triggered when fenced code blocks are either not preceded or not followed by a blank line:
+ *
+ *     Some text
+ *     ```
+ *     Code block
+ *     ```
+ *
+ *     ```
+ *     Another code block
+ *     ```
+ *     Some more text
+ *
+ * To fix this, ensure that all fenced code blocks have a blank line both before and after (except where the block is
+ * at the beginning or end of the document):
+ *
+ *     Some text
+ *
+ *     ```
+ *     Code block
+ *     ```
+ *
+ *     ```
+ *     Another code block
+ *     ```
+ *
+ *     Some more text
+ *
+ * Rationale: Aside from aesthetic reasons, some parsers, including kramdown, will not parse fenced code blocks that
+ * don't have blank lines before and after them.
+ *
+ * Based on [MD031](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class BlanksAroundFencesRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "Fenced code blocks should be surrounded by blank lines"
     override val tags = listOf("code", "blank_lines")
@@ -40,30 +77,3 @@ class BlanksAroundFencesRule(override val config: RuleSetup.Builder.() -> Unit =
     private fun surroundingLinesEmpty(inCode: Boolean, lines: List<BasedSequence>, lineNum: Int) =
         inCode && lines[lineNum - 1].isNotEmpty() || (!inCode && lines[lineNum + 1].isNotEmpty())
 }
-
-/*
-rule "MD031", "Fenced code blocks should be surrounded by blank lines" do
-  tags :code, :blank_lines
-  aliases 'blanks-around-fences'
-  check do |doc|
-    errors = []
-    # Some parsers (including kramdown) have trouble detecting fenced code
-    # blocks without surrounding whitespace, so examine the lines directly.
-    in_code = false
-    fence = nil
-    lines = [ "" ] + doc.lines + [ "" ]
-    lines.each_with_index do |line, linenum|
-      line.strip.match(/^(`{3,}|~{3,})/)
-      if $1 and (not in_code or $1.slice(0, fence.length) == fence)
-        fence = in_code ? nil : $1
-        in_code = !in_code
-        if (in_code and not lines[linenum - 1].empty?) or
-           (not in_code and not lines[linenum + 1].empty?)
-          errors << linenum
-        end
-      end
-    end
-    errors
-  end
-end
- */

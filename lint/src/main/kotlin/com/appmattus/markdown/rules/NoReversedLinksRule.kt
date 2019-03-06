@@ -5,7 +5,23 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
-class NoReversedLinksRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoReversedLinks") {
+/**
+ * # Reversed link syntax
+ *
+ * This rule is triggered when text that appears to be a link is encountered, but where the syntax appears to have been
+ * reversed (the `[]` and `()` are reversed):
+ *
+ *     (Incorrect link syntax)[http://www.example.com/]
+ *
+ * To fix this, swap the `[]` and `()` around:
+ *
+ *     [Correct link syntax](http://www.example.com/)
+ *
+ * Based on [MD011](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class NoReversedLinksRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "Reversed link syntax"
     override val tags = listOf("links")
@@ -24,13 +40,3 @@ class NoReversedLinksRule(override val config: RuleSetup.Builder.() -> Unit = {}
         }
     }
 }
-
-/*
-rule "MD011", "Reversed link syntax" do
-  tags :links
-  aliases 'no-reversed-links'
-  check do |doc|
-    doc.matching_text_element_lines(/\([^)]+\)\[[^\]]+\]/)
-  end
-end
- */

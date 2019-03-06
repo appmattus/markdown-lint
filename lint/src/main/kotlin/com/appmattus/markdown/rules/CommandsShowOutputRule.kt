@@ -5,7 +5,41 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
-class CommandsShowOutputRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("CommandsShowOutput") {
+/**
+ * # Dollar signs used before commands without showing output
+ *
+ * This rule is triggered when there are code blocks showing shell commands to be typed, and the shell commands are
+ * preceded by dollar signs ($):
+ *
+ *     $ ls
+ *     $ cat foo
+ *     $ less bar
+ *
+ * The dollar signs are unnecessary in the above situation, and should not be included:
+ *
+ *     ls
+ *     cat foo
+ *     less bar
+ *
+ * However, an exception is made when there is a need to distinguish between typed commands and command output, as in
+ * the following example:
+ *
+ *     $ ls
+ *     foo bar
+ *     $ cat foo
+ *     Hello world
+ *     $ cat bar
+ *     baz
+ *
+ * Rationale: it is easier to copy and paste and less noisy if the dollar signs are omitted when they are not needed.
+ * See [Dollar signs in shell code](https://www.cirosantilli.com/markdown-style-guide/#dollar-signs-in-shell-code) for
+ * more information.
+ *
+ * Based on [MD014](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class CommandsShowOutputRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "Dollar signs used before commands without showing output"
     override val tags = listOf("code")
@@ -20,16 +54,3 @@ class CommandsShowOutputRule(override val config: RuleSetup.Builder.() -> Unit =
         }
     }
 }
-
-/*
-rule "MD014", "Dollar signs used before commands without showing output" do
-  tags :code
-  aliases 'commands-show-output'
-  check do |doc|
-    doc.find_type_elements(:codeblock).select{
-      |e| not e.value.empty? and
-      not e.value.split(/\n+/).map{|l| l.match(/^\$\s/)}.include?(nil)
-    }.map{|e| doc.element_linenumber(e)}
-  end
-end
- */

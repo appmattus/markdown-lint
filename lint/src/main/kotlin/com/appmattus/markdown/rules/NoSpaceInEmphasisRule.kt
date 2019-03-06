@@ -5,7 +5,39 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
-class NoSpaceInEmphasisRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoSpaceInEmphasis") {
+/**
+ * # Spaces inside emphasis markers
+ *
+ * This rule is triggered when emphasis markers (bold, italic) are used, but they have spaces between the markers and
+ * the text:
+ *
+ *     Here is some ** bold ** text.
+ *
+ *     Here is some * italic * text.
+ *
+ *     Here is some more __ bold __ text.
+ *
+ *     Here is some more _ italic _ text.
+ *
+ * To fix this, remove the spaces around the emphasis markers:
+ *
+ *     Here is some **bold** text.
+ *
+ *     Here is some *italic* text.
+ *
+ *     Here is some more __bold__ text.
+ *
+ *     Here is some more _italic_ text.
+ *
+ * Rationale: Emphasis is only parsed as such when the asterisks/underscores aren't completely surrounded by spaces.
+ * This rule attempts to detect where they were surrounded by spaces, but it appears that emphasized text was intended
+ * by the author.
+ *
+ * Based on [MD037](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class NoSpaceInEmphasisRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "Spaces inside emphasis markers"
     override val tags = listOf("whitespace", "emphasis")
@@ -22,17 +54,3 @@ class NoSpaceInEmphasisRule(override val config: RuleSetup.Builder.() -> Unit = 
         }
     }
 }
-
-/*
-rule "MD037", "Spaces inside emphasis markers" do
-  tags :whitespace, :emphasis
-  aliases 'no-space-in-emphasis'
-  check do |doc|
-    # Kramdown doesn't parse emphasis with spaces, which means we can just
-    # look for emphasis patterns inside regular text with spaces just inside
-    # them.
-    (doc.matching_text_element_lines(/\s(\*\*?|__?)\s.+\1/) | \
-      doc.matching_text_element_lines(/(\*\*?|__?).+\s\1\s/)).sort
-  end
-end
- */

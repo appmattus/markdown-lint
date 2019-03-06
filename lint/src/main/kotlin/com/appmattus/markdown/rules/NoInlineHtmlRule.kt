@@ -5,7 +5,25 @@ import com.appmattus.markdown.MarkdownDocument
 import com.appmattus.markdown.Rule
 import com.appmattus.markdown.RuleSetup
 
-class NoInlineHtmlRule(override val config: RuleSetup.Builder.() -> Unit = {}) : Rule("NoInlineHtml") {
+/**
+ * # Inline HTML
+ *
+ * This rule is triggered whenever raw HTML is used in a markdown document:
+ *
+ *     <h1>Inline HTML header</h1>
+ *
+ * To fix this, use 'pure' markdown instead of including raw HTML:
+ *
+ *     # Markdown header
+ *
+ * Rationale: Raw HTML is allowed in markdown, but this rule is included for those who want their documents to only
+ * include "pure" markdown, or for those who are rendering markdown documents in something other than HTML.
+ *
+ * Based on [MD033](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
+class NoInlineHtmlRule(
+    override val config: RuleSetup.Builder.() -> Unit = {}
+) : Rule() {
 
     override val description = "Inline HTML"
     override val tags = listOf("html")
@@ -16,13 +34,3 @@ class NoInlineHtmlRule(override val config: RuleSetup.Builder.() -> Unit = {}) :
         }
     }
 }
-
-/*
-rule "MD033", "Inline HTML" do
-  tags :html
-  aliases 'no-inline-html'
-  check do |doc|
-    doc.element_linenumbers(doc.find_type(:html_element))
-  end
-end
- */

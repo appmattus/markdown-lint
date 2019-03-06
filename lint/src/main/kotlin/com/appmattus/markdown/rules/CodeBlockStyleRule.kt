@@ -9,10 +9,36 @@ import com.vladsch.flexmark.ast.FencedCodeBlock
 import com.vladsch.flexmark.ast.IndentedCodeBlock
 import com.vladsch.flexmark.util.ast.Block
 
+/**
+ * # Code block style
+ *
+ * This rule is triggered when a different code block style is used than the configured one. For example, in the
+ * default configuration this rule is triggered for the following document:
+ *
+ *     Some text.
+ *
+ *         Code block
+ *
+ *     Some more text.
+ *
+ * To fix this, used fenced code blocks:
+ *
+ *     Some text.
+ *
+ *     ```ruby
+ *     Code block
+ *     ```
+ *
+ *     Some more text.
+ *
+ * The reverse is true if the rule is configured to use the [CodeBlockStyle.Indented] style.
+ *
+ * Based on [MD046](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ */
 class CodeBlockStyleRule(
     private val style: CodeBlockStyle = CodeBlockStyle.Fenced,
     override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule("CodeBlockStyle") {
+) : Rule() {
 
     override val description = "Code block style"
     override val tags = listOf("code")
@@ -48,31 +74,3 @@ class CodeBlockStyleRule(
         }
     }
 }
-
-/*
-rule "MD046", "Code block style" do
-  tags :code
-  aliases 'code-block-style'
-  params :style => :fenced
-  check do |doc|
-    style = @params[:style]
-    doc.element_linenumbers(
-      doc.find_type_elements(:codeblock).select do |i|
-        # for consistent we determine the first one
-        if style == :consistent
-          if doc.element_line(i).start_with?("    ")
-            style = :indented
-          else
-            style = :fenced
-          end
-        end
-        if @params[:style] == :fenced
-          doc.element_line(i).start_with?("    ")
-        else
-          !doc.element_line(i).start_with?("    ")
-        end
-      end
-    )
-  end
-end
- */
