@@ -20,15 +20,6 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(project(":lint"))
 
-    //implementation("com.puppycrawl.tools:checkstyle:8.18")
-
-    //implementation(kotlin("compiler"))
-    //implementation(kotlin("script-util"))
-    //implementation(kotlin("script-runtime"))
-
-    //implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1")
-    //implementation("com.vladsch.flexmark:flexmark-all:0.40.20")
-
     testImplementation(kotlin("test"))
     testImplementation(gradleTestKit())
     testImplementation("junit:junit:4.12")
@@ -37,15 +28,8 @@ dependencies {
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
     testImplementation("com.flextrade.jfixture:jfixture:2.7.2")
 
-    //testImplementation("org.junit.platform:junit-platform-engine:1.4.0")
-    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.1") /*{
-        exclude(group = "org.jetbrains.kotlin")
-    }*/
-    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.1") /*{
-        exclude(group = "org.junit.platform")
-        exclude(group = "org.jetbrains.kotlin")
-    }*/
-
+    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.1")
+    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.1")
     // spek requires kotlin-reflect, can be omitted if already in the classpath
     testRuntimeOnly(kotlin("reflect"))
 }

@@ -36,7 +36,7 @@ class RulesBuilder {
 
 data class RuleSetup(val active: Boolean) {
 
-    class Builder() {
+    class Builder {
         var active = true
 
         internal fun build() = RuleSetup(active)

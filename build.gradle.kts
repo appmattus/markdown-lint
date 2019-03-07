@@ -19,6 +19,7 @@ buildscript {
 
 plugins {
     id("com.github.ben-manes.versions") version "0.21.0"
+    id("io.gitlab.arturbosch.detekt") version "1.0.0-RC14"
 }
 
 allprojects {
@@ -47,4 +48,11 @@ tasks.withType(DependencyUpdatesTask::class.java).all {
             }
         }
     }
+}
+
+detekt {
+    input = files("$projectDir")
+
+    // To override MaxLineLength:excludeCommentStatements
+    config = files("detekt-config.yml")
 }

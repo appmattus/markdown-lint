@@ -17,8 +17,9 @@ import com.vladsch.flexmark.ast.ListItem
  *
  *     # This is a header
  *
- * Note: The punctuation parameter can be used to specify what characters class as punctuation at the end of the header.
- * For example, you can set it to `'.,;:!'` to allow headers with question marks in them, such as might be used in an FAQ.
+ * Note: The punctuation parameter can be used to specify what characters class as punctuation at the end of the
+ * header. For example, you can set it to `'.,;:!'` to allow headers with question marks in them, such as might be used
+ * in an FAQ.
  *
  * Based on [MD026](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */

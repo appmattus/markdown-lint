@@ -80,7 +80,7 @@
           <img src="http://jakarta.apache.org/images/jakarta-logo.gif" alt="http://jakarta.apache.org" align="left" border="0"/>
           </a-->
         </td>
-    		<td class="text-align:right"><h2>CheckStyle Audit</h2></td>
+    		<td class="text-align:right"><h2>Markdown Lint Report</h2></td>
     		</tr>
     		<tr>
     		<td class="text-align:right">Designed for use with <a href='https://checkstyle.org/'>CheckStyle</a> and <a href='http://jakarta.apache.org'>Ant</a>.</td>

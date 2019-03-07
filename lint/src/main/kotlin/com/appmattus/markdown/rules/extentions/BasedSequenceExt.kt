@@ -4,7 +4,7 @@ import com.vladsch.flexmark.util.sequence.BasedSequence
 import com.vladsch.flexmark.util.sequence.BasedSequence.WHITESPACE_CHARS
 
 fun BasedSequence.canTrim() =
-    countChars(WHITESPACE_CHARS, 0, length) + countCharsReversed(WHITESPACE_CHARS, 0, length) != 0
+    countLeading(WHITESPACE_CHARS, 0, length) + countTrailing(WHITESPACE_CHARS, 0, length) != 0
 
 fun BasedSequence.splitIntoLines() = split(listOf("\n", "\r", "\r\n"), 0, 0, "")
 

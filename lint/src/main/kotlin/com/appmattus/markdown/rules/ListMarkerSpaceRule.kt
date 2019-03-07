@@ -37,7 +37,7 @@ import com.vladsch.flexmark.ast.OrderedList
  * specifies that 1 space after the list marker should be used if every item in the list fits within a single paragraph,
  * but to use 2 or 3 spaces (for ordered and unordered lists respectively) if there are multiple paragraphs of content
  * inside the list:
-
+ *
  *     * Foo
  *     * Bar
  *     * Baz

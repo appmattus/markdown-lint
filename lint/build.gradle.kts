@@ -8,8 +8,6 @@ plugins {
     id("com.github.kt3k.coveralls")
 
     id("com.novoda.bintray-release")
-
-    id("io.gitlab.arturbosch.detekt") version "1.0.0-RC14"
 }
 
 dependencies {
@@ -30,15 +28,8 @@ dependencies {
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
     testImplementation("com.flextrade.jfixture:jfixture:2.7.2")
 
-    //testImplementation("org.junit.platform:junit-platform-engine:1.4.0")
-    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.1")/* {
-        exclude(group = "org.jetbrains.kotlin")
-    }*/
-    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.1")/* {
-        exclude(group = "org.junit.platform")
-        exclude(group = "org.jetbrains.kotlin")
-    }*/
-
+    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.1")
+    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.1")
     // spek requires kotlin-reflect, can be omitted if already in the classpath
     testRuntimeOnly(kotlin("reflect"))
 }
@@ -50,14 +41,6 @@ tasks.withType<Jar> {
             "Lint-Registry-v2" to "com.appmattus.markdown.MarkdownIssueRegistry"
         )
     }
-}
-
-//sourceCompatibility = "1.7"
-//targetCompatibility = "1.7"
-
-detekt {
-    input = files("$projectDir")
-    filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
 }
 
 tasks.withType<Test> {
@@ -73,7 +56,7 @@ tasks.withType<Test> {
 
 tasks.getByName("test").finalizedBy(tasks.getByName("jacocoTestReport"))
 
-tasks.getByName("check").finalizedBy(tasks.getByName("detekt"))
+tasks.getByName("check").finalizedBy(rootProject.tasks.getByName("detekt"))
 
 tasks.withType<JacocoReport> {
     reports {
