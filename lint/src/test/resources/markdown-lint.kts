@@ -1,4 +1,4 @@
-import com.appmattus.markdown.markdownlint
+import com.appmattus.markdown.dsl.markdownlint
 import com.appmattus.markdown.rules.ConsistentHeaderStyleRule
 import com.appmattus.markdown.rules.FirstHeaderH1Rule
 

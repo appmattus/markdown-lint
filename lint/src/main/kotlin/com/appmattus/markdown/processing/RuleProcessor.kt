@@ -1,5 +1,9 @@
-package com.appmattus.markdown
+package com.appmattus.markdown.processing
 
+import com.appmattus.markdown.dsl.MarkdownLintConfig
+import com.appmattus.markdown.dsl.Report
+import com.appmattus.markdown.errors.Error
+import com.appmattus.markdown.rules.AllRules
 import com.puppycrawl.tools.checkstyle.XMLLogger
 import com.puppycrawl.tools.checkstyle.api.AuditEvent
 import com.puppycrawl.tools.checkstyle.api.AutomaticBean
@@ -96,7 +100,10 @@ class RuleProcessor {
         val parser = ParserFactory.parser
 
         return associateWith { file ->
-            val document = MarkdownDocument(file.name, parser.parse(file.readText(Charsets.UTF_8)))
+            val document = MarkdownDocument(
+                file.name,
+                parser.parse(file.readText(Charsets.UTF_8))
+            )
             rules.flatMap { rule ->
                 rule.processDocument(document)
             }

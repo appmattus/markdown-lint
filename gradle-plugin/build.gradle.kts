@@ -2,17 +2,28 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.jvm.tasks.Jar
 
+//version = 0.1
+
 plugins {
     `kotlin-dsl`
+    id("com.gradle.plugin-publish") version "0.10.1"
 }
 
 gradlePlugin {
     plugins {
-        register("markdownlint") {
-            id = "markdownlint"
+        create("markdownlint") {
+            id = "com.appmattus.markdown"
+            displayName = "markdownlint"
+            description = "Linting for markdown files"
             implementationClass = "com.appmattus.markdown.plugin.MarkdownLintPlugin"
         }
     }
+}
+
+pluginBundle {
+    website = "github"
+    vcsUrl = "https://github... .git"
+    tags = listOf("markdown", "lint", "format", "style")
 }
 
 dependencies {

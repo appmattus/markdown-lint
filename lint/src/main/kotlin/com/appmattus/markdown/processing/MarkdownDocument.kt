@@ -1,4 +1,4 @@
-package com.appmattus.markdown
+package com.appmattus.markdown.processing
 
 import com.appmattus.markdown.rules.extentions.splitIntoLines
 import com.vladsch.flexmark.ast.AutoLink

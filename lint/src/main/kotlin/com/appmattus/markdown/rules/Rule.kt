@@ -1,4 +1,9 @@
-package com.appmattus.markdown
+package com.appmattus.markdown.rules
+
+import com.appmattus.markdown.errors.Error
+import com.appmattus.markdown.processing.MarkdownDocument
+import com.appmattus.markdown.dsl.RuleSetup
+import com.appmattus.markdown.errors.ErrorReporter
 
 abstract class Rule {
     abstract val description: String
@@ -18,16 +23,3 @@ abstract class Rule {
         get() = RuleSetup.Builder().apply(config).build()
 }
 
-class ErrorReporter(private val ruleClass: Class<Rule>, private val document: MarkdownDocument) {
-    private val _errors = mutableSetOf<Error>()
-
-    val errors: List<Error>
-        get() = _errors.toList()
-
-    fun reportError(startOffset: Int, endOffset: Int, errorMessage: String) {
-        val lineNumber = document.getLineNumber(startOffset) + 1
-        val columnNumber = document.getColumnNumber(startOffset) + 1
-
-        _errors.add(Error(startOffset, endOffset, lineNumber, columnNumber, errorMessage, ruleClass))
-    }
-}

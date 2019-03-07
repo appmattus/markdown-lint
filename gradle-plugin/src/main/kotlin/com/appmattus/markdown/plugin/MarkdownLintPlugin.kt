@@ -1,6 +1,6 @@
 package com.appmattus.markdown.plugin
 
-import com.appmattus.markdown.RuleProcessor
+import com.appmattus.markdown.processing.RuleProcessor
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.invoke
@@ -19,7 +19,8 @@ class MarkdownLintPlugin : Plugin<Project> {
                 doLast {
                     val reportsDir = File(buildDir, "reports/markdownlint").apply { mkdirs() }
 
-                    RuleProcessor().process(markdownlint.configFile, projectDir, reportsDir, System.out)
+                    RuleProcessor()
+                        .process(markdownlint.configFile, projectDir, reportsDir, System.out)
                 }
             }
         }

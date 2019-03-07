@@ -352,7 +352,7 @@ object MarkdownLintPluginTest : Spek({
 private fun TemporaryFolder.createBuildScriptWithDefaultConfig() = createFile("build.gradle.kts") {
     """
     plugins {
-        id("markdownlint")
+        id("com.appmattus.markdown")
     }
     """.trimIndent()
 }
@@ -360,7 +360,7 @@ private fun TemporaryFolder.createBuildScriptWithDefaultConfig() = createFile("b
 private fun TemporaryFolder.createBuildScriptWithConfigFile() = createFile("build.gradle.kts") {
     """
     plugins {
-        id("markdownlint")
+        id("com.appmattus.markdown")
     }
     markdownlint {
         configFile = File(projectDir, "markdownlint.kts")
@@ -382,7 +382,7 @@ private fun TemporaryFolder.createPluginConfigurationWithNoConfiguration() = cre
 
 private fun TemporaryFolder.createPluginConfigurationDisablingRule() = createFile("markdownlint.kts") {
     """
-    import com.appmattus.markdown.markdownlint
+    import com.appmattus.markdown.dsl.markdownlint
     import com.appmattus.markdown.rules.SingleH1Rule
 
     markdownlint {
@@ -397,7 +397,7 @@ private fun TemporaryFolder.createPluginConfigurationDisablingRule() = createFil
 
 private fun TemporaryFolder.createPluginConfigurationWithXmlReportOnly() = createFile("markdownlint.kts") {
     """
-    import com.appmattus.markdown.markdownlint
+    import com.appmattus.markdown.dsl.markdownlint
     import com.appmattus.markdown.rules.FirstHeaderH1Rule
 
     markdownlint {
@@ -410,7 +410,7 @@ private fun TemporaryFolder.createPluginConfigurationWithXmlReportOnly() = creat
 
 private fun TemporaryFolder.createPluginConfigurationWithHtmlReportOnly() = createFile("markdownlint.kts") {
     """
-    import com.appmattus.markdown.markdownlint
+    import com.appmattus.markdown.dsl.markdownlint
     import com.appmattus.markdown.rules.FirstHeaderH1Rule
 
     markdownlint {
@@ -423,7 +423,7 @@ private fun TemporaryFolder.createPluginConfigurationWithHtmlReportOnly() = crea
 
 private fun TemporaryFolder.createPluginConfigurationWithNoReports() = createFile("markdownlint.kts") {
     """
-    import com.appmattus.markdown.markdownlint
+    import com.appmattus.markdown.dsl.markdownlint
     import com.appmattus.markdown.rules.FirstHeaderH1Rule
 
     markdownlint {

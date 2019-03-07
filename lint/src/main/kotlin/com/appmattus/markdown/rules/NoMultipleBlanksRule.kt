@@ -1,9 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.ErrorReporter
-import com.appmattus.markdown.MarkdownDocument
-import com.appmattus.markdown.Rule
-import com.appmattus.markdown.RuleSetup
+import com.appmattus.markdown.processing.MarkdownDocument
+import com.appmattus.markdown.dsl.RuleSetup
+import com.appmattus.markdown.errors.ErrorReporter
 
 /**
  * # Multiple consecutive blank lines
