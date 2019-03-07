@@ -17,9 +17,9 @@ class MarkdownLintPlugin : Plugin<Project> {
                 outputs.upToDateWhen { false }
 
                 doLast {
-                    val reportsDir = File(buildDir, "reports").apply { mkdirs() }
+                    val reportsDir = File(buildDir, "reports/markdownlint").apply { mkdirs() }
 
-                    RuleProcessor().process(markdownlint.configFile, projectDir, reportsDir)
+                    RuleProcessor().process(markdownlint.configFile, projectDir, reportsDir, System.out)
                 }
             }
         }

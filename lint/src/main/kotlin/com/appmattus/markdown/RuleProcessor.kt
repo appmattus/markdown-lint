@@ -7,6 +7,7 @@ import com.puppycrawl.tools.checkstyle.api.LocalizedMessage
 import com.puppycrawl.tools.checkstyle.api.SeverityLevel
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.PrintStream
 import javax.script.ScriptEngineManager
 import javax.xml.transform.TransformerFactory
 import javax.xml.transform.dom.DOMSource
@@ -15,14 +16,65 @@ import javax.xml.transform.stream.StreamSource
 
 class RuleProcessor {
 
-    fun process(configFile: File?, rootDir: File, reportsDir: File) {
+    fun process(configFile: File?, rootDir: File, reportsDir: File, summaryStream: PrintStream? = null) {
         val config = configFile?.evaluate() ?: MarkdownLintConfig.Builder().build()
-        val fileErrors = rootDir.scanForErrors(config)
+
+        val markdownFiles = rootDir.listMarkdownFiles()
+        val fileErrors = markdownFiles.scanForErrors(config)
+
+        summaryStream?.summariseErrors(markdownFiles, fileErrors)
 
         val checkstyleXmlBytes = fileErrors.mapErrorsToCheckstyleXmlBytes()
 
-        generateXmlReport(reportsDir, config, checkstyleXmlBytes)
-        generateHtmlReport(reportsDir, config, checkstyleXmlBytes)
+        if (config.generateXmlReport()) {
+            try {
+                val xmlFile = File(reportsDir, "markdownlint.xml")
+                generateXmlReport(xmlFile, checkstyleXmlBytes)
+                summaryStream?.summariseXmlGeneration(xmlFile)
+            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+                // Ignore
+            }
+        }
+
+        if (config.generateHtmlReport()) {
+            try {
+                val htmlFile = File(reportsDir, "markdownlint.html")
+                generateHtmlReport(htmlFile, checkstyleXmlBytes)
+                summaryStream?.summariseHtmlGeneration(htmlFile)
+            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+                // Ignore
+            }
+        }
+    }
+
+    private fun PrintStream.summariseXmlGeneration(xmlFile: File) {
+        println("Successfully generated Checkstyle XML report at ${xmlFile.path}")
+    }
+
+    private fun PrintStream.summariseHtmlGeneration(htmlFile: File) {
+        println("Successfully generated HTML report at ${htmlFile.path}")
+    }
+
+    private fun PrintStream.summariseErrors(
+        markdownFiles: List<File>,
+        fileErrors: Map<File, List<Error>>
+    ) {
+        println("${markdownFiles.size} markdown files were analysed")
+        println()
+
+        if (fileErrors.isNotEmpty()) {
+            println("Errors:")
+            fileErrors.forEach { file, errors ->
+                errors.forEach { error ->
+                    println(
+                        "    ${error.ruleClass.simpleName} at ${file.path}:${error.lineNumber}:${error.columnNumber}"
+                    )
+                }
+            }
+        } else {
+            println("No errors reported")
+        }
+        println()
     }
 
     private fun File.evaluate(): MarkdownLintConfig {
@@ -31,23 +83,24 @@ class RuleProcessor {
         if (result is MarkdownLintConfig) {
             return result
         } else {
-            throw IllegalStateException("Expecting a MarkdownLintConfig but got ${result.javaClass.name}")
+            throw IllegalStateException("Invalid configuration of markdownlint in $path")
         }
     }
 
-    private fun File.scanForErrors(config: MarkdownLintConfig): Map<File, List<Error>> {
-        val markdownFiles = listMarkdownFiles()
+    private fun List<File>.scanForErrors(
+        config: MarkdownLintConfig
+    ): Map<File, List<Error>> {
 
         val rules = AllRules(config).rules
 
         val parser = ParserFactory.parser
-        val fileErrors = markdownFiles.associateWith { file ->
+
+        return associateWith { file ->
             val document = MarkdownDocument(file.name, parser.parse(file.readText(Charsets.UTF_8)))
             rules.flatMap { rule ->
                 rule.processDocument(document)
             }
         }.filterValues { it.isNotEmpty() }
-        return fileErrors
     }
 
     private fun File.listMarkdownFiles(): List<File> {
@@ -89,32 +142,24 @@ class RuleProcessor {
         }
     }
 
-    private fun generateXmlReport(reportsDir: File, config: MarkdownLintConfig, checkstyleXmlBytes: ByteArray) {
-        if (config.generateXmlReport()) {
-            java.io.File(reportsDir, "markdownlint.xml").writeBytes(checkstyleXmlBytes)
-        }
+    private fun generateXmlReport(xmlFile: File, checkstyleXmlBytes: ByteArray) {
+        xmlFile.writeBytes(checkstyleXmlBytes)
     }
 
     private fun generateHtmlReport(
-        reportsDir: File,
-        config: MarkdownLintConfig,
+        htmlFile: File,
         checkstyleXmlBytes: ByteArray
     ) {
-        if (config.generateHtmlReport()) {
-            val factory = javax.xml.parsers.DocumentBuilderFactory.newInstance()
-            val builder = factory.newDocumentBuilder()
-            val document = builder.parse(checkstyleXmlBytes.inputStream())
+        val factory = javax.xml.parsers.DocumentBuilderFactory.newInstance()
+        val builder = factory.newDocumentBuilder()
+        val document = builder.parse(checkstyleXmlBytes.inputStream())
 
-            val stylesheet =
-                RuleProcessor::class.java.classLoader.getResourceAsStream("checkstyle-noframes-sorted.xsl")
+        val stylesheet = RuleProcessor::class.java.classLoader.getResourceAsStream("checkstyle-noframes-sorted.xsl")
 
-            val transformer = TransformerFactory.newInstance().newTransformer(StreamSource(stylesheet))
+        val transformer = TransformerFactory.newInstance().newTransformer(StreamSource(stylesheet))
 
-            val outputHtmlFile = File(reportsDir, "markdownlint.html")
-
-            val result = StreamResult(outputHtmlFile.outputStream())
-            transformer.transform(DOMSource(document), result)
-        }
+        val result = StreamResult(htmlFile.outputStream())
+        transformer.transform(DOMSource(document), result)
     }
 
     private fun MarkdownLintConfig.generateXmlReport() = reports.contains(Report.Checkstyle)
