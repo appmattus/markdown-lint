@@ -9,6 +9,7 @@ plugins {
     id("jacoco")
     id("com.github.kt3k.coveralls")
     id("com.gradle.plugin-publish") version "0.10.1"
+    id("pl.droidsonroids.jacoco.testkit") version "1.0.3"
 }
 
 gradlePlugin {
