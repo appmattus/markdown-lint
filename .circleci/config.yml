@@ -3,7 +3,7 @@ defaults: &defaults
   docker:
     - image: circleci/android:api-28
   environment:
-    #GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx1024m -XX:+HeapDumpOnOutOfMemoryError"'
+    GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx1024m -XX:+HeapDumpOnOutOfMemoryError"'
     #JVM_OPTS: -Xmx1024m
     #_JAVA_OPTIONS: "-Xmx1024m"
 
