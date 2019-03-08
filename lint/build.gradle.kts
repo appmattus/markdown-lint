@@ -6,8 +6,8 @@ plugins {
     id("java-gradle-plugin")
     kotlin("jvm")
 
-//    id("jacoco")
-//    id("com.github.kt3k.coveralls")
+    id("jacoco")
+    id("com.github.kt3k.coveralls")
     id("com.gradle.plugin-publish") version "0.10.1"
 }
 
@@ -23,8 +23,8 @@ gradlePlugin {
 }
 
 pluginBundle {
-    website = "github"
-    vcsUrl = "https://github... .git"
+    website = "https://github.com/appmattus/markdown-lint"
+    vcsUrl = "https://github.com/appmattus/markdown-lint.git"
     tags = listOf("markdown", "lint", "format", "style")
 }
 
@@ -76,11 +76,11 @@ tasks.withType<Test> {
     }
 }
 
-//tasks.getByName("test").finalizedBy(tasks.getByName("jacocoTestReport"))
+tasks.getByName("test").finalizedBy(tasks.getByName("jacocoTestReport"))
 
 tasks.getByName("check").finalizedBy(rootProject.tasks.getByName("detekt"))
 
-/*tasks.withType<JacocoReport> {
+tasks.withType<JacocoReport> {
     reports {
         xml.isEnabled = true
         html.isEnabled = true
@@ -94,4 +94,4 @@ coveralls {
 
 tasks.getByName("jacocoTestReport").finalizedBy(tasks.getByName("coveralls"))
 
-tasks.getByName("coveralls").onlyIf { System.getenv("CI")?.isNotEmpty() == true }*/
+tasks.getByName("coveralls").onlyIf { System.getenv("CI")?.isNotEmpty() == true }
