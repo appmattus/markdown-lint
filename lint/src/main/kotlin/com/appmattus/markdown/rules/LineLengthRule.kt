@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.extentions.splitIntoLines
 
 /**
@@ -23,9 +23,9 @@ import com.appmattus.markdown.rules.extentions.splitIntoLines
  * Based on [MD013](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class LineLengthRule(
-    val lineLength: Int = 80,
-    val codeBlocks: Boolean = true,
-    val tables: Boolean = true,
+    private val lineLength: Int = 80,
+    private val codeBlocks: Boolean = true,
+    private val tables: Boolean = true,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 
 /**
  * # First header should be a top level header
@@ -22,7 +22,7 @@ import com.appmattus.markdown.errors.ErrorReporter
  * Based on [MD002](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class FirstHeaderH1Rule(
-    val level: Int = 1,
+    private val level: Int = 1,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
