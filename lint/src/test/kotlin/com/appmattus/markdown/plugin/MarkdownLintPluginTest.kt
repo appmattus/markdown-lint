@@ -7,6 +7,7 @@ import org.junit.rules.TemporaryFolder
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import java.io.File
+import java.io.InputStream
 
 object MarkdownLintPluginTest : Spek({
     Feature("MarkdownLintPlugin") {
@@ -278,11 +279,12 @@ object MarkdownLintPluginTest : Spek({
                 val errors = Regex("SingleH1Rule").findAll(output).toList()
                 assertThat(errors.size).isOne()
             }
-            
+
             And("xml contains one error") {
-            	val xmlReport = File(temporaryFolder.root, "build/reports/markdownlint/markdownlint.xml").readText().trim()
-            	val errors = Regex("<error").findAll(xmlReport).toList()
-            	assertThat(errors.size).isOne()
+                val xmlReport =
+                    File(temporaryFolder.root, "build/reports/markdownlint/markdownlint.xml").readText().trim()
+                val errors = Regex("<error").findAll(xmlReport).toList()
+                assertThat(errors.size).isOne()
             }
         }
 
@@ -310,14 +312,15 @@ object MarkdownLintPluginTest : Spek({
                 val errors = Regex("SingleH1Rule").findAll(output).toList()
                 assertThat(errors.size).isOne()
             }
-            
+
             And("xml contains one error") {
-            	val xmlReport = File(temporaryFolder.root, "build/reports/markdownlint/markdownlint.xml").readText().trim()
-            	val errors = Regex("<error").findAll(xmlReport).toList()
-            	assertThat(errors.size).isOne()
+                val xmlReport =
+                    File(temporaryFolder.root, "build/reports/markdownlint/markdownlint.xml").readText().trim()
+                val errors = Regex("<error").findAll(xmlReport).toList()
+                assertThat(errors.size).isOne()
             }
         }
-        
+
         Scenario("configuration changes errors reported") {
             lateinit var output: String
 
@@ -344,11 +347,12 @@ object MarkdownLintPluginTest : Spek({
             And("no errors were reported") {
                 assertThat(output).contains("No errors reported")
             }
-            
+
             And("xml contains no error") {
-            	val xmlReport = File(temporaryFolder.root, "build/reports/markdownlint/markdownlint.xml").readText().trim()
-            	val errors = Regex("<error").findAll(xmlReport).toList()
-            	assertThat(errors.size).isZero()
+                val xmlReport =
+                    File(temporaryFolder.root, "build/reports/markdownlint/markdownlint.xml").readText().trim()
+                val errors = Regex("<error").findAll(xmlReport).toList()
+                assertThat(errors.size).isZero()
             }
         }
     }
@@ -469,6 +473,7 @@ private fun build(temporaryFolder: TemporaryFolder, vararg arguments: String): B
         .withProjectDir(temporaryFolder.root)
         .withPluginClasspath()
         .withArguments(*arguments)
+        .withJaCoCo()
         .build()
 
 private fun buildAndFail(temporaryFolder: TemporaryFolder, vararg arguments: String): BuildResult =
@@ -477,10 +482,22 @@ private fun buildAndFail(temporaryFolder: TemporaryFolder, vararg arguments: Str
         .withProjectDir(temporaryFolder.root)
         .withPluginClasspath()
         .withArguments(*arguments)
+        .withJaCoCo()
         .buildAndFail()
 
 private fun TemporaryFolder.createFile(filename: String, content: () -> String): File {
     return newFile(filename).apply {
         writeText(content())
     }
+}
+
+private fun InputStream.toFile(file: File) {
+    use { input ->
+        file.outputStream().use { input.copyTo(it) }
+    }
+}
+
+private fun GradleRunner.withJaCoCo(): GradleRunner {
+    javaClass.classLoader.getResourceAsStream("testkit-gradle.properties").toFile(File(projectDir, "gradle.properties"))
+    return this
 }
