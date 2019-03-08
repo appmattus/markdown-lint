@@ -28,7 +28,7 @@ import com.vladsch.flexmark.ast.OrderedList
  * Based on [MD029](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class OlPrefixRule(
-    val style: OrderedListStyle = OrderedListStyle.One,
+    private val style: OrderedListStyle = OrderedListStyle.One,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
