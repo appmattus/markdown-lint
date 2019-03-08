@@ -1,9 +1,56 @@
-# markdown-lint [![CircleCI](https://circleci.com/gh/appmattus/markdown-lint/tree/master.svg?style=svg)](https://circleci.com/gh/appmattus/markdown-lint/tree/master) [![Coverage Status](https://coveralls.io/repos/github/appmattus/markdown-lint/badge.svg?branch=master)](https://coveralls.io/github/appmattus/markdown-lint?branch=master)
+# markdown-lint for Gradle projects [![CircleCI](https://circleci.com/gh/appmattus/markdown-lint/tree/master.svg?style=svg)](https://circleci.com/gh/appmattus/markdown-lint/tree/master) [![Coverage Status](https://coveralls.io/repos/github/appmattus/markdown-lint/badge.svg?branch=master)](https://coveralls.io/github/appmattus/markdown-lint?branch=master)
 
 Linting for markdown files
 
 ## Getting started
 
+Apply the plugin in your `build.gradle.kts` script. Further instructions on the 
+[plugin page](https://plugins.gradle.org/plugin/com.appmattus.markdown).
+
+```kotlin
+plugins {
+  id("com.appmattus.markdown") version "0.1.0"
+}
+```
+
+To customise the rules and report generation specify a configuration file in your `build.gradle.kts` script:
+
+```kotlin
+markdownlint {
+    configFile = File(projectDir, "markdownlint.kts")
+}
+```
+
+Then in your `markdownlint.kts` file use the DSL to configure the rules and report generation as you wish:
+
+```kotlin
+import com.appmattus.markdown.dsl.markdownlint
+import com.appmattus.markdown.rules.config.HeaderStyle
+import com.appmattus.markdown.rules.ConsistentHeaderStyleRule
+import com.appmattus.markdown.rules.SingleH1Rule
+
+markdownlint {
+    rules {
+        // Change the default settings of a rule
+        +ConsistentHeaderStyleRule(HeaderStyle.Atx)
+        
+        // Disable a rule by setting active to false
+        +SingleH1Rule {
+            active = false
+        }
+    }
+    
+    // If you specify the reports block the plugin will output only the types specified
+    // i.e. to output no reports implement an empty block
+    reports {
+        // enable html report
+        html()
+        
+        // enable checkstyle xml report
+        checkstyle()
+    }
+}
+```
 
 ## Contributing
 Please fork this repository and contribute back using [pull requests](https://github.com/appmattus/markdown-lint/pulls).
