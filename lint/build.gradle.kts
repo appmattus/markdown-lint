@@ -29,6 +29,9 @@ pluginBundle {
     tags = listOf("markdown", "lint", "format", "style")
 }
 
+version = System.getenv("CIRCLE_TAG") ?: System.getProperty("CIRCLE_TAG") ?: "unknown"
+group = "com.appmattus"
+
 dependencies {
     compileOnly(gradleApi())
     //compileOnly(gradleKotlinDsl())
