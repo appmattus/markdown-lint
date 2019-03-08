@@ -3,9 +3,8 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.jvm.tasks.Jar
 
 plugins {
-    `kotlin-dsl`
-    //id("java-gradle-plugin")
-    //kotlin("jvm")
+    id("java-gradle-plugin")
+    kotlin("jvm")
 
 //    id("jacoco")
 //    id("com.github.kt3k.coveralls")
@@ -49,7 +48,7 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.12.1")
     testImplementation("org.mockito:mockito-core:2.24.5")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
-    //testImplementation("com.flextrade.jfixture:jfixture:2.7.2")
+    testImplementation("com.flextrade.jfixture:jfixture:2.7.2")
 
     testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.1")
     testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.1")
