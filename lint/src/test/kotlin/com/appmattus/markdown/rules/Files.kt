@@ -59,6 +59,8 @@ val allFiles = listOf(
     "incorrect_header_atx.md",
     "incorrect_header_atx_closed.md",
     "incorrect_header_setext.md",
+    "incorrect_header_setext_with_atx_1.md",
+    "incorrect_header_setext_with_atx_2.md",
     "inline_html.md",
     "links.md",
     "lists_without_blank_lines.md",
