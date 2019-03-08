@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.config.HeaderStyle
 import com.appmattus.markdown.rules.extentions.style
 
@@ -42,7 +42,7 @@ import com.appmattus.markdown.rules.extentions.style
  * Based on [MD003](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class ConsistentHeaderStyleRule(
-    val style: HeaderStyle = HeaderStyle.Consistent,
+    private val style: HeaderStyle = HeaderStyle.Consistent,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

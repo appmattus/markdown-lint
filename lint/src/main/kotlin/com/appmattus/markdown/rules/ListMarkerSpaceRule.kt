@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.vladsch.flexmark.ast.BulletList
 import com.vladsch.flexmark.ast.ListItem
 import com.vladsch.flexmark.ast.OrderedList
@@ -62,10 +62,10 @@ import com.vladsch.flexmark.ast.OrderedList
  * Based on [MD030](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class ListMarkerSpaceRule(
-    val ulSingle: Int = 1,
-    val olSingle: Int = 1,
-    val ulMulti: Int = 1,
-    val olMulti: Int = 1,
+    private val ulSingle: Int = 1,
+    private val olSingle: Int = 1,
+    private val ulMulti: Int = 1,
+    private val olMulti: Int = 1,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

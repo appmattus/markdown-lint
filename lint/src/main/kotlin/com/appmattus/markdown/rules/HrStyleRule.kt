@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.config.HorizontalRuleStyle
 
 /**
@@ -35,7 +35,7 @@ import com.appmattus.markdown.rules.config.HorizontalRuleStyle
  * Based on [MD035](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class HrStyleRule(
-    val style: HorizontalRuleStyle = HorizontalRuleStyle.Consistent,
+    private val style: HorizontalRuleStyle = HorizontalRuleStyle.Consistent,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
