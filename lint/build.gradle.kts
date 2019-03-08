@@ -3,14 +3,36 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.jvm.tasks.Jar
 
 plugins {
-    kotlin("jvm")
-    id("jacoco")
-    id("com.github.kt3k.coveralls")
+    `kotlin-dsl`
+    //id("java-gradle-plugin")
+    //kotlin("jvm")
 
-    id("com.novoda.bintray-release")
+//    id("jacoco")
+//    id("com.github.kt3k.coveralls")
+    id("com.gradle.plugin-publish") version "0.10.1"
+}
+
+gradlePlugin {
+    plugins {
+        create("markdownlint") {
+            id = "com.appmattus.markdown"
+            displayName = "markdownlint"
+            description = "Linting for markdown files"
+            implementationClass = "com.appmattus.markdown.plugin.MarkdownLintPlugin"
+        }
+    }
+}
+
+pluginBundle {
+    website = "github"
+    vcsUrl = "https://github... .git"
+    tags = listOf("markdown", "lint", "format", "style")
 }
 
 dependencies {
+    compileOnly(gradleApi())
+    compileOnly(gradleKotlinDsl())
+
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("compiler"))
     implementation(kotlin("script-util"))
@@ -22,6 +44,7 @@ dependencies {
     implementation("com.puppycrawl.tools:checkstyle:8.18")
 
     testImplementation(kotlin("test"))
+    testImplementation(gradleTestKit())
     testImplementation("junit:junit:4.12")
     testImplementation("org.assertj:assertj-core:3.12.1")
     testImplementation("org.mockito:mockito-core:2.24.5")
@@ -54,11 +77,11 @@ tasks.withType<Test> {
     }
 }
 
-tasks.getByName("test").finalizedBy(tasks.getByName("jacocoTestReport"))
+//tasks.getByName("test").finalizedBy(tasks.getByName("jacocoTestReport"))
 
 tasks.getByName("check").finalizedBy(rootProject.tasks.getByName("detekt"))
 
-tasks.withType<JacocoReport> {
+/*tasks.withType<JacocoReport> {
     reports {
         xml.isEnabled = true
         html.isEnabled = true
@@ -72,18 +95,4 @@ coveralls {
 
 tasks.getByName("jacocoTestReport").finalizedBy(tasks.getByName("coveralls"))
 
-tasks.getByName("coveralls").onlyIf { System.getenv("CI")?.isNotEmpty() == true }
-
-publish {
-    bintrayUser = System.getenv("BINTRAY_USER") ?: System.getProperty("BINTRAY_USER") ?: "unknown"
-    bintrayKey = System.getenv("BINTRAY_KEY") ?: System.getProperty("BINTRAY_KEY") ?: "unknown"
-
-    userOrg = "appmattus"
-    groupId = "com.appmattus"
-    artifactId = "leaktracker"
-    publishVersion = System.getenv("TRAVIS_TAG") ?: System.getProperty("TRAVIS_TAG") ?: "unknown"
-    desc = "A memory leak tracking library for Android and Java"
-    website = "https://github.com/appmattus/leaktracker"
-
-    dryRun = false
-}
+tasks.getByName("coveralls").onlyIf { System.getenv("CI")?.isNotEmpty() == true }*/

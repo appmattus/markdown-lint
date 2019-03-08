@@ -246,7 +246,12 @@ object MarkdownLintPluginTest : Spek({
             }
 
             When("we execute the markdownlint task") {
-                output = buildAndFail(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
+                output = buildAndFail(
+                    temporaryFolder,
+                    "markdownlint",
+                    "-q",
+                    "--stacktrace"
+                ).output.trimEnd()
             }
 
             Then("build fails with invalid configuration") {
