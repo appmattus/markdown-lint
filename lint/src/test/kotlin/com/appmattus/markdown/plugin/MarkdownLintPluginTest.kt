@@ -17,6 +17,20 @@ object MarkdownLintPluginTest : Spek({
             }
         }
 
+        Scenario("trigger build that will probably fail") {
+            Given("a build script with default configuration") {
+                temporaryFolder.createBuildScriptWithDefaultConfig()
+            }
+
+            When("we execute the markdownlint task") {
+                try {
+                    build(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
+                } catch (e: Exception) {
+
+                }
+            }
+        }
+
         Scenario("no markdown files returns no errors") {
             lateinit var output: String
 
