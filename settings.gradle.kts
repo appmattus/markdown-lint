@@ -1,4 +1,3 @@
 include(
-    "lint",
-    "gradle-plugin"
+    "lint"
 )

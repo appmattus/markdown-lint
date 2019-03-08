@@ -1,12 +1,8 @@
-package com.appmattus.markdown
+package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.dsl.MarkdownLintConfig
 import com.appmattus.markdown.dsl.markdownlint
 import com.appmattus.markdown.processing.MarkdownDocument
-import com.appmattus.markdown.rules.AllRules
-import com.appmattus.markdown.rules.BlanksAroundFencesRule
-import com.appmattus.markdown.rules.NoPunctuationFilenameRule
-import com.appmattus.markdown.rules.Rule
 import mockDocument
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
