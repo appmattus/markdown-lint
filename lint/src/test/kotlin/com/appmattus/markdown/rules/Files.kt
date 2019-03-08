@@ -48,6 +48,7 @@ val allFiles = listOf(
     "hr_style_inconsistent.md",
     "hr_style_long.md",
     "hr_style_stars.md",
+    "hr_style_underscores.md",
     "inconsistent_bullet_indent_same_level.md",
     "inconsistent_bullet_styles_asterisk.md",
     "inconsistent_bullet_styles_dash.md",
