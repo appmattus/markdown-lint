@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules;
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.config.UnorderedListStyle
 import com.appmattus.markdown.rules.extentions.style
 
@@ -29,7 +29,7 @@ import com.appmattus.markdown.rules.extentions.style
  * Based on [MD004](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class ConsistentUlStyleRule(
-    val style: UnorderedListStyle = UnorderedListStyle.Consistent,
+    private val style: UnorderedListStyle = UnorderedListStyle.Consistent,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
