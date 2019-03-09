@@ -41,8 +41,9 @@ dependencies {
     implementation(kotlin("script-util"))
     implementation(kotlin("script-runtime"))
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1")
-    api("com.vladsch.flexmark:flexmark-all:0.40.20")
+    api("com.vladsch.flexmark:flexmark-ext-tables:0.40.20")
+    api("com.vladsch.flexmark:flexmark-ext-gfm-strikethrough:0.40.20")
+    api("com.vladsch.flexmark:flexmark-ext-autolink:0.40.20")
 
     implementation("com.puppycrawl.tools:checkstyle:8.18")
 

@@ -13,6 +13,18 @@ plugins {
 }
 ```
 
+Run the plugin with:
+
+```bash
+./gradlew markdownlint
+```
+
+or by adding a dependency to the task:
+
+```kotlin
+tasks.getByName("check").finalizedBy(rootProject.tasks.getByName("markdownlint"))
+```
+
 To customise the rules and report generation specify a configuration file in your `build.gradle.kts` script:
 
 ```kotlin
