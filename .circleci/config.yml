@@ -29,7 +29,7 @@ jobs:
             find . -type f -regex ".*/build/test-results/testDebug*/.*xml" -exec cp {} ~/junit/ \;
           when: always
       - store_artifacts:
-          path: lint/build/reports
+          path: markdown/build/reports
           destination: reports
       - store_test_results:
           path: ~/junit
