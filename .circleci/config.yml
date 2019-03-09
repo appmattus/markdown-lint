@@ -3,7 +3,7 @@ defaults: &defaults
   docker:
     - image: circleci/android:api-28
   environment:
-    _JAVA_OPTIONS: "-Xmx1536m"
+    _JAVA_OPTIONS: "-Xmx1024m"
 
 version: 2
 jobs:
