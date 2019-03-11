@@ -26,6 +26,7 @@ class LineLengthRule(
     private val lineLength: Int = 80,
     private val codeBlocks: Boolean = true,
     private val tables: Boolean = true,
+    private val headings: Boolean = true,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
@@ -45,6 +46,13 @@ class LineLengthRule(
             links.find {
                 it.endInclusive == range.endInclusive && document.chars.getColumnAtIndex(it.start) <= lineLength
             } == null
+        }
+
+        if (!headings) {
+            val codeBlocks = document.headings.map { IntRange(it.startLineNumber, it.endLineNumber) }
+            result = result.filter { range ->
+                (codeBlocks.find { it.contains(document.getLineNumber(range.start)) } == null)
+            }
         }
 
         if (!codeBlocks) {
