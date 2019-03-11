@@ -37,9 +37,8 @@ dependencies {
     //compileOnly(gradleKotlinDsl())
 
     implementation(kotlin("stdlib-jdk8"))
-    implementation(kotlin("compiler"))
+    implementation(kotlin("compiler-embeddable"))
     implementation(kotlin("script-util"))
-    implementation(kotlin("script-runtime"))
 
     api("com.vladsch.flexmark:flexmark-ext-tables:0.40.20")
     api("com.vladsch.flexmark:flexmark-ext-gfm-strikethrough:0.40.20")
