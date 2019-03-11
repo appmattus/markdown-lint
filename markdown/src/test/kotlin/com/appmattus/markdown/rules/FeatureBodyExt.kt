@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.errors.Error
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.loadDocument
+import com.appmattus.markdown.processing.MarkdownDocument
 import mockDocument
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.style.gherkin.FeatureBody
@@ -32,7 +32,8 @@ fun FeatureBody.FileRuleScenario(
             }
 
             Then("we expect $expectedErrorCount errors") {
-                assertThat(ruleErrors.size).isEqualTo(expectedErrorCount).describedAs("Number of errors")
+                assertThat(ruleErrors.size).describedAs("Number of errors")
+                    .withFailMessage(ruleErrors.joinToString("\n")).isEqualTo(expectedErrorCount)
             }
 
             if (expectedErrorCount > 0) {

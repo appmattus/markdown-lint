@@ -4,6 +4,9 @@ import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.extentions.splitIntoLines
+import com.vladsch.flexmark.ast.Emphasis
+import com.vladsch.flexmark.ast.StrongEmphasis
+import com.vladsch.flexmark.util.ast.Node
 
 /**
  * # Line length
@@ -27,11 +30,16 @@ class LineLengthRule(
     private val codeBlocks: Boolean = true,
     private val tables: Boolean = true,
     private val headings: Boolean = true,
+    punctuation: String = ".,;:!? ",
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
+    private val terminatingPunctuationRegex = Regex("[${Regex.escape(punctuation)}]?\\s*")
+
     override val description = "Line length"
     override val tags = listOf("line_length")
+
+    data class LinkRef(val startOffset: Int, val endOffset: Int, val node: Node, val lineNumber: Int)
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         var result = document.chars.splitIntoLines().filter {
@@ -41,10 +49,28 @@ class LineLengthRule(
         }
 
         // Remove links at the end of the file
-        val links = document.allLinks.map { IntRange(it.startOffset, it.endOffset) }
+        val links = document.allLinks.map {
+
+            var item: Node = it
+            while (item.parent is Emphasis || item.parent is StrongEmphasis) {
+                item = item.parent
+            }
+
+            LinkRef(item.startOffset, item.endOffset, item, document.getLineNumber(item.startOffset))
+        }
         result = result.filter { range ->
-            links.find {
-                it.endInclusive == range.endInclusive && document.chars.getColumnAtIndex(it.start) <= lineLength
+            links.find { linkRef ->
+                val lineNumber = document.getLineNumber(range.start)
+
+                if (linkRef.lineNumber == lineNumber
+                    && document.getColumnNumber(linkRef.startOffset) + 1 <= lineLength
+                    && document.getColumnNumber(linkRef.endOffset - 1) + 2 >= lineLength
+                ) {
+                    val eol = document.chars.subSequence(linkRef.endOffset, document.chars.endOfLine(linkRef.endOffset))
+                    eol.matches(terminatingPunctuationRegex)
+                } else {
+                    false
+                }
             } == null
         }
 
