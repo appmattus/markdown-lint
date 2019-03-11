@@ -32,6 +32,6 @@ object ConsistentHeaderStyleRuleTest : Spek({
                 "incorrect_header_setext_with_atx_2.md",
                 "headers_with_spaces_at_the_beginning.md"
             )
-        ) { ConsistentHeaderStyleRule() }
+        ) { ConsistentHeaderStyleRule(HeaderStyle.Consistent) }
     }
 })

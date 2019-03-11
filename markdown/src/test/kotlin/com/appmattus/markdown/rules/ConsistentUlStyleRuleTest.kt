@@ -19,6 +19,6 @@ object ConsistentUlStyleRuleTest : Spek({
                 "incorrect_bullet_style_plus.md",
                 "lists_without_blank_lines.md"
             )
-        ) { ConsistentUlStyleRule() }
+        ) { ConsistentUlStyleRule(UnorderedListStyle.Consistent) }
     }
 })

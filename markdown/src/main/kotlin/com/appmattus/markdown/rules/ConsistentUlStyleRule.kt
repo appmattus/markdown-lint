@@ -29,7 +29,7 @@ import com.appmattus.markdown.rules.extentions.style
  * Based on [MD004](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class ConsistentUlStyleRule(
-    private val style: UnorderedListStyle = UnorderedListStyle.Consistent,
+    private val style: UnorderedListStyle = UnorderedListStyle.Dash,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
