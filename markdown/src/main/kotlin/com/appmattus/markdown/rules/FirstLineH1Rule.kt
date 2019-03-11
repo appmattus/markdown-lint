@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 
 /**
  * # First line in file should be a top level header
@@ -36,7 +36,8 @@ class FirstLineH1Rule(
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.firstOrNull().let { header ->
             if (header == null || header.lineNumber != 0 || header.level != level) {
-                errorReporter.reportError(document.lines[0].startOffset, document.lines[0].endOffset, description)
+                val endOfFirstLine = document.chars.endOfLine(0)
+                errorReporter.reportError(0, endOfFirstLine, description)
             }
         }
     }
