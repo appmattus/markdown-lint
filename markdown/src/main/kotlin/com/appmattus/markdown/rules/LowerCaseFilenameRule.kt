@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 
 /**
  * # Replace upper case letters with lower case
@@ -34,7 +34,7 @@ import com.appmattus.markdown.errors.ErrorReporter
  * Based on [File name](https://www.cirosantilli.com/markdown-style-guide/#file-name)
  */
 class LowerCaseFilenameRule(
-    private val exclusions: List<String> = listOf("README.md", "LICENSE.md"),
+    private val exclusions: List<String> = listOf("README.md", "LICENSE.md", "NOTICE.md", "CONTRIBUTING.md"),
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
