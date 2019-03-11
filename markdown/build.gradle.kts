@@ -45,8 +45,6 @@ dependencies {
     api("com.vladsch.flexmark:flexmark-ext-gfm-strikethrough:0.40.20")
     api("com.vladsch.flexmark:flexmark-ext-autolink:0.40.20")
 
-    implementation("com.puppycrawl.tools:checkstyle:8.18")
-
     testImplementation(kotlin("test"))
     testImplementation(gradleTestKit())
     testImplementation("junit:junit:4.12")

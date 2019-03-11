@@ -9,11 +9,6 @@ buildscript {
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.21")
         classpath("org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2")
-        classpath("com.novoda:bintray-release:0.9")
-        classpath("com.novoda:bintray-release:0.9")
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 

@@ -1,14 +1,14 @@
 package com.appmattus.markdown.processing
 
+import com.appmattus.markdown.checkstyle.AuditEvent
+import com.appmattus.markdown.checkstyle.LocalizedMessage
+import com.appmattus.markdown.checkstyle.OutputStreamOptions
+import com.appmattus.markdown.checkstyle.SeverityLevel
+import com.appmattus.markdown.checkstyle.XMLLogger
 import com.appmattus.markdown.dsl.MarkdownLintConfig
 import com.appmattus.markdown.dsl.Report
 import com.appmattus.markdown.errors.Error
 import com.appmattus.markdown.rules.AllRules
-import com.puppycrawl.tools.checkstyle.XMLLogger
-import com.puppycrawl.tools.checkstyle.api.AuditEvent
-import com.puppycrawl.tools.checkstyle.api.AutomaticBean
-import com.puppycrawl.tools.checkstyle.api.LocalizedMessage
-import com.puppycrawl.tools.checkstyle.api.SeverityLevel
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.PrintStream
@@ -120,30 +120,29 @@ class RuleProcessor {
 
     private fun Map<File, List<Error>>.mapErrorsToCheckstyleXmlBytes(): ByteArray {
         return ByteArrayOutputStream().use {
-            val logger = XMLLogger(it, AutomaticBean.OutputStreamOptions.NONE)
+            val logger = XMLLogger(it, OutputStreamOptions.NONE)
 
-            logger.auditStarted(null)
+            logger.auditStarted()
 
             this.forEach { file, errors ->
 
                 val filePath = file.path
 
-                logger.fileStarted(AuditEvent(this, filePath))
+                logger.fileStarted(AuditEvent(filePath))
 
                 errors.forEach { error ->
                     val message = LocalizedMessage(
                         error.lineNumber, error.columnNumber,
-                        "messages.properties", error.errorMessage, null, SeverityLevel.ERROR, null,
-                        error.ruleClass, null
+                        error.errorMessage, SeverityLevel.ERROR, error.ruleClass
                     )
 
-                    logger.addError(AuditEvent(this, filePath, message))
+                    logger.addError(AuditEvent(filePath, message))
                 }
 
-                logger.fileFinished(AuditEvent(this, filePath))
+                logger.fileFinished(AuditEvent(filePath))
             }
 
-            logger.auditFinished(null)
+            logger.auditFinished()
 
             it.toByteArray()
         }

@@ -1,4 +1,4 @@
-package com.appmattus.markdown.dsl;
+package com.appmattus.markdown.dsl
 
 enum class Report {
     Html, Checkstyle;
