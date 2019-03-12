@@ -1,7 +1,7 @@
 package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.dsl.MarkdownLintConfig
-import com.appmattus.markdown.dsl.markdownlint
+import com.appmattus.markdown.dsl.markdownLintConfig
 import com.appmattus.markdown.processing.MarkdownDocument
 import mockDocument
 import org.assertj.core.api.Assertions.assertThat
@@ -17,7 +17,7 @@ object AllRulesTest : Spek({
             lateinit var rules: List<Rule>
 
             Given("an empty rule config") {
-                config = markdownlint {
+                config = markdownLintConfig {
                     rules { }
                 }
             }
@@ -36,7 +36,7 @@ object AllRulesTest : Spek({
             lateinit var rules: List<Rule>
 
             Given("config disables one rule") {
-                config = markdownlint {
+                config = markdownLintConfig {
                     rules {
                         +BlanksAroundFencesRule {
                             active = false
@@ -63,7 +63,7 @@ object AllRulesTest : Spek({
             lateinit var rules: List<Rule>
 
             Given("we configure one rule") {
-                config = markdownlint {
+                config = markdownLintConfig {
                     rules {
                         +NoPunctuationFilenameRule(punctuation = "ABC")
                     }

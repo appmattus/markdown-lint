@@ -34,20 +34,20 @@ your `build.gradle.kts` script:
 
 ```kotlin
 markdownlint {
-    configFile = File(projectDir, "markdownlint.kts")
+    configFile = File(projectDir, "markdownlint.gradle.kts")
 }
 ```
 
-Then in your `markdownlint.kts` file use the DSL to configure the rules and
-report generation as you wish:
+Then in your `markdownlint.gradle.kts` file use the DSL to configure the rules
+and report generation as you wish:
 
 ```kotlin
-import com.appmattus.markdown.dsl.markdownlint
+import com.appmattus.markdown.dsl.markdownLintConfig
 import com.appmattus.markdown.rules.config.HeaderStyle
 import com.appmattus.markdown.rules.ConsistentHeaderStyleRule
 import com.appmattus.markdown.rules.SingleH1Rule
 
-markdownlint {
+markdownLintConfig {
     rules {
         // Change the default settings of a rule
         +ConsistentHeaderStyleRule(HeaderStyle.Atx)

@@ -435,10 +435,10 @@ private fun TemporaryFolder.createPluginConfigurationWithNoConfiguration() = cre
 
 private fun TemporaryFolder.createPluginConfigurationDisablingRule() = createFile("markdownlint.kts") {
     """
-    import com.appmattus.markdown.dsl.markdownlint
+    import com.appmattus.markdown.dsl.markdownLintConfig
     import com.appmattus.markdown.rules.SingleH1Rule
 
-    markdownlint {
+    markdownLintConfig {
         rules {
             +SingleH1Rule {
                 active = false
@@ -450,9 +450,9 @@ private fun TemporaryFolder.createPluginConfigurationDisablingRule() = createFil
 
 private fun TemporaryFolder.createPluginConfigurationWithIncreasedThreshold() = createFile("markdownlint.kts") {
     """
-    import com.appmattus.markdown.dsl.markdownlint
+    import com.appmattus.markdown.dsl.markdownLintConfig
 
-    markdownlint {
+    markdownLintConfig {
         threshold(1)
     }
     """.trimIndent()
@@ -460,10 +460,10 @@ private fun TemporaryFolder.createPluginConfigurationWithIncreasedThreshold() = 
 
 private fun TemporaryFolder.createPluginConfigurationWithXmlReportOnly() = createFile("markdownlint.kts") {
     """
-    import com.appmattus.markdown.dsl.markdownlint
+    import com.appmattus.markdown.dsl.markdownLintConfig
     import com.appmattus.markdown.rules.FirstHeaderH1Rule
 
-    markdownlint {
+    markdownLintConfig {
         reports {
             checkstyle()
         }
@@ -473,10 +473,10 @@ private fun TemporaryFolder.createPluginConfigurationWithXmlReportOnly() = creat
 
 private fun TemporaryFolder.createPluginConfigurationWithHtmlReportOnly() = createFile("markdownlint.kts") {
     """
-    import com.appmattus.markdown.dsl.markdownlint
+    import com.appmattus.markdown.dsl.markdownLintConfig
     import com.appmattus.markdown.rules.FirstHeaderH1Rule
 
-    markdownlint {
+    markdownLintConfig {
         reports {
             html()
         }
@@ -486,10 +486,10 @@ private fun TemporaryFolder.createPluginConfigurationWithHtmlReportOnly() = crea
 
 private fun TemporaryFolder.createPluginConfigurationWithNoReports() = createFile("markdownlint.kts") {
     """
-    import com.appmattus.markdown.dsl.markdownlint
+    import com.appmattus.markdown.dsl.markdownLintConfig
     import com.appmattus.markdown.rules.FirstHeaderH1Rule
 
-    markdownlint {
+    markdownLintConfig {
         reports {
         }
     }

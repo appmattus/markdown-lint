@@ -32,4 +32,4 @@ data class MarkdownLintConfig(val rules: List<Rule>, val reports: Set<Report>, v
     }
 }
 
-fun markdownlint(body: MarkdownLintConfig.Builder.() -> Unit) = MarkdownLintConfig.Builder().apply(body).build()
+fun markdownLintConfig(body: MarkdownLintConfig.Builder.() -> Unit) = MarkdownLintConfig.Builder().apply(body).build()
