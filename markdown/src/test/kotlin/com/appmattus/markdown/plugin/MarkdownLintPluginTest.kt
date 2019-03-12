@@ -272,7 +272,7 @@ object MarkdownLintPluginTest : Spek({
             }
 
             When("we execute the markdownlint task") {
-                output = build(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
+                output = buildAndFail(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
             }
 
             Then("one error is reported") {
@@ -305,7 +305,7 @@ object MarkdownLintPluginTest : Spek({
             }
 
             When("we execute the markdownlint task") {
-                output = build(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
+                output = buildAndFail(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
             }
 
             Then("one error is reported") {
@@ -355,6 +355,50 @@ object MarkdownLintPluginTest : Spek({
                 assertThat(errors.size).isZero()
             }
         }
+
+        Scenario("one bad markdown file throws an exception") {
+            lateinit var output: String
+
+            Given("a build script with default configuration") {
+                temporaryFolder.createBuildScriptWithDefaultConfig()
+            }
+
+            And("a bad markdown file") {
+                temporaryFolder.createMarkdownFileWithAnError("README.md")
+            }
+
+            When("we execute the markdownlint task") {
+                output = buildAndFail(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
+            }
+
+            Then("one error is reported") {
+                assertThat(output).contains("Build failure threshold of 0 reached with 1 errors!")
+            }
+        }
+
+        Scenario("one bad markdown file and adjusted threshold doesn't throw an exception") {
+            lateinit var output: String
+
+            Given("a build script with increased threshold") {
+                temporaryFolder.createBuildScriptWithConfigFile()
+            }
+
+            And("config file increasing threshold") {
+                temporaryFolder.createPluginConfigurationWithIncreasedThreshold()
+            }
+
+            And("a bad markdown file") {
+                temporaryFolder.createMarkdownFileWithAnError("README.md")
+            }
+
+            When("we execute the markdownlint task") {
+                output = build(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
+            }
+
+            Then("no errors reported") {
+                assertThat(output).doesNotContain("Build failure")
+            }
+        }
     }
 })
 
@@ -400,6 +444,16 @@ private fun TemporaryFolder.createPluginConfigurationDisablingRule() = createFil
                 active = false
             }
         }
+    }
+    """.trimIndent()
+}
+
+private fun TemporaryFolder.createPluginConfigurationWithIncreasedThreshold() = createFile("markdownlint.kts") {
+    """
+    import com.appmattus.markdown.dsl.markdownlint
+
+    markdownlint {
+        threshold(1)
     }
     """.trimIndent()
 }

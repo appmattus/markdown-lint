@@ -12,14 +12,14 @@ class MarkdownLintPlugin : Plugin<Project> {
         val markdownlint = extensions.create("markdownlint", MarkdownLint::class.java)
 
         tasks.register("markdownlint") {
-			it.outputs.upToDateWhen { false }
+            it.outputs.upToDateWhen { false }
 
-			it.doLast {
-				val reportsDir = File(buildDir, "reports/markdownlint").apply { mkdirs() }
+            it.doLast {
+                val reportsDir = File(buildDir, "reports/markdownlint").apply { mkdirs() }
 
-				RuleProcessor()
-					.process(markdownlint.configFile, projectDir, reportsDir, System.out)
-			}
-		}
+                RuleProcessor()
+                    .process(markdownlint.configFile, projectDir, reportsDir, System.out)
+            }
+        }
     }
 }

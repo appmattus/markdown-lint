@@ -8,6 +8,7 @@ import com.appmattus.markdown.checkstyle.XMLLogger
 import com.appmattus.markdown.dsl.MarkdownLintConfig
 import com.appmattus.markdown.dsl.Report
 import com.appmattus.markdown.errors.Error
+import com.appmattus.markdown.plugin.BuildFailure
 import com.appmattus.markdown.rules.AllRules
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -48,6 +49,11 @@ class RuleProcessor {
             } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
                 // Ignore
             }
+        }
+
+        val errors = fileErrors.values.sumBy { it.size }
+        if (errors > config.threshold) {
+            throw BuildFailure("Build failure threshold of ${config.threshold} reached with $errors errors!")
         }
     }
 

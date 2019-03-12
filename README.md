@@ -12,7 +12,7 @@ Apply the plugin in your `build.gradle.kts` script. Further instructions on the
 
 ```kotlin
 plugins {
-  id("com.appmattus.markdown") version "0.1.4"
+  id("com.appmattus.markdown") version "0.1.5"
 }
 ```
 
@@ -29,7 +29,7 @@ tasks.getByName("check")
     .finalizedBy(rootProject.tasks.getByName("markdownlint"))
 ```
 
-To customise the rules and report generation specify a configuration file in 
+To customise the rules and report generation specify a configuration file in
 your `build.gradle.kts` script:
 
 ```kotlin
