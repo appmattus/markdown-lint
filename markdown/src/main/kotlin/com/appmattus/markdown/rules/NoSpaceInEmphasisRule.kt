@@ -1,8 +1,11 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
+import com.vladsch.flexmark.ast.Code
+import com.vladsch.flexmark.ast.FencedCodeBlock
+import com.vladsch.flexmark.ast.IndentedCodeBlock
 
 /**
  * # Spaces inside emphasis markers
@@ -46,7 +49,9 @@ class NoSpaceInEmphasisRule(
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
-        document.allText.forEach {
+        document.allText.filterNot {
+            it.parent is FencedCodeBlock || it.parent is IndentedCodeBlock || it.parent is Code
+        }.forEach {
             if (it.chars.contains(startRegex) || it.chars.contains(endRegex)) {
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }

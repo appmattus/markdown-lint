@@ -33,3 +33,19 @@ One-sided * broken emphasis* {NoSpaceInEmphasisRule}
 Don't _flag on _words with underscores before them.
 
 The same goes for words* with asterisks* after them.
+
+```text
+/*
+ *
+ * Ignore code blocks
+ *
+ */
+```
+
+    /**
+     *
+     * Ignore * code * blocks
+     *
+     */
+
+`/* Ignore * code * blocks */`
