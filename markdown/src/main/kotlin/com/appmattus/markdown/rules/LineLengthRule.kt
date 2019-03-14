@@ -30,7 +30,7 @@ class LineLengthRule(
     private val codeBlocks: Boolean = true,
     private val tables: Boolean = true,
     private val headings: Boolean = true,
-    punctuation: String = ".,;:!? ",
+    punctuation: String = ".,;:!?) ",
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
@@ -43,13 +43,13 @@ class LineLengthRule(
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         var result = document.chars.splitIntoLines().filter {
-            it.length > lineLength
+            it.length > lineLength && it.subSequence(lineLength).isNotBlank()
         }.map {
             IntRange(it.startOffset + lineLength, it.endOffset)
         }
 
         // Remove links at the end of the file
-        val links = document.allLinks.map {
+        val linksAndImages = document.allLinks.map {
 
             var item: Node = it
             while (item.parent is Emphasis || item.parent is StrongEmphasis) {
@@ -57,9 +57,12 @@ class LineLengthRule(
             }
 
             LinkRef(item.startOffset, item.endOffset, item, document.getLineNumber(item.startOffset))
+        } + document.allImages.map {
+            LinkRef(it.startOffset, it.endOffset, it, document.getLineNumber(it.startOffset))
         }
+
         result = result.filter { range ->
-            links.find { linkRef ->
+            linksAndImages.find { linkRef ->
                 val lineNumber = document.getLineNumber(range.start)
 
                 if (linkRef.lineNumber == lineNumber

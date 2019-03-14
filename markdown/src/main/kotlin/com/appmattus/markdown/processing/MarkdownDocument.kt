@@ -10,6 +10,8 @@ import com.vladsch.flexmark.ast.FencedCodeBlock
 import com.vladsch.flexmark.ast.Heading
 import com.vladsch.flexmark.ast.HtmlBlock
 import com.vladsch.flexmark.ast.HtmlInline
+import com.vladsch.flexmark.ast.Image
+import com.vladsch.flexmark.ast.ImageRef
 import com.vladsch.flexmark.ast.IndentedCodeBlock
 import com.vladsch.flexmark.ast.Link
 import com.vladsch.flexmark.ast.LinkNodeBase
@@ -53,6 +55,7 @@ class MarkdownDocument(val filename: String, val document: Document) {
     }
     val links: List<Link> by lazy { document.find(Link::class) }
     val autoLinks: List<AutoLink> by lazy { document.find(AutoLink::class) }
+    val allImages: List<LinkNodeBase> by lazy { document.find(Image::class, ImageRef::class) }
     val tables: List<TableBlock> by lazy { document.find(TableBlock::class) }
     val blockQuotes: List<BlockQuote> by lazy { document.find(BlockQuote::class) }
     val horizontalRules: List<ThematicBreak>  by lazy { document.find(ThematicBreak::class) }
