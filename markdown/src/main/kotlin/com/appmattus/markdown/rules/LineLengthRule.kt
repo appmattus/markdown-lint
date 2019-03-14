@@ -39,7 +39,7 @@ class LineLengthRule(
     override val description = "Line length"
     override val tags = listOf("line_length")
 
-    data class LinkRef(val startOffset: Int, val endOffset: Int, val node: Node, val lineNumber: Int)
+    private data class AllowedBlock(val startOffset: Int, val endOffset: Int, val lineNumber: Int)
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         var result = document.chars.splitIntoLines().filter {
@@ -48,21 +48,11 @@ class LineLengthRule(
             IntRange(it.startOffset + lineLength, it.endOffset)
         }
 
-        // Remove links at the end of the file
-        val linksAndImages = document.allLinks.map {
-
-            var item: Node = it
-            while (item.parent is Emphasis || item.parent is StrongEmphasis) {
-                item = item.parent
-            }
-
-            LinkRef(item.startOffset, item.endOffset, item, document.getLineNumber(item.startOffset))
-        } + document.allImages.map {
-            LinkRef(it.startOffset, it.endOffset, it, document.getLineNumber(it.startOffset))
-        }
+        val allowedBlocks =
+            document.allowedLinks() + document.allowedImages() + document.allowedInlineCodeWithNoBreaks()
 
         result = result.filter { range ->
-            linksAndImages.find { linkRef ->
+            allowedBlocks.find { linkRef ->
                 val lineNumber = document.getLineNumber(range.start)
 
                 if (linkRef.lineNumber == lineNumber
@@ -100,6 +90,45 @@ class LineLengthRule(
 
         result.forEach { range ->
             errorReporter.reportError(range.start, range.endInclusive, description)
+        }
+    }
+
+    private fun MarkdownDocument.allowedLinks(): List<AllowedBlock> {
+        return allLinks.map {
+            var item: Node = it
+            while (item.parent is Emphasis || item.parent is StrongEmphasis) {
+                item = item.parent
+            }
+
+            AllowedBlock(item.startOffset, item.endOffset, document.getLineNumber(item.startOffset))
+        }
+    }
+
+    private fun MarkdownDocument.allowedImages(): List<AllowedBlock> {
+        return allImages.map {
+            AllowedBlock(it.startOffset, it.endOffset, document.getLineNumber(it.startOffset))
+        }
+    }
+
+    private fun MarkdownDocument.allowedInlineCodeWithNoBreaks(): List<AllowedBlock> {
+        return inlineCode.flatMap { code ->
+            code.firstChild.chars.splitIntoLines().filterNot {
+                it.contains(" ")
+            }.map {
+                val start = if (it.startOffset == code.openingMarker.endOffset) {
+                    code.openingMarker.startOffset
+                } else {
+                    it.startOffset
+                }
+
+                val end = if (it.endOffset == code.closingMarker.startOffset) {
+                    code.closingMarker.endOffset
+                } else {
+                    it.endOffset
+                }
+
+                AllowedBlock(start, end, document.getLineNumber(it.startOffset))
+            }
         }
     }
 }
