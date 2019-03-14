@@ -12,7 +12,7 @@ Apply the plugin in your `build.gradle.kts` script. Further instructions on the
 
 ```kotlin
 plugins {
-  id("com.appmattus.markdown") version "0.1.5"
+  id("com.appmattus.markdown") version "0.1.8"
 }
 ```
 
@@ -67,6 +67,9 @@ markdownLintConfig {
         // enable checkstyle xml report
         checkstyle()
     }
+
+    // Specify the error count threshold that triggers a failed build
+    threshold(10)
 }
 ```
 
