@@ -1,10 +1,12 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
-import com.appmattus.markdown.rules.extentions.indent
-import com.appmattus.markdown.rules.extentions.level
+import com.appmattus.markdown.processing.MarkdownDocument
+import com.vladsch.flexmark.ast.BulletListItem
+import com.vladsch.flexmark.ast.ListItem
+import com.vladsch.flexmark.ast.OrderedListItem
+import com.vladsch.flexmark.util.ast.Document
 
 /**
  * # Unordered list indentation
@@ -32,7 +34,8 @@ import com.appmattus.markdown.rules.extentions.level
  * [Sub-lists not indenting](http://support.markedapp.com/discussions/problems/21-sub-lists-not-indenting) for a
  * description of the problem.
  *
- * Based on [MD007](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
+ * Based on [MD007](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb) and
+ * [MD007](https://github.com/DavidAnson/markdownlint/blob/master/lib/md007.js)
  */
 class UlIndentRule(
     private val indent: Int = 2,
@@ -44,9 +47,32 @@ class UlIndentRule(
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.unorderedListItems.forEach {
-            if (it.indent() != it.level() * indent) {
+            val parentListItem = it.parentListItemOrNull()
+
+            var expectedMarkerPos = parentListItem?.let {
+                document.chars.getColumnAtIndex(parentListItem.openingMarker.startOffset) + indent
+            } ?: 0
+
+            if (parentListItem is OrderedListItem) {
+                // When contained in an ordered list, align with it's content
+                expectedMarkerPos = document.chars.getColumnAtIndex(parentListItem.childChars.startOffset)
+            }
+
+            val actualMarkerPos = document.chars.getColumnAtIndex(it.openingMarker.startOffset)
+
+            if (expectedMarkerPos != actualMarkerPos) {
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
         }
+    }
+
+    fun BulletListItem.parentListItemOrNull(): ListItem? {
+        var cur = parent
+        while (cur !is Document) {
+            cur = cur.parent
+            if (cur is ListItem)
+                return cur
+        }
+        return null
     }
 }

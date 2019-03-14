@@ -61,7 +61,7 @@ And with incorrect spacing:
 Ordered lists with children:
 
 1. Foo {ListMarkerSpaceRule}
-    * Hi
+    * Hi {UlIndentRule} complains as should align with content above
 1. Bar {ListMarkerSpaceRule}
 1. Baz {ListMarkerSpaceRule}
 

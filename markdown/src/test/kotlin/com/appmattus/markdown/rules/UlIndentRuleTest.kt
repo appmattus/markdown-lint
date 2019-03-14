@@ -5,6 +5,10 @@ import org.spekframework.spek2.style.gherkin.Feature
 
 object UlIndentRuleTest : Spek({
     Feature("UlIndentRule") {
+        FileRuleScenario(listOf("ul_indent_bugfixes.md")) { UlIndentRule() }
+
+        FileRuleScenario(listOf("ul_indent_bugfixes_4_spaces.md")) { UlIndentRule(indent = 4) }
+
         FileRuleScenario(listOf("bulleted_list_2_space_indent.md")) { UlIndentRule(indent = 4) }
 
         FileRuleScenario(listOf("spaces_after_list_marker.md")) { UlIndentRule(indent = 4) }
