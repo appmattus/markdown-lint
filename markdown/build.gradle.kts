@@ -1,6 +1,7 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.jvm.tasks.Jar
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java-gradle-plugin")
@@ -97,3 +98,7 @@ coveralls {
 tasks.getByName("jacocoTestReport").finalizedBy(tasks.getByName("coveralls"))
 
 tasks.getByName("coveralls").onlyIf { System.getenv("CI")?.isNotEmpty() == true }
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
+}
