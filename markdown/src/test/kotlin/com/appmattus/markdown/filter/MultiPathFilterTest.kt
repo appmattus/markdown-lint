@@ -198,5 +198,60 @@ object MultiPathFilterTest : Spek({
                 assertThat(MultiPathFilter(listOf(pattern), root).matches(path)).isTrue()
             }
         }
+
+        Scenario("invalid regex in second pattern throws an IllegalArgumentException") {
+            lateinit var pattern: String
+            Given("an invalid regex pattern") {
+                pattern = "*."
+            }
+
+            Then("MultiPathFilter throws an IllegalArgumentException") {
+                assertThatIllegalArgumentException().isThrownBy { MultiPathFilter(listOf(".*/build/.*", pattern)) }
+            }
+        }
+
+        Scenario("empty regex in second pattern throws an IllegalArgumentException") {
+            lateinit var pattern: String
+            Given("an empty pattern") {
+                pattern = ""
+            }
+
+            Then("MultiPathFilter throws an IllegalArgumentException") {
+                assertThatIllegalArgumentException().isThrownBy { MultiPathFilter(listOf(".*/build/.*", pattern)) }
+            }
+        }
+
+        Scenario("blank regex in second pattern throws an IllegalArgumentException") {
+            lateinit var pattern: String
+            Given("a blank pattern") {
+                pattern = "    "
+            }
+
+            Then("MultiPathFilter throws an IllegalArgumentException") {
+                assertThatIllegalArgumentException().isThrownBy { MultiPathFilter(listOf(".*/build/.*", pattern)) }
+            }
+        }
+
+        Scenario("matches second relative path") {
+            lateinit var pattern: String
+            lateinit var root: Path
+            lateinit var path: Path
+
+            Given("a single regex pattern on Unix systems") {
+                pattern = ".*/build/.*"
+            }
+
+            And("a default root path") {
+                root = Paths.get("").toAbsolutePath()
+            }
+
+            When("we have a relative path") {
+                path = root.resolve("some/build/path/should/match")
+            }
+
+            Then("MultiPathFilter matches") {
+                assertThat(MultiPathFilter(listOf(".*/wontmatchthis/.*", pattern)).matches(path)).isTrue()
+            }
+        }
     }
 })
