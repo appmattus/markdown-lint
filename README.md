@@ -12,7 +12,7 @@ Apply the plugin in your `build.gradle.kts` script. Further instructions on the
 
 ```kotlin
 plugins {
-  id("com.appmattus.markdown") version "0.1.8"
+  id("com.appmattus.markdown") version "0.2.0"
 }
 ```
 
