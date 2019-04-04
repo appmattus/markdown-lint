@@ -451,7 +451,6 @@ private fun TemporaryFolder.createPluginConfigurationWithIncreasedThreshold() = 
 private fun TemporaryFolder.createPluginConfigurationWithXmlReportOnly() = createFile("markdownlint.kts") {
     """
     import com.appmattus.markdown.dsl.markdownLintConfig
-    import com.appmattus.markdown.rules.FirstHeaderH1Rule
 
     markdownLintConfig {
         reports {
@@ -464,7 +463,6 @@ private fun TemporaryFolder.createPluginConfigurationWithXmlReportOnly() = creat
 private fun TemporaryFolder.createPluginConfigurationWithHtmlReportOnly() = createFile("markdownlint.kts") {
     """
     import com.appmattus.markdown.dsl.markdownLintConfig
-    import com.appmattus.markdown.rules.FirstHeaderH1Rule
 
     markdownLintConfig {
         reports {
@@ -477,7 +475,6 @@ private fun TemporaryFolder.createPluginConfigurationWithHtmlReportOnly() = crea
 private fun TemporaryFolder.createPluginConfigurationWithNoReports() = createFile("markdownlint.kts") {
     """
     import com.appmattus.markdown.dsl.markdownLintConfig
-    import com.appmattus.markdown.rules.FirstHeaderH1Rule
 
     markdownLintConfig {
         reports {
