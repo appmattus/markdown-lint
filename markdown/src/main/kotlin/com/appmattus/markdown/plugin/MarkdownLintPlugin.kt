@@ -17,8 +17,8 @@ class MarkdownLintPlugin : Plugin<Project> {
             it.doLast {
                 val reportsDir = File(buildDir, "reports/markdownlint").apply { mkdirs() }
 
-                RuleProcessor()
-                    .process(markdownlint.configFile, projectDir, reportsDir, System.out)
+                RuleProcessor(projectDir, reportsDir)
+                    .process(markdownlint.configFile, System.out)
             }
         }
     }
