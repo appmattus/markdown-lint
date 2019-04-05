@@ -25,7 +25,7 @@ class SinglePathFilter(
 
         try {
             FileSystems.getDefault().apply {
-                independentPattern = pattern.replace("(?<!\\)/", Regex.escape(separator))
+                independentPattern = pattern.replace("/", Regex.escape(separator))
                 matcher = getPathMatcher("regex:$independentPattern")
             }
         } catch (exception: PatternSyntaxException) {
