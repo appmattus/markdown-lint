@@ -2,7 +2,13 @@ package com.appmattus.markdown.dsl
 
 import com.appmattus.markdown.rules.Rule
 
-data class MarkdownLintConfig(val rules: List<Rule>, val reports: Set<Report>, val threshold: Int) {
+data class MarkdownLintConfig(
+    val rules: List<Rule>,
+    val reports: Set<Report>,
+    val threshold: Int,
+    val includes: List<String>,
+    val excludes: List<String>
+) {
 
     @MarkdownDsl
     class Builder {
@@ -13,6 +19,9 @@ data class MarkdownLintConfig(val rules: List<Rule>, val reports: Set<Report>, v
         private var rules: List<Rule> = emptyList()
 
         private var threshold: Int = 0
+
+        private var includes: List<String> = listOf(".*")
+        private var excludes: List<String> = emptyList()
 
         fun reports(body: Report.Builder.() -> Unit) = apply {
             reports = Report.Builder().apply(body).build()
@@ -26,8 +35,16 @@ data class MarkdownLintConfig(val rules: List<Rule>, val reports: Set<Report>, v
             this.threshold = threshold
         }
 
+        fun includes(patterns: List<String>) = apply {
+            this.includes = patterns
+        }
+
+        fun excludes(patterns: List<String>) = apply {
+            this.excludes = patterns
+        }
+
         fun build(): MarkdownLintConfig {
-            return MarkdownLintConfig(rules, reports, threshold)
+            return MarkdownLintConfig(rules, reports, threshold, includes, excludes)
         }
     }
 }

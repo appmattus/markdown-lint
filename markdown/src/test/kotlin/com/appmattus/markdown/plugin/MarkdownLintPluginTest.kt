@@ -17,6 +17,12 @@ object MarkdownLintPluginTest : Spek({
             }
         }
 
+        val slash = Regex.escape(File.separator)
+        val htmlReportPattern =
+            "build${slash}reports${slash}markdownlint${slash}markdownlint\\.html".toRegex().toPattern()
+        val xmlReportPattern =
+            "build${slash}reports${slash}markdownlint${slash}markdownlint\\.xml".toRegex().toPattern()
+
         Scenario("no markdown files returns no errors") {
             lateinit var output: String
 
@@ -131,17 +137,13 @@ object MarkdownLintPluginTest : Spek({
             }
 
             Then("xml report generated") {
-                assertThat(output).contains(
-                    "Successfully generated Checkstyle XML report",
-                    "build/reports/markdownlint/markdownlint.xml"
-                )
+                assertThat(output).contains("Successfully generated Checkstyle XML report")
+                assertThat(output).containsPattern(xmlReportPattern)
             }
 
             And("html report generated") {
-                assertThat(output).contains(
-                    "Successfully generated HTML report",
-                    "build/reports/markdownlint/markdownlint.html"
-                )
+                assertThat(output).contains("Successfully generated HTML report")
+                assertThat(output).containsPattern(htmlReportPattern)
             }
         }
 
@@ -161,17 +163,13 @@ object MarkdownLintPluginTest : Spek({
             }
 
             Then("no xml report generated") {
-                assertThat(output).doesNotContain(
-                    "Successfully generated Checkstyle XML report",
-                    "build/reports/markdownlint/markdownlint.xml"
-                )
+                assertThat(output).doesNotContain("Successfully generated Checkstyle XML report")
+                assertThat(output).doesNotContainPattern(xmlReportPattern)
             }
 
             And("no html report generated") {
-                assertThat(output).doesNotContain(
-                    "Successfully generated HTML report",
-                    "build/reports/markdownlint/markdownlint.html"
-                )
+                assertThat(output).doesNotContain("Successfully generated HTML report")
+                assertThat(output).doesNotContainPattern(htmlReportPattern)
             }
         }
 
@@ -191,17 +189,13 @@ object MarkdownLintPluginTest : Spek({
             }
 
             Then("no xml report generated") {
-                assertThat(output).doesNotContain(
-                    "Successfully generated Checkstyle XML report",
-                    "build/reports/markdownlint/markdownlint.xml"
-                )
+                assertThat(output).doesNotContain("Successfully generated Checkstyle XML report")
+                assertThat(output).doesNotContainPattern(xmlReportPattern)
             }
 
             And("html report generated") {
-                assertThat(output).contains(
-                    "Successfully generated HTML report",
-                    "build/reports/markdownlint/markdownlint.html"
-                )
+                assertThat(output).contains("Successfully generated HTML report")
+                assertThat(output).containsPattern(htmlReportPattern)
             }
         }
 
@@ -221,17 +215,13 @@ object MarkdownLintPluginTest : Spek({
             }
 
             Then("xml report generated") {
-                assertThat(output).contains(
-                    "Successfully generated Checkstyle XML report",
-                    "build/reports/markdownlint/markdownlint.xml"
-                )
+                assertThat(output).contains("Successfully generated Checkstyle XML report")
+                assertThat(output).containsPattern(xmlReportPattern)
             }
 
             And("no html report generated") {
-                assertThat(output).doesNotContain(
-                    "Successfully generated HTML report",
-                    "build/reports/markdownlint/markdownlint.html"
-                )
+                assertThat(output).doesNotContain("Successfully generated HTML report")
+                assertThat(output).doesNotContainPattern(htmlReportPattern)
             }
         }
 
@@ -461,7 +451,6 @@ private fun TemporaryFolder.createPluginConfigurationWithIncreasedThreshold() = 
 private fun TemporaryFolder.createPluginConfigurationWithXmlReportOnly() = createFile("markdownlint.kts") {
     """
     import com.appmattus.markdown.dsl.markdownLintConfig
-    import com.appmattus.markdown.rules.FirstHeaderH1Rule
 
     markdownLintConfig {
         reports {
@@ -474,7 +463,6 @@ private fun TemporaryFolder.createPluginConfigurationWithXmlReportOnly() = creat
 private fun TemporaryFolder.createPluginConfigurationWithHtmlReportOnly() = createFile("markdownlint.kts") {
     """
     import com.appmattus.markdown.dsl.markdownLintConfig
-    import com.appmattus.markdown.rules.FirstHeaderH1Rule
 
     markdownLintConfig {
         reports {
@@ -487,7 +475,6 @@ private fun TemporaryFolder.createPluginConfigurationWithHtmlReportOnly() = crea
 private fun TemporaryFolder.createPluginConfigurationWithNoReports() = createFile("markdownlint.kts") {
     """
     import com.appmattus.markdown.dsl.markdownLintConfig
-    import com.appmattus.markdown.rules.FirstHeaderH1Rule
 
     markdownLintConfig {
         reports {

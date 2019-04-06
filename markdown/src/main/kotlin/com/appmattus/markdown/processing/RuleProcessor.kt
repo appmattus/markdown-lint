@@ -8,6 +8,7 @@ import com.appmattus.markdown.checkstyle.XMLLogger
 import com.appmattus.markdown.dsl.MarkdownLintConfig
 import com.appmattus.markdown.dsl.Report
 import com.appmattus.markdown.errors.Error
+import com.appmattus.markdown.filter.MultiPathFilter
 import com.appmattus.markdown.plugin.BuildFailure
 import com.appmattus.markdown.rules.AllRules
 import java.io.ByteArrayOutputStream
@@ -19,12 +20,12 @@ import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
 import javax.xml.transform.stream.StreamSource
 
-class RuleProcessor {
+class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
 
-    fun process(configFile: File?, rootDir: File, reportsDir: File, summaryStream: PrintStream? = null) {
+    fun process(configFile: File?, summaryStream: PrintStream? = null) {
         val config = configFile?.evaluate() ?: MarkdownLintConfig.Builder().build()
 
-        val markdownFiles = rootDir.listMarkdownFiles()
+        val markdownFiles = rootDir.listMarkdownFiles(config)
         val fileErrors = markdownFiles.scanForErrors(config)
 
         summaryStream?.summariseErrors(markdownFiles, fileErrors)
@@ -97,9 +98,7 @@ class RuleProcessor {
         }
     }
 
-    private fun List<File>.scanForErrors(
-        config: MarkdownLintConfig
-    ): Map<File, List<Error>> {
+    private fun List<File>.scanForErrors(config: MarkdownLintConfig): Map<File, List<Error>> {
 
         val rules = AllRules(config).rules
 
@@ -111,16 +110,27 @@ class RuleProcessor {
                 parser.parse(file.readText(Charsets.UTF_8))
             )
             rules.flatMap { rule ->
-                rule.processDocument(document)
+                val includes = MultiPathFilter(rule.configuration.includes, rootDir.toPath())
+                val excludes = MultiPathFilter(rule.configuration.excludes, rootDir.toPath())
+
+                if (includes.matches(file.toPath()) && !excludes.matches(file.toPath())) {
+                    rule.processDocument(document)
+                } else {
+                    emptyList()
+                }
             }
         }.filterValues { it.isNotEmpty() }
     }
 
-    private fun File.listMarkdownFiles(): List<File> {
+    private fun File.listMarkdownFiles(config: MarkdownLintConfig): List<File> {
+        val includes = MultiPathFilter(config.includes, toPath())
+        val excludes = MultiPathFilter(config.excludes, toPath())
+
         return walk()
             .onEnter { it.name != "build" && !it.name.startsWith(".") }
             .filter { it.isFile }
             .filter { it.extension == "md" || it.extension == "markdown" }
+            .filter { includes.matches(it.toPath()) && !excludes.matches(it.toPath()) }
             .toList()
     }
 
