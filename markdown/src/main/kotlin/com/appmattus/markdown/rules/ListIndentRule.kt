@@ -1,10 +1,13 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.extentions.indent
-import com.appmattus.markdown.rules.extentions.level
+import com.vladsch.flexmark.ast.BulletListItem
+import com.vladsch.flexmark.ast.ListItem
+import com.vladsch.flexmark.ast.OrderedListItem
+import com.vladsch.flexmark.util.ast.Node
 
 /**
  * # Inconsistent indentation for list items at the same level
@@ -32,6 +35,8 @@ class ListIndentRule(
     override val description = "Inconsistent indentation for list items at the same level"
     override val tags = listOf("bullet", "ul", "indentation")
 
+    private data class ItemLevel(val indentLevel: Int, var ordered: ItemLevel? = null, var unordered: ItemLevel? = null)
+
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         val bullets = document.listItems
@@ -40,17 +45,28 @@ class ListIndentRule(
             return
         }
 
-        val indentLevels = mutableMapOf<Int, Int>()
+        val root = ItemLevel(0)
 
         bullets.forEach { b ->
 
-            val indentLevel = b.indent()
+            val hierarchy = listItemHierarchy(b)
 
-            if (!indentLevels.containsKey(b.level())) {
-                indentLevels[b.level()] = indentLevel
-            } else if (indentLevel != indentLevels[b.level()]) {
+            var cur = root
+            hierarchy.forEach {
+                cur = when (it) {
+                    is BulletListItem -> (cur.unordered ?: ItemLevel(it.indent())).also { cur.unordered = it }
+                    is OrderedListItem -> (cur.ordered ?: ItemLevel(it.indent())).also { cur.ordered = it }
+                    else -> throw IllegalStateException()
+                }
+            }
+
+            if (cur.indentLevel != b.indent()) {
                 errorReporter.reportError(b.startOffset, b.endOffset, description)
             }
         }
     }
+
+    private fun listItemHierarchy(leafItem: ListItem) = generateSequence(leafItem as Node) {
+        it.parent
+    }.filterIsInstance(ListItem::class.java).toList().asReversed()
 }
