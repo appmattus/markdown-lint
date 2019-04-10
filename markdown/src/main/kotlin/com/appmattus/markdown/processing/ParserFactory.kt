@@ -2,6 +2,7 @@ package com.appmattus.markdown.processing
 
 import com.vladsch.flexmark.ext.autolink.AutolinkExtension
 import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension
+import com.vladsch.flexmark.ext.gfm.tasklist.TaskListExtension
 import com.vladsch.flexmark.ext.tables.TablesExtension
 import com.vladsch.flexmark.parser.Parser
 import com.vladsch.flexmark.util.options.MutableDataSet
@@ -18,7 +19,8 @@ internal object ParserFactory {
             listOf(
                 TablesExtension.create(),
                 StrikethroughExtension.create(),
-                AutolinkExtension.create()
+                AutolinkExtension.create(),
+                TaskListExtension.create()
             )
         ).build()
     }

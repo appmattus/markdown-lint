@@ -79,3 +79,7 @@ code fence without language {FencedCodeLanguageRule:73}
 markdownLint {ProperNamesRule}
 
 ![](image.jpg) {MD045}
+
+- [ ] First task item
+- [x] Second item
+- [X] Third inconsistent item
