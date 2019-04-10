@@ -87,10 +87,14 @@ class ListMarkerSpaceRule(
                 else -> throw IllegalStateException()
             }
 
-            listBlock.children.forEach {
-                it as ListItem
-                if (it.firstChild.startOffset - it.openingMarker.endOffset != indent) {
-                    errorReporter.reportError(it.startOffset, it.endOffset, description)
+            listBlock.children.forEach { item ->
+                item as ListItem
+
+                // For task lists we look at the marker suffix as the opening content
+                val startContent = item.markerSuffix.takeIf(CharSequence::isNotEmpty) ?: item.firstChild.chars
+
+                if (startContent.startOffset - item.openingMarker.endOffset != indent) {
+                    errorReporter.reportError(item.startOffset, item.endOffset, description)
                 }
             }
         }
