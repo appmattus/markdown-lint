@@ -81,5 +81,8 @@ markdownLint {ProperNamesRule}
 ![](image.jpg) {MD045}
 
 - [ ] First task item
-- [x] Second item
+-  [x] Second item {ListMarkerSpaceRule}
 - [X] Third inconsistent item {ConsistentTaskListMarkerStyleRule}
+
+- [x] An item
+- [x]  Another item
