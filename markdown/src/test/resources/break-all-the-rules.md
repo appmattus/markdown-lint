@@ -82,4 +82,4 @@ markdownLint {ProperNamesRule}
 
 - [ ] First task item
 - [x] Second item
-- [X] Third inconsistent item
+- [X] Third inconsistent item {ConsistentTaskListMarkerStyleRule}

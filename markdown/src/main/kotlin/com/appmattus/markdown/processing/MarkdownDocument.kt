@@ -24,6 +24,7 @@ import com.vladsch.flexmark.ast.Paragraph
 import com.vladsch.flexmark.ast.Reference
 import com.vladsch.flexmark.ast.Text
 import com.vladsch.flexmark.ast.ThematicBreak
+import com.vladsch.flexmark.ext.gfm.tasklist.TaskListItem
 import com.vladsch.flexmark.ext.tables.TableBlock
 import com.vladsch.flexmark.util.ast.Block
 import com.vladsch.flexmark.util.ast.Document
@@ -39,6 +40,7 @@ class MarkdownDocument(val filename: String, val document: Document) {
     val htmlElements: List<Node>  by lazy { document.find(HtmlBlock::class, HtmlInline::class) }
     val orderedListItems: List<OrderedListItem> by lazy { document.find(OrderedListItem::class) }
     val unorderedListItems: List<BulletListItem> by lazy { document.find(BulletListItem::class) }
+    val taskListItems: List<TaskListItem> by lazy { document.find(TaskListItem::class) }
     val listItems: List<ListItem> by lazy { document.find(OrderedListItem::class, BulletListItem::class) }
 
     val listBlocks: List<ListBlock> by lazy { document.find(OrderedList::class, BulletList::class) }

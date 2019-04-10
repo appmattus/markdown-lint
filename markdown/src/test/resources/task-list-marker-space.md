@@ -1,5 +1,5 @@
-# Ensure task list spacing is okay
+# Ensure task list is okay
 
 - [ ] First task item
 - [x] Second item
-- [X] Third inconsistent item
+- [X] Third inconsistent item {ConsistentTaskListMarkerStyleRule}
