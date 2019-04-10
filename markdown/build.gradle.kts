@@ -44,6 +44,7 @@ dependencies {
     api("com.vladsch.flexmark:flexmark-ext-tables:0.40.20")
     api("com.vladsch.flexmark:flexmark-ext-gfm-strikethrough:0.40.20")
     api("com.vladsch.flexmark:flexmark-ext-autolink:0.40.20")
+    api("com.vladsch.flexmark:flexmark-ext-gfm-tasklist:0.40.20")
 
     testImplementation(kotlin("test"))
     testImplementation(gradleTestKit())

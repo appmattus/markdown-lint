@@ -79,3 +79,11 @@ code fence without language {FencedCodeLanguageRule:73}
 markdownLint {ProperNamesRule}
 
 ![](image.jpg) {MD045}
+
+- [ ] First task item
+-  [x] Second item {ListMarkerSpaceRule}
+- [X] Third inconsistent item {ConsistentTaskListMarkerStyleRule}
+
+- [x] An item
+- [x]  Another item {TaskListMarkerSpaceRule}
+- [x]Not enough space {TaskListMarkerSpaceRule}
