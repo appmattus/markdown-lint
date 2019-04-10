@@ -27,7 +27,6 @@ class NoSpaceInCodeRule(
 ) : Rule() {
 
     override val description = "Spaces inside code span elements"
-    override val tags = listOf("whitespace", "code")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.inlineCode.forEach {

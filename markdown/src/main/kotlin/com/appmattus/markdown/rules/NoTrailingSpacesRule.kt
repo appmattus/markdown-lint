@@ -25,7 +25,6 @@ class NoTrailingSpacesRule(
 ) : Rule() {
 
     override val description = "Trailing spaces"
-    override val tags = listOf("whitespace")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.lines.forEach {

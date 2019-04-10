@@ -33,7 +33,6 @@ class NoEmptyLinksRule(
 ) : Rule() {
 
     override val description = "No empty links"
-    override val tags = listOf("links")
 
     private val emptyLinkRegex = Regex("#?|(?:<>)")
 

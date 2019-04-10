@@ -31,7 +31,6 @@ class HeaderStartLeftRule(
 ) : Rule() {
 
     override val description = "Headers must start at the beginning of the line"
-    override val tags = listOf("headers", "spaces")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.filterNot { it.parent is ListItem }.forEach { heading ->

@@ -49,7 +49,6 @@ class BlanksAroundListsRule(
 ) : Rule() {
 
     override val description = "Lists should be surrounded by blank lines"
-    override val tags = listOf("bullet", "ul", "ol", "blank_lines")
 
     private val fenceRegEx = Regex("^(`{3,}|~{3,})")
     private val listRegEx = Regex("^([*+\\-]|(\\d+\\.))\\s")

@@ -29,7 +29,6 @@ class NoBareUrlsRule(
 ) : Rule() {
 
     override val description = "Bare URL used"
-    override val tags = listOf("links", "url")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.autoLinks.forEach {

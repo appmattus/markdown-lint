@@ -43,7 +43,6 @@ class UlStartLeftRule(
 ) : Rule() {
 
     override val description = "Consider starting bulleted lists at the beginning of the line"
-    override val tags = listOf("bullet", "ul", "indentation")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.topLevelListBlocks.forEach {

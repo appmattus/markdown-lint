@@ -46,7 +46,6 @@ class NoDuplicateHeaderRule(
 ) : Rule() {
 
     override val description = "Multiple headers with the same content"
-    override val tags = listOf("headers")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         if (!allowDifferentNesting) {

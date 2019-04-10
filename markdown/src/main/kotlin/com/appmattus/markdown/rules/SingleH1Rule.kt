@@ -39,7 +39,6 @@ class SingleH1Rule(
 ) : Rule() {
 
     override val description = "Multiple top level headers in the same document"
-    override val tags = listOf("headers")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val headers = document.headings.filterNot { it.parent is ListItem }.filter { it.level == level }

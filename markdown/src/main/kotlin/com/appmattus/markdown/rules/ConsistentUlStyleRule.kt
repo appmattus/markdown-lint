@@ -34,7 +34,6 @@ class ConsistentUlStyleRule(
 ) : Rule() {
 
     override val description = "Unordered list style"
-    override val tags = listOf("bullet", "ul")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 

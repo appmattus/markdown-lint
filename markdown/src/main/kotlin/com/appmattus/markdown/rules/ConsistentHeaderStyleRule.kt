@@ -47,7 +47,6 @@ class ConsistentHeaderStyleRule(
 ) : Rule() {
 
     override val description = "Header style"
-    override val tags = listOf("headers")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 

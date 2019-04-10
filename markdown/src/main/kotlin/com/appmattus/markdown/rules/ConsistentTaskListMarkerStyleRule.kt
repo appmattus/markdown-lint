@@ -30,7 +30,6 @@ class ConsistentTaskListMarkerStyleRule(
 ) : Rule() {
 
     override val description = "Task list item marker style"
-    override val tags = listOf("task-list", "ul")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 

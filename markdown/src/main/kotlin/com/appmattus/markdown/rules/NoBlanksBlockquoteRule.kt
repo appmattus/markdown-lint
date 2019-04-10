@@ -41,7 +41,6 @@ class NoBlanksBlockquoteRule(
 ) : Rule() {
 
     override val description = "Blank line inside blockquote"
-    override val tags = listOf("blockquote", "whitespace")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.blockQuotes.filter { it.next is BlockQuote }.forEach {

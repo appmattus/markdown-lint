@@ -29,7 +29,6 @@ class NoMultipleSpaceAtxRule(
 ) : Rule() {
 
     override val description = "Multiple spaces after hash on atx style header"
-    override val tags = listOf("headers", "atx", "spaces")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.forEach { heading ->

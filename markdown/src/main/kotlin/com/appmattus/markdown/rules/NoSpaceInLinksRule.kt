@@ -22,7 +22,6 @@ class NoSpaceInLinksRule(
 ) : Rule() {
 
     override val description = "Spaces inside link text"
-    override val tags = listOf("whitespace", "links")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.links.forEach {

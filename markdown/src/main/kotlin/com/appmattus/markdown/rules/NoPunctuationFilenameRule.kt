@@ -39,7 +39,6 @@ class NoPunctuationFilenameRule(
 ) : Rule() {
 
     override val description = "Filenames must not contain punctuation"
-    override val tags = listOf("file_name")
 
     private val punctuationRegex = Regex("[${Regex.escape(punctuation)}]")
 

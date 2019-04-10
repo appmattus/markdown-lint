@@ -25,7 +25,6 @@ class NoInlineHtmlRule(
 ) : Rule() {
 
     override val description = "Inline HTML"
-    override val tags = listOf("html")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.htmlElements.forEach {

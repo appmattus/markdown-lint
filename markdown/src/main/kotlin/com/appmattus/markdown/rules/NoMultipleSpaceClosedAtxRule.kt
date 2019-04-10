@@ -31,7 +31,6 @@ class NoMultipleSpaceClosedAtxRule(
 ) : Rule() {
 
     override val description = "Multiple spaces inside hashes on closed atx style header"
-    override val tags = listOf("headers", "atx_closed", "spaces")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.forEach { heading ->

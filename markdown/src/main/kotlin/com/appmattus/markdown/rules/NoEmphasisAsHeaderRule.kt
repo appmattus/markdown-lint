@@ -43,7 +43,6 @@ class NoEmphasisAsHeaderRule(
 ) : Rule() {
 
     override val description = "Emphasis used instead of a header"
-    override val tags = listOf("headers", "emphasis")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 

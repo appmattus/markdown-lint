@@ -38,7 +38,6 @@ class NoSurroundingHyphensFilenameRule(
 ) : Rule() {
 
     override val description = "Filenames must not be wrapped by hyphens"
-    override val tags = listOf("file_name")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 

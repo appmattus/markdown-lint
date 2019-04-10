@@ -37,7 +37,6 @@ class BlanksAroundHeadersRule(
 ) : Rule() {
 
     override val description = "Headers should be surrounded by blank lines"
-    override val tags = listOf("headers", "blank_lines")
 
     private val whitespaceRegex = Regex("\\s*")
 

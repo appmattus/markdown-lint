@@ -70,7 +70,6 @@ class ListMarkerSpaceRule(
 ) : Rule() {
 
     override val description = "Spaces after list markers"
-    override val tags = listOf("ol", "ul", "whitespace")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 

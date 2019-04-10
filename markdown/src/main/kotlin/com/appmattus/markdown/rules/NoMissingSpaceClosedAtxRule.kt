@@ -30,7 +30,6 @@ class NoMissingSpaceClosedAtxRule(
 ) : Rule() {
 
     override val description = "No space inside hashes on closed atx style header"
-    override val tags = listOf("headers", "atx_closed", "spaces")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.forEach { heading ->

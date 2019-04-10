@@ -42,7 +42,6 @@ class NoSpaceInEmphasisRule(
 ) : Rule() {
 
     override val description = "Spaces inside emphasis markers"
-    override val tags = listOf("whitespace", "emphasis")
 
     private val startRegex = Regex("\\s(\\*\\*?|__?)\\s.+\\1")
     private val endRegex = Regex("(\\*\\*?|__?).+\\s\\1\\s")

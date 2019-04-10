@@ -43,7 +43,6 @@ class UlIndentRule(
 ) : Rule() {
 
     override val description = "Unordered list indentation"
-    override val tags = listOf("bullet", "ul", "indentation")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.unorderedListItems.forEach {

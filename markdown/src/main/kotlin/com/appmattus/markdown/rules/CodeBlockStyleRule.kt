@@ -40,7 +40,6 @@ class CodeBlockStyleRule(
 ) : Rule() {
 
     override val description = "Code block style"
-    override val tags = listOf("code")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val codeBlocks = document.codeBlocks

@@ -27,7 +27,6 @@ class FirstHeaderH1Rule(
 ) : Rule() {
 
     override val description = "First header should be a top level header"
-    override val tags = listOf("headers")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.firstOrNull()?.let {

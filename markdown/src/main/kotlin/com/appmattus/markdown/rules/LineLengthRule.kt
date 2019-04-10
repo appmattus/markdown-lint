@@ -37,7 +37,6 @@ class LineLengthRule(
     private val terminatingPunctuationRegex = Regex("[${Regex.escape(punctuation)}]?\\s*")
 
     override val description = "Line length"
-    override val tags = listOf("line_length")
 
     private data class AllowedBlock(val startOffset: Int, val endOffset: Int, val lineNumber: Int)
 

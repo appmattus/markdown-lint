@@ -28,7 +28,6 @@ class NoTrailingPunctuationRule(
 ) : Rule() {
 
     override val description = "Trailing punctuation in header"
-    override val tags = listOf("headers")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.filterNot { it.parent is ListItem }.filter { heading ->

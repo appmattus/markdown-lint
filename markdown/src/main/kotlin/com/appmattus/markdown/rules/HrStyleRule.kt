@@ -40,7 +40,6 @@ class HrStyleRule(
 ) : Rule() {
 
     override val description = "Horizontal rule style"
-    override val tags = listOf("hr")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val hr = document.horizontalRules

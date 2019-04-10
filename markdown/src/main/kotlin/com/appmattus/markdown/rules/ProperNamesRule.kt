@@ -39,7 +39,6 @@ class ProperNamesRule(
 ) : Rule() {
 
     override val description = "Proper names should have the correct capitalization"
-    override val tags = listOf("spelling")
 
     private val linkExtractor = LinkExtractor.builder().build()
 

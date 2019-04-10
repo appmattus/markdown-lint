@@ -36,7 +36,6 @@ class HeaderIncrementRule(
 ) : Rule() {
 
     override val description = "Header levels should only increment by one level at a time"
-    override val tags = listOf("headers")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         var oldLevel: Int? = null

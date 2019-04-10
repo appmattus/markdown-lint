@@ -25,7 +25,6 @@ class NoMultipleSpaceBlockquoteRule(
 ) : Rule() {
 
     override val description = "Multiple spaces after blockquote symbol"
-    override val tags = listOf("blockquote", "whitespace", "indentation")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.blockQuotes.map { it.firstChild as Paragraph }.forEach { paragraph ->

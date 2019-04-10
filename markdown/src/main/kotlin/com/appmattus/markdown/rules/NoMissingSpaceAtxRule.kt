@@ -28,7 +28,6 @@ class NoMissingSpaceAtxRule(
 ) : Rule() {
 
     override val description = "No space after hash on atx style header"
-    override val tags = listOf("headers", "atx", "spaces")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.forEach { heading ->

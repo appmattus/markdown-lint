@@ -23,7 +23,6 @@ class NoReversedLinksRule(
 ) : Rule() {
 
     override val description = "Reversed link syntax"
-    override val tags = listOf("links")
 
     private val regex = Regex("\\([^)]+\\)$")
 

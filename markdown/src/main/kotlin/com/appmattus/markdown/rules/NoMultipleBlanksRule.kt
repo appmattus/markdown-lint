@@ -29,7 +29,6 @@ class NoMultipleBlanksRule(
 ) : Rule() {
 
     override val description = "Multiple consecutive blank lines"
-    override val tags = listOf("whitespace", "blank_lines")
 
     private val regex = Regex("^\\s*(\r?\n|\n)\\s*(\r?\n|\n|$)", RegexOption.MULTILINE)
 

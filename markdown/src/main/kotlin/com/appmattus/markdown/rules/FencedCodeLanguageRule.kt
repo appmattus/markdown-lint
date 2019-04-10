@@ -28,7 +28,6 @@ class FencedCodeLanguageRule(
 ) : Rule() {
 
     override val description = "Fenced code blocks should have a language specified"
-    override val tags = listOf("code", "language")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.fencedCodeBlocks.forEach {

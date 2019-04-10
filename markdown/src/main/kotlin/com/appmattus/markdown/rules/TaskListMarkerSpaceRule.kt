@@ -25,7 +25,6 @@ class TaskListMarkerSpaceRule(
 ) : Rule() {
 
     override val description = "Spaces after task list markers"
-    override val tags = listOf("task-list", "ul", "whitespace")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 

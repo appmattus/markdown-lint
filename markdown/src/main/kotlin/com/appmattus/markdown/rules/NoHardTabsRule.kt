@@ -29,7 +29,6 @@ class NoHardTabsRule(
 ) : Rule() {
 
     override val description = "Hard tabs"
-    override val tags = listOf("whitespace", "hard_tab")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.chars.indexOfAll("\t").forEach {

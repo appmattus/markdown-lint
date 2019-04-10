@@ -45,7 +45,6 @@ class BlanksAroundFencesRule(
 ) : Rule() {
 
     override val description = "Fenced code blocks should be surrounded by blank lines"
-    override val tags = listOf("code", "blank_lines")
 
     private val fenceRegEx = Regex("^(`{3,}|~{3,})")
 

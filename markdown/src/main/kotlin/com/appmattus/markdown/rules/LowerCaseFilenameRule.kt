@@ -39,7 +39,6 @@ class LowerCaseFilenameRule(
 ) : Rule() {
 
     override val description = "Filenames must be all lowercase"
-    override val tags = listOf("file_name")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         if (document.filename.toLowerCase() != document.filename && !exclusions.contains(document.filename)) {

@@ -38,7 +38,6 @@ class NoConsecutiveHyphensFilenameRule(
 ) : Rule() {
 
     override val description = "Filenames must not contain consecutive hyphens"
-    override val tags = listOf("file_name")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 

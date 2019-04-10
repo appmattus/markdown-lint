@@ -38,7 +38,6 @@ class NoWhitespaceFilenameRule(
 ) : Rule() {
 
     override val description = "Filenames must not contain whitespace"
-    override val tags = listOf("file_name")
 
     private val whitespace = "\\s".toRegex()
 

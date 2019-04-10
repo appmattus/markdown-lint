@@ -41,7 +41,6 @@ class CommandsShowOutputRule(
 ) : Rule() {
 
     override val description = "Dollar signs used before commands without showing output"
-    override val tags = listOf("code")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.codeBlocks.forEach { block ->

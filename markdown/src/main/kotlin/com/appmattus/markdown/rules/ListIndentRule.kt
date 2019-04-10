@@ -33,7 +33,6 @@ class ListIndentRule(
 ) : Rule() {
 
     override val description = "Inconsistent indentation for list items at the same level"
-    override val tags = listOf("bullet", "ul", "indentation")
 
     private data class ItemLevel(val indentLevel: Int, var ordered: ItemLevel? = null, var unordered: ItemLevel? = null)
 

@@ -33,7 +33,6 @@ class OlPrefixRule(
 ) : Rule() {
 
     override val description = "Ordered list item prefix"
-    override val tags = listOf("ol")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         when (style) {

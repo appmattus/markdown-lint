@@ -7,7 +7,6 @@ import com.appmattus.markdown.errors.ErrorReporter
 
 abstract class Rule {
     abstract val description: String
-    abstract val tags: List<String>
 
     protected abstract fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter)
 
