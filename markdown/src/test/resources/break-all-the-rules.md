@@ -85,4 +85,5 @@ markdownLint {ProperNamesRule}
 - [X] Third inconsistent item {ConsistentTaskListMarkerStyleRule}
 
 - [x] An item
-- [x]  Another item
+- [x]  Another item {TaskListMarkerSpaceRule}
+- [x]Not enough space {TaskListMarkerSpaceRule}
