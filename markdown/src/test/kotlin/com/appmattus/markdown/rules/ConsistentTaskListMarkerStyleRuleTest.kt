@@ -10,12 +10,17 @@ object ConsistentTaskListMarkerStyleRuleTest : Spek({
         FileRuleScenario(listOf("task-list-marker-space.md")) {
             ConsistentTaskListMarkerStyleRule(TaskListItemMarkerStyle.Consistent)
         }
+
         FileRuleScenario(listOf("task-list-marker-space.md")) {
             ConsistentTaskListMarkerStyleRule(TaskListItemMarkerStyle.Lowercase)
         }
 
         FileRuleScenario(listOf("task-list-marker-space-uppercase.md")) {
             ConsistentTaskListMarkerStyleRule(TaskListItemMarkerStyle.Uppercase)
+        }
+
+        FileRuleScenario(listOf("task-list-marker-no-complete.md")) {
+            ConsistentTaskListMarkerStyleRule(TaskListItemMarkerStyle.Consistent)
         }
 
         FileRuleScenario { ConsistentTaskListMarkerStyleRule() }

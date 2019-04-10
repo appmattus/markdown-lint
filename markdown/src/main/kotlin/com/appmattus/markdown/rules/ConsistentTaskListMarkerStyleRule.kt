@@ -34,13 +34,11 @@ class ConsistentTaskListMarkerStyleRule(
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
-        val taskItems = document.taskListItems
+        val doneMarkers = document.taskListItems.filter { it.isItemDoneMarker }
 
-        if (taskItems.isEmpty()) {
+        if (doneMarkers.isEmpty()) {
             return
         }
-
-        val doneMarkers = taskItems.filter { it.isItemDoneMarker }
 
         val docStyle = if (style == TaskListItemMarkerStyle.Consistent) doneMarkers.first().style() else style
 
