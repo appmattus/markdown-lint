@@ -29,8 +29,6 @@ class ConsistentTaskListMarkerStyleRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Task list item marker style"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         val doneMarkers = document.taskListItems.filter { it.isItemDoneMarker }
@@ -39,12 +37,23 @@ class ConsistentTaskListMarkerStyleRule(
             return
         }
 
-        val docStyle = if (style == TaskListItemMarkerStyle.Consistent) doneMarkers.first().style() else style
+        val docStyle = if (style == TaskListItemMarkerStyle.Consistent) doneMarkers.first().style()!! else style
 
         doneMarkers.forEach {
             if (it.style() != docStyle) {
+                val description = "Task list marker expected in ${docStyle.description()} style but is " +
+                        "${it.style()?.description()}. Configuration: style=${style.description()}."
+
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
+        }
+    }
+
+    private fun TaskListItemMarkerStyle.description(): String {
+        return when (this) {
+            TaskListItemMarkerStyle.Consistent -> "Consistent"
+            TaskListItemMarkerStyle.Uppercase -> "Uppercase [X]"
+            TaskListItemMarkerStyle.Lowercase -> "Lowercase [x]"
         }
     }
 }

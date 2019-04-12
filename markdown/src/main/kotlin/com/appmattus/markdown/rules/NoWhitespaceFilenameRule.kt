@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 
 /**
  * # Replace white space characters by hyphens
@@ -37,12 +37,20 @@ class NoWhitespaceFilenameRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Filenames must not contain whitespace"
-
     private val whitespace = "\\s".toRegex()
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         if (document.filename.contains(whitespace)) {
+            val filename = document.filename.replace(Regex("\\.(md|markdown)$"), "")
+            val extension = document.filename.replaceFirst(filename, "")
+
+            val replacement = filename
+                .replace(whitespace, "-")
+                .replace("-{2,}".toRegex(), "-")
+                .trim('-') + extension
+
+            val description = "Filenames must not contain whitespace, for example '$replacement'."
+
             errorReporter.reportError(0, 0, description)
         }
     }

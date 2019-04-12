@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.vladsch.flexmark.ast.ListItem
 
 /**
@@ -27,12 +27,14 @@ class NoTrailingPunctuationRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Trailing punctuation in header"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.filterNot { it.parent is ListItem }.filter { heading ->
             punctuation.contains(heading.text.lastChar())
         }.forEach { heading ->
+            val replacement = heading.text.replace("[${Regex.escape(punctuation)}]+$".toRegex(), "")
+            val description = "Remove trailing punctuation in header, for example '$replacement'. Configuration: " +
+                    "punctuation=$punctuation."
+
             errorReporter.reportError(heading.startOffset, heading.endOffset, description)
         }
     }

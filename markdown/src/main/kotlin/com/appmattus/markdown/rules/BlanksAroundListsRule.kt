@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.vladsch.flexmark.util.sequence.BasedSequence
 
 /**
@@ -48,8 +48,6 @@ class BlanksAroundListsRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Lists should be surrounded by blank lines"
-
     private val fenceRegEx = Regex("^(`{3,}|~{3,})")
     private val listRegEx = Regex("^([*+\\-]|(\\d+\\.))\\s")
     private val emptyRegEx = Regex("^(\\s|$)")
@@ -63,15 +61,35 @@ class BlanksAroundListsRule(
 
         val lines = document.lines
 
+        var missingBlankAbove = false
+
         lines.forEach { line ->
             if (!inCode) {
                 val listMarker = listRegEx.find(line.trim())?.value
 
                 if (!inList && listMarker != null && !prevLine.contains(emptyRegEx)) {
-                    errorReporter.reportError(line.startOffset, line.endOffset, description)
+                    missingBlankAbove = true
                 } else if (inList && listMarker == null && !line.contains(emptyRegEx)) {
+
+                    val description = if (missingBlankAbove) {
+                        "Lists should be surrounded by blank lines. Missing blank above and below this line."
+                    } else {
+                        "Lists should be surrounded by blank lines. Missing blank below this line."
+                    }
+
                     errorReporter.reportError(prevLine.startOffset, prevLine.endOffset, description)
+
+                    missingBlankAbove = false
+                } else if (missingBlankAbove) {
+                    errorReporter.reportError(
+                        prevLine.startOffset,
+                        prevLine.endOffset,
+                        "Lists should be surrounded by blank lines. Missing blank above this line."
+                    )
+
+                    missingBlankAbove = false
                 }
+
                 inList = listMarker != null
             }
 

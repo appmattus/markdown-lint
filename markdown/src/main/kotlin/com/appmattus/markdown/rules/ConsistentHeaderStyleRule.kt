@@ -46,8 +46,6 @@ class ConsistentHeaderStyleRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Header style"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         val headings = document.headings
@@ -59,14 +57,32 @@ class ConsistentHeaderStyleRule(
 
         headings.forEach {
             if (docStyle == HeaderStyle.SetextWithAtx) {
-                if (it.style() != HeaderStyle.Setext && !(it.style() == HeaderStyle.Atx && it.level > 2)) {
+                val expectedStyle = if (it.level > 2) HeaderStyle.Atx else HeaderStyle.Setext
+
+                if (it.style() != expectedStyle) {
+                    val description = "Header expected in ${expectedStyle.description()} style but is " +
+                            "${it.style().description()}. Configuration: style=${style.description()}."
+
                     errorReporter.reportError(it.startOffset, it.endOffset, description)
                 }
             } else {
                 if (it.style() != docStyle) {
+                    val description = "Header expected in ${docStyle.description()} style but is " +
+                            "${it.style().description()}. Configuration: style=${style.description()}."
+
                     errorReporter.reportError(it.startOffset, it.endOffset, description)
                 }
             }
+        }
+    }
+
+    private fun HeaderStyle.description(): String {
+        return when (this) {
+            HeaderStyle.Consistent -> "Consistent"
+            HeaderStyle.Atx -> "Atx"
+            HeaderStyle.AtxClosed -> "AtxClosed"
+            HeaderStyle.Setext -> "Setext"
+            HeaderStyle.SetextWithAtx -> "SetextWithAtx"
         }
     }
 }

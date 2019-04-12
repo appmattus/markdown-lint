@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 
 /**
  * # Spaces inside link text
@@ -21,13 +21,20 @@ class NoSpaceInLinksRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Spaces inside link text"
+    private val openingMarkerRegex = "\\[\\s+".toRegex()
+    private val closingMarkerRegex = "\\s+]".toRegex()
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.links.forEach {
             if (it.textOpeningMarker.endOffset != it.text.startOffset ||
                 it.textClosingMarker.startOffset != it.text.endOffset
             ) {
+                val replacement = it.chars
+                    .replaceFirst(openingMarkerRegex, "[")
+                    .replaceFirst(closingMarkerRegex, "]")
+
+                val description = "Remove spaces inside link text, for example '$replacement'."
+
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
         }

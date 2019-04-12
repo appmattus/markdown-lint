@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 
 /**
  * # Header levels should only increment by one level at a time
@@ -35,13 +35,13 @@ class HeaderIncrementRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Header levels should only increment by one level at a time"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         var oldLevel: Int? = null
 
         document.headings.forEach { heading ->
             if (oldLevel?.let { heading.level > it + 1 } == true) {
+                val description = "Header levels should only increment one level at a time. This should be a level " +
+                        "${oldLevel!! + 1} header."
                 errorReporter.reportError(heading.startOffset, heading.endOffset, description)
             }
             oldLevel = heading.level

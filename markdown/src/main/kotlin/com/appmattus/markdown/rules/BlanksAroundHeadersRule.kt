@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.vladsch.flexmark.ast.ListItem
 
 /**
@@ -36,28 +36,28 @@ class BlanksAroundHeadersRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Headers should be surrounded by blank lines"
-
     private val whitespaceRegex = Regex("\\s*")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.filterNot { it.parent is ListItem }.forEach { heading ->
 
-            var isValid = true
-            if (heading.startLineNumber > 0) {
-                if (!document.lines[heading.startLineNumber - 1].matches(whitespaceRegex)) {
-                    isValid = false
-                }
+            val prefixLineNotEmpty =
+                heading.startLineNumber > 0 && !document.lines[heading.startLineNumber - 1].matches(whitespaceRegex)
+
+            val suffixLineNotEmpty = heading.endLineNumber < document.lines.size - 2
+                    && !document.lines[heading.endLineNumber + 1].matches(whitespaceRegex)
+
+            val description = when {
+                prefixLineNotEmpty && suffixLineNotEmpty ->
+                    "Headers should be surrounded by blank lines. Missing blank above and below this header."
+                prefixLineNotEmpty ->
+                    "Headers should be surrounded by blank lines. Missing blank above this header."
+                suffixLineNotEmpty ->
+                    "Headers should be surrounded by blank lines. Missing blank below this header."
+                else -> null
             }
 
-            //heading.startLineNumber
-            if (heading.endLineNumber < document.lines.size - 2) {
-                if (!document.lines[heading.endLineNumber + 1].matches(whitespaceRegex)) {
-                    isValid = false
-                }
-            }
-
-            if (!isValid) {
+            if (description != null) {
                 errorReporter.reportError(heading.startOffset, heading.endOffset, description)
             }
         }

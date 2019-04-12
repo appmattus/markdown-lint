@@ -69,8 +69,6 @@ class ListMarkerSpaceRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Spaces after list markers"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         document.listBlocks.forEach { listBlock ->
@@ -93,6 +91,9 @@ class ListMarkerSpaceRule(
                 val startContent = item.markerSuffix.takeIf(CharSequence::isNotEmpty) ?: item.firstChild.chars
 
                 if (startContent.startOffset - item.openingMarker.endOffset != indent) {
+                    val description = "Ensure $indent spaces after list marker. Configuration: ulSingle=$ulSingle, " +
+                            "olSingle=$olSingle, ulMulti=$ulMulti, olMulti=$olMulti."
+
                     errorReporter.reportError(item.startOffset, item.endOffset, description)
                 }
             }

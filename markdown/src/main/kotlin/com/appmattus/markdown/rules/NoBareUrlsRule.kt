@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 
 /**
  * # Bare URL used
@@ -28,11 +28,10 @@ class NoBareUrlsRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Bare URL used"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.autoLinks.forEach {
             if (it.openingMarker.isEmpty && it.closingMarker.isEmpty) {
+                val description = "Wrap bare URL in angle brackets, for example '<${it.url}>'."
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
         }

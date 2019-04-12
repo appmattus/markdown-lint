@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.config.HeaderStyle
 import com.appmattus.markdown.rules.extentions.style
 
@@ -28,12 +28,12 @@ class NoMultipleSpaceAtxRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Multiple spaces after hash on atx style header"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.forEach { heading ->
             if (heading.style() == HeaderStyle.Atx) {
                 if (heading.text.startOffset - heading.openingMarker.endOffset > 1) {
+                    val description = "Multiple spaces after hash on atx style header, for example change " +
+                            "to '${heading.openingMarker} ${heading.text}'."
                     errorReporter.reportError(heading.startOffset, heading.endOffset, description)
                 }
             }

@@ -42,8 +42,6 @@ class UlIndentRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Unordered list indentation"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.unorderedListItems.forEach {
             val parentListItem = it.parentListItemOrNull()
@@ -60,6 +58,12 @@ class UlIndentRule(
             val actualMarkerPos = document.chars.getColumnAtIndex(it.openingMarker.startOffset)
 
             if (expectedMarkerPos != actualMarkerPos) {
+
+                val description =
+                    "Indent nested unordered list items $indent characters from their parent, for example '${" ".repeat(
+                        expectedMarkerPos
+                    )}${it.openingMarker}'. Configuration: indent=$indent."
+
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
         }

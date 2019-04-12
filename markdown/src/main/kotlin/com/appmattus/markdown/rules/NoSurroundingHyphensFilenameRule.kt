@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 
 /**
  * # Strip surrounding hyphens
@@ -37,13 +37,15 @@ class NoSurroundingHyphensFilenameRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Filenames must not be wrapped by hyphens"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         val filename = document.filename.replace(Regex("\\.(md|markdown)$"), "")
 
         if (filename.startsWith("-") || filename.endsWith("-")) {
+            val extension = document.filename.replaceFirst(filename, "")
+            val replacement = filename.trim('-') + extension
+            val description = "Filenames must not be wrapped by hyphens, for example '$replacement'."
+
             errorReporter.reportError(0, 0, description)
         }
     }

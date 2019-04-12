@@ -3,3 +3,5 @@
 - [ ]  First task item {TaskListMarkerSpaceRule}
 - [x]Second item {TaskListMarkerSpaceRule}
 - [X] Third inconsistent item {ConsistentTaskListMarkerStyleRule}
+- [ ]        
+- [ ]

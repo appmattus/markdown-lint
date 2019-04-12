@@ -24,13 +24,14 @@ class TaskListMarkerSpaceRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Spaces after task list markers"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         document.taskListItems.forEach { item ->
+            if (item.firstChild != null && item.firstChild.startOffset - item.markerSuffix.endOffset != indent) {
+                val firstLine = item.firstChild.chars.lineSequence().iterator().next()
+                val description = "Ensure $indent space characters after task list markers, for example " +
+                        "'${item.markerSuffix}${" ".repeat(indent)}$firstLine'. Configuration: indent=$indent."
 
-            if (item.firstChild.startOffset - item.markerSuffix.endOffset != indent) {
                 errorReporter.reportError(item.startOffset, item.endOffset, description)
             }
         }

@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.extentions.indent
 
 /**
@@ -42,11 +42,12 @@ class UlStartLeftRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Consider starting bulleted lists at the beginning of the line"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.topLevelListBlocks.forEach {
             if (it.indent() != 0) {
+                val description = "Start bullet list items at the start of the line, currently indented " +
+                        "${it.indent()} characters."
+
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
         }

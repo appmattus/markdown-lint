@@ -33,8 +33,6 @@ class ConsistentUlStyleRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Unordered list style"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         val bullets = document.unorderedListItems
@@ -47,8 +45,20 @@ class ConsistentUlStyleRule(
 
         bullets.forEach {
             if (it.style() != docStyle) {
+                val description = "Unordered list item expected in ${docStyle.description()} style but is " +
+                        "${it.style().description()}. Configuration: style=${style.description()}."
+
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
+        }
+    }
+
+    private fun UnorderedListStyle.description(): String {
+        return when (this) {
+            UnorderedListStyle.Consistent -> "Consistent"
+            UnorderedListStyle.Asterisk -> "Asterisk '*'"
+            UnorderedListStyle.Plus -> "Plus '+'"
+            UnorderedListStyle.Dash -> "Dash '-'"
         }
     }
 }

@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.vladsch.flexmark.ast.AutoLink
 import com.vladsch.flexmark.ast.Code
 import com.vladsch.flexmark.ast.Link
@@ -32,13 +32,15 @@ class ProperNamesRule(
         "Node.js",
         "GitHub",
         "npm",
-        "Internet Explorer"
+        "Internet Explorer",
+        "Java",
+        "Android Studio",
+        "IntelliJ IDEA",
+        "IntelliJ"
     ),
     private val codeBlocks: Boolean = false,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
-
-    override val description = "Proper names should have the correct capitalization"
 
     private val linkExtractor = LinkExtractor.builder().build()
 
@@ -75,6 +77,13 @@ class ProperNamesRule(
             }.filter {
                 !names.contains(it.toString())
             }.forEach {
+                val actual = it.toString()
+                val expected = names.find { name ->
+                    name.equals(actual, ignoreCase = true)
+                }
+
+                val description = "Proper names should have the correct capitalization, for example '$expected' " +
+                        "instead of '$actual'. Configuration: codeBlocks=$codeBlocks, names=[…]."
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
         }

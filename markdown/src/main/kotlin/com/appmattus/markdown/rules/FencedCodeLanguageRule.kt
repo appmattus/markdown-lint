@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 
 /**
  * # Fenced code blocks should have a language specified
@@ -27,7 +27,7 @@ class FencedCodeLanguageRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Fenced code blocks should have a language specified"
+    private val description = "Fenced code blocks should have a language specified, for example '```kotlin'."
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.fencedCodeBlocks.forEach {

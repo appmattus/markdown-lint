@@ -30,13 +30,11 @@ class LineLengthRule(
     private val codeBlocks: Boolean = true,
     private val tables: Boolean = true,
     private val headings: Boolean = true,
-    punctuation: String = ".,;:!?) ",
+    private val punctuation: String = ".,;:!?) ",
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     private val terminatingPunctuationRegex = Regex("[${Regex.escape(punctuation)}]?\\s*")
-
-    override val description = "Line length"
 
     private data class AllowedBlock(val startOffset: Int, val endOffset: Int, val lineNumber: Int)
 
@@ -88,6 +86,10 @@ class LineLengthRule(
         }
 
         result.forEach { range ->
+            val description = "Line length greater than $lineLength by ${range.endInclusive - range.start} " +
+                    "characters. Configuration: lineLength=$lineLength, codeBlocks=$codeBlocks, tables=$tables, " +
+                    "headings=$headings, punctuation=$punctuation."
+
             errorReporter.reportError(range.start, range.endInclusive, description)
         }
     }

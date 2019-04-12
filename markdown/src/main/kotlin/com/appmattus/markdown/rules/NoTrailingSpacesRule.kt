@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 
 /**
  * # Trailing spaces
@@ -24,14 +24,14 @@ class NoTrailingSpacesRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Trailing spaces"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.lines.forEach {
             if (it.endsWith(" ")) {
                 val actual = it.length - it.trimEnd().length
 
                 if (actual != 0 && actual != brSpaces) {
+                    val description = "Remove $actual trailing spaces. Use $brSpaces spaces for a breaking space. " +
+                            "Configuration: brSpaces=$brSpaces."
                     errorReporter.reportError(it.startOffset, it.endOffset, description)
                 }
             }

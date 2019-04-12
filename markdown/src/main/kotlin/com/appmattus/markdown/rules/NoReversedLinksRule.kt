@@ -22,10 +22,11 @@ class NoReversedLinksRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Reversed link syntax"
+    private val description = "Link syntax reversed, change to '[Text](Url)'."
 
     private val regex = Regex("\\([^)]+\\)$")
 
+    @Suppress("NestedBlockDepth")
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.linkRefs.forEach { linkRef ->
             if (linkRef.url.isEmpty) {

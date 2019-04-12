@@ -32,8 +32,6 @@ class ListIndentRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Inconsistent indentation for list items at the same level"
-
     private data class ItemLevel(val indentLevel: Int, var ordered: ItemLevel? = null, var unordered: ItemLevel? = null)
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
@@ -60,6 +58,9 @@ class ListIndentRule(
             }
 
             if (cur.indentLevel != b.indent()) {
+                val description = "Expected list item indentation of ${cur.indentLevel} characters at the same " +
+                        "level but found ${b.indent()}."
+
                 errorReporter.reportError(b.startOffset, b.endOffset, description)
             }
         }

@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.vladsch.flexmark.ast.ListItem
 
 /**
@@ -45,13 +45,14 @@ class NoDuplicateHeaderRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Multiple headers with the same content"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         if (!allowDifferentNesting) {
             val headingsMap = mutableListOf<String>()
             document.headings.filterNot { it.parent is ListItem }.forEach { heading ->
                 if (headingsMap.contains(heading.text.toString())) {
+                    val description = "Multiple headers with the same content, ${heading.text}. For changelogs " +
+                            "consider setting allowDifferentNesting to true. Configuration: " +
+                            "allowDifferentNesting=false."
                     errorReporter.reportError(heading.startOffset, heading.endOffset, description)
                 } else {
                     headingsMap.add(heading.text.toString())
@@ -71,6 +72,8 @@ class NoDuplicateHeaderRule(
                 val text = heading.text.toString()
 
                 if ((0 until heading.level).any { stack[it].contains(text) }) {
+                    val description = "Multiple headers with the same content, ${heading.text}. Configuration: " +
+                            "allowDifferentNesting=true."
                     errorReporter.reportError(heading.startOffset, heading.endOffset, description)
                 } else {
                     stack[heading.level - 1].add(text)

@@ -1,12 +1,11 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.errors.Error
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
+import com.appmattus.markdown.errors.Error
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 
 abstract class Rule {
-    abstract val description: String
 
     protected abstract fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter)
 
@@ -21,4 +20,3 @@ abstract class Rule {
     val configuration
         get() = RuleSetup.Builder().apply(config).build()
 }
-

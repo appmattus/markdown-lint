@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.extentions.indent
 import com.vladsch.flexmark.ast.ListItem
 
@@ -30,12 +30,12 @@ class HeaderStartLeftRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Headers must start at the beginning of the line"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.filterNot { it.parent is ListItem }.forEach { heading ->
 
             if (heading.indent() > 0) {
+                val description = "Headers must start at the beginning of the line. Remove the ${heading.indent()} " +
+                        "character indentation."
                 errorReporter.reportError(heading.startOffset, heading.endOffset, description)
             }
         }

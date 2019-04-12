@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 
 /**
  * # Replace punctuation characters by hyphens
@@ -34,18 +34,24 @@ import com.appmattus.markdown.errors.ErrorReporter
  * Based on [File name](https://www.cirosantilli.com/markdown-style-guide/#file-name)
  */
 class NoPunctuationFilenameRule(
-    punctuation: String = ".,;:!?_",
+    private val punctuation: String = ".,;:!?_",
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Filenames must not contain punctuation"
-
     private val punctuationRegex = Regex("[${Regex.escape(punctuation)}]")
+    private val doubleHyphenRegex = "-{2,}".toRegex()
+
+    private val fileExtensionRegex = Regex("\\.(md|markdown)$")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-        val filename = document.filename.replace(Regex("\\.(md|markdown)$"), "")
+        val filename = document.filename.replace(fileExtensionRegex, "")
 
         if (filename.contains(punctuationRegex)) {
+            val extension = document.filename.replaceFirst(filename, "")
+            val replacement = filename.replace(punctuationRegex, "-").replace(doubleHyphenRegex, "-") + extension
+            val description = "Filenames must not contain punctuation, for example '$replacement'. Configuration: " +
+                    "punctuation=$punctuation."
+
             errorReporter.reportError(0, 0, description)
         }
     }

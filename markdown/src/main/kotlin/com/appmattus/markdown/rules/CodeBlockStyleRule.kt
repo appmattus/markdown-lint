@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.config.CodeBlockStyle
 import com.vladsch.flexmark.ast.FencedCodeBlock
 import com.vladsch.flexmark.ast.IndentedCodeBlock
@@ -39,8 +39,6 @@ class CodeBlockStyleRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Code block style"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val codeBlocks = document.codeBlocks
 
@@ -59,6 +57,8 @@ class CodeBlockStyleRule(
 
         codeBlocks.forEach {
             if (!it.matchesStyle(mainStyle)) {
+                val description = "Code block expected in ${mainStyle.description()} style but is " +
+                        "${it.styleDescription()}. Configuration: style=${style.description()}."
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
         }
@@ -69,6 +69,22 @@ class CodeBlockStyleRule(
             CodeBlockStyle.Fenced -> this is FencedCodeBlock
             CodeBlockStyle.Indented -> this is IndentedCodeBlock
             else -> false
+        }
+    }
+
+    private fun CodeBlockStyle.description(): String {
+        return when (this) {
+            CodeBlockStyle.Consistent -> "Consistent"
+            CodeBlockStyle.Fenced -> "Fenced"
+            CodeBlockStyle.Indented -> "Indented"
+        }
+    }
+
+    private fun Block.styleDescription(): String {
+        return when (this) {
+            is FencedCodeBlock -> "Fenced"
+            is IndentedCodeBlock -> "Indented"
+            else -> throw IllegalStateException("Unknown block type")
         }
     }
 }

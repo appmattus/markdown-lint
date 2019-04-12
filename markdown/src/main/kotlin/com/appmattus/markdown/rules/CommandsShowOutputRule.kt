@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 
 /**
  * # Dollar signs used before commands without showing output
@@ -40,7 +40,7 @@ class CommandsShowOutputRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Dollar signs used before commands without showing output"
+    private val description = "Remove dollar sign prefix in code blocks when not showing output."
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.codeBlocks.forEach { block ->

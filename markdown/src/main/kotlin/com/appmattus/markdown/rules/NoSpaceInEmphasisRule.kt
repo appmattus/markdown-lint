@@ -41,17 +41,23 @@ class NoSpaceInEmphasisRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Spaces inside emphasis markers"
-
-    private val startRegex = Regex("\\s(\\*\\*?|__?)\\s.+\\1")
-    private val endRegex = Regex("(\\*\\*?|__?).+\\s\\1\\s")
+    private val startRegex = Regex("\\s(\\*\\*?|__?)\\s(.+)\\1")
+    private val endRegex = Regex("(\\*\\*?|__?)(.+)\\s\\1\\s")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         document.allText.filterNot {
             it.parent is FencedCodeBlock || it.parent is IndentedCodeBlock || it.parent is Code
         }.forEach {
-            if (it.chars.contains(startRegex) || it.chars.contains(endRegex)) {
+            val startMatch = startRegex.find(it.chars)
+            val endMatch = endRegex.find(it.chars)
+
+            if (startMatch != null || endMatch != null) {
+                val marker = startMatch?.groupValues?.get(1) ?: endMatch?.groupValues?.get(1)
+                val content = (startMatch?.groupValues?.get(2) ?: endMatch?.groupValues?.get(2))!!.trim()
+                val description = "Avoid spaces inside emphasis markers, for example change to " +
+                        "'$marker$content$marker'."
+
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
         }

@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.vladsch.flexmark.ast.ListItem
 import com.vladsch.flexmark.util.ast.Document
 
@@ -38,7 +38,8 @@ class SingleH1Rule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Multiple top level headers in the same document"
+    private val description = "Multiple top level $level headers in the same document, replace with a level " +
+            "${level + 1} header. Configuration: level=$level."
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val headers = document.headings.filterNot { it.parent is ListItem }.filter { it.level == level }

@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.vladsch.flexmark.ast.BlockQuote
 
 /**
@@ -40,7 +40,8 @@ class NoBlanksBlockquoteRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Blank line inside blockquote"
+    private val description =
+        "Blank line between blockquotes. Either turn into a single blockquote or separate with text."
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.blockQuotes.filter { it.next is BlockQuote }.forEach {

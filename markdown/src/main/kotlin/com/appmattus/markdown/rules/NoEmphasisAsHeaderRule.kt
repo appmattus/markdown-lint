@@ -1,8 +1,9 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
+import com.vladsch.flexmark.ast.DelimitedNode
 import com.vladsch.flexmark.ast.Emphasis
 import com.vladsch.flexmark.ast.StrongEmphasis
 import com.vladsch.flexmark.ast.Text
@@ -42,8 +43,6 @@ class NoEmphasisAsHeaderRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Emphasis used instead of a header"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         document.topLevelParagraphs.filter { it.lineCount == 1 }.filter { it.firstChild == it.lastChild }.forEach {
@@ -53,6 +52,9 @@ class NoEmphasisAsHeaderRule(
                 if (wrapper.firstChild == wrapper.lastChild && wrapper.firstChild is Text) {
                     // Check sentence doesn't end in punctuation
                     if (!punctuation.contains(wrapper.firstChild.chars.lastChar())) {
+                        val emphasisMarker = (wrapper as DelimitedNode).openingMarker
+                        val description = "Emphasis '$emphasisMarker' used instead of a header. Configuration: " +
+                                "punctuation=$punctuation."
                         errorReporter.reportError(wrapper.startOffset, wrapper.endOffset, description)
                     }
                 }

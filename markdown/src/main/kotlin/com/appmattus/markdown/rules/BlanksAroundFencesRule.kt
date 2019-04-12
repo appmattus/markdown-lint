@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.vladsch.flexmark.util.sequence.BasedSequence
 
 /**
@@ -44,8 +44,6 @@ class BlanksAroundFencesRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Fenced code blocks should be surrounded by blank lines"
-
     private val fenceRegEx = Regex("^(`{3,}|~{3,})")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
@@ -64,7 +62,15 @@ class BlanksAroundFencesRule(
                     fence = if (inCode) null else it.value
                     inCode = !inCode
 
-                    if (surroundingLinesEmpty(inCode, lines, lineNum)) {
+                    val description = when {
+                        prefixLineNotEmpty(inCode, lines, lineNum) ->
+                            "Fenced code blocks should be surrounded by blank lines. Missing blank above this line."
+                        suffixLineNotEmpty(inCode, lines, lineNum) ->
+                            "Fenced code blocks should be surrounded by blank lines. Missing blank below this line."
+                        else -> null
+                    }
+
+                    if (description != null) {
                         errorReporter.reportError(line.startOffset, line.endOffset, description)
                     }
                 }
@@ -72,6 +78,9 @@ class BlanksAroundFencesRule(
         }
     }
 
-    private fun surroundingLinesEmpty(inCode: Boolean, lines: List<BasedSequence>, lineNum: Int) =
-        inCode && lines[lineNum - 1].isNotEmpty() || (!inCode && lines[lineNum + 1].isNotEmpty())
+    private fun prefixLineNotEmpty(inCode: Boolean, lines: List<BasedSequence>, lineNum: Int) =
+        inCode && lines[lineNum - 1].isNotEmpty()
+
+    private fun suffixLineNotEmpty(inCode: Boolean, lines: List<BasedSequence>, lineNum: Int) =
+        !inCode && lines[lineNum + 1].isNotEmpty()
 }

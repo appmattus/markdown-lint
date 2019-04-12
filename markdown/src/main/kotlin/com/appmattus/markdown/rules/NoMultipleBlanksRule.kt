@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 
 /**
  * # Multiple consecutive blank lines
@@ -28,7 +28,7 @@ class NoMultipleBlanksRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Multiple consecutive blank lines"
+    private val description = "Replace multiple consecutive blank lines with a single blank line."
 
     private val regex = Regex("^\\s*(\r?\n|\n)\\s*(\r?\n|\n|$)", RegexOption.MULTILINE)
 

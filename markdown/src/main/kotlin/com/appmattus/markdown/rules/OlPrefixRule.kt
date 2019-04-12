@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.config.OrderedListStyle
 import com.appmattus.markdown.rules.extentions.index
 import com.vladsch.flexmark.ast.OrderedList
@@ -32,13 +32,13 @@ class OlPrefixRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Ordered list item prefix"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         when (style) {
             OrderedListStyle.One -> {
                 document.orderedListItems.forEach {
                     if (it.openingMarker.toString() != "1.") {
+                        val description = "Ordered list item prefix expected '1.' but was '${it.openingMarker}'. " +
+                                "Configuration: style=One."
                         errorReporter.reportError(it.openingMarker.startOffset, it.openingMarker.endOffset, description)
                     }
                 }
@@ -48,6 +48,8 @@ class OlPrefixRule(
                     val startIndex = (it.parent as OrderedList).startNumber
 
                     if (it.openingMarker.toString() != "${startIndex + it.index()}.") {
+                        val description = "Ordered list item prefix expected '${startIndex + it.index()}.' but was " +
+                                "'${it.openingMarker}'. Configuration: style=Ordered."
                         errorReporter.reportError(it.openingMarker.startOffset, it.openingMarker.endOffset, description)
                     }
                 }

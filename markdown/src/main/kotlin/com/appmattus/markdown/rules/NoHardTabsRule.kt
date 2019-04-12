@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 
 /**
  * # Hard tabs
@@ -28,7 +28,7 @@ class NoHardTabsRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Hard tabs"
+    private val description = "Replace hard tab characters with spaces."
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.chars.indexOfAll("\t").forEach {

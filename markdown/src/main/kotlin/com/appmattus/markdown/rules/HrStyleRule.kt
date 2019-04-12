@@ -39,8 +39,6 @@ class HrStyleRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "Horizontal rule style"
-
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val hr = document.horizontalRules
 
@@ -52,9 +50,22 @@ class HrStyleRule(
 
             hr.forEach {
                 if (it.chars.toString() != expectedChars) {
+                    val description = "Horizontal rule expected as ${expectedChars} but is ${it.chars}. " +
+                            "Configuration: style=${style.description()}."
+
                     errorReporter.reportError(it.startOffset, it.endOffset, description)
                 }
             }
+        }
+    }
+
+    private fun HorizontalRuleStyle.description(): String {
+        return when (this) {
+            HorizontalRuleStyle.Consistent -> "Consistent"
+            HorizontalRuleStyle.Asterisk -> "Asterisk '***'"
+            HorizontalRuleStyle.Dash -> "Dash '---'"
+            HorizontalRuleStyle.Underscore -> "Underscore '___'"
+            is HorizontalRuleStyle.Exact -> "Exact '$chars'"
         }
     }
 }

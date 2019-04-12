@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.extentions.referenceUrl
 import com.vladsch.flexmark.ast.LinkRef
 import com.vladsch.flexmark.ast.Reference
@@ -32,8 +32,6 @@ class NoEmptyLinksRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
-    override val description = "No empty links"
-
     private val emptyLinkRegex = Regex("#?|(?:<>)")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
@@ -45,6 +43,7 @@ class NoEmptyLinksRule(
                 else -> link.url.toString()
             }?.let { url ->
                 if (url.matches(emptyLinkRegex)) {
+                    val description = "The link has no URL, '${link.chars}'."
                     errorReporter.reportError(link.startOffset, link.endOffset, description)
                 }
             }
