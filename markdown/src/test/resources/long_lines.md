@@ -48,6 +48,8 @@ _**[This long line is comprised of an emphasized and bolded link](https://exampl
 
 {LineLengthRule:1} {LineLengthRule:11} {LineLengthRule:14}
 {LineLengthRule:19} {LineLengthRule:21}
+{ConsistentEmphasisStyleRule:35} {ConsistentEmphasisStyleRule:39}
+{ConsistentEmphasisStyleRule:41} {ConsistentEmphasisStyleRule:43}
 
 LineLengthRule:29 is invalid too but gets picked up as a link currently
 
@@ -58,13 +60,13 @@ This is a looooongish [line](https://example.com "This is the long link's title"
 This is a looongish [line](https://example.com "This is the long link's title")A
 This is a loooongish [line](https://example.com "This is the long link's title")B
 
-{LineLengthRule:59}
+{LineLengthRule:61}
 
 This is a long long long long long long long long long long long long loongish [line](https://example.com "This is the long link's title")
 This is a long long long long long long long long long long long long looongish [line](https://example.com "This is the long link's title")
 This is a long long long long long long long long long long long long loooongish [line](https://example.com "This is the long link's title")
 
-{LineLengthRule:64} {LineLengthRule:65}
+{LineLengthRule:66} {LineLengthRule:67}
 
 {NoReversedLinksRule:21} {NoReversedLinksRule:23} {NoReversedLinksRule:27}
 {NoEmptyLinksRule:27}

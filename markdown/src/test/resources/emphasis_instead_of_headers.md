@@ -7,7 +7,7 @@ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
 eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
 in culpa qui officia deserunt mollit anim id est laborum.
 
-__Section 1.1: another section {NoEmphasisAsHeaderRule}__
+__Section 1.1: {NoEmphasisAsHeaderRule} {ConsistentEmphasisStyleRule}__
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
@@ -25,7 +25,7 @@ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
 eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
 in culpa qui officia deserunt mollit anim id est laborum.
 
-_Section 3: oh no more sections {NoEmphasisAsHeaderRule}_
+_Section 3: {NoEmphasisAsHeaderRule} {ConsistentEmphasisStyleRule}_
 
 This is a normal paragraph
 **that just happens to have emphasized text in**

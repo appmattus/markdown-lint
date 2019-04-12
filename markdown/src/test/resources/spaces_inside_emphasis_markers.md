@@ -2,9 +2,9 @@ Line with *Normal emphasis*
 
 Line with **Normal strong**
 
-Line with _Normal emphasis_
+Line with _Normal emphasis_ {ConsistentEmphasisStyleRule}
 
-Line with __Normal strong__
+Line with __Normal strong__ {ConsistentEmphasisStyleRule}
 
 Broken * emphasis * with spaces in {NoSpaceInEmphasisRule}
 
@@ -19,8 +19,10 @@ Mixed *ok emphasis* and * broken emphasis * {NoSpaceInEmphasisRule}
 Mixed **ok strong** and ** broken strong ** {NoSpaceInEmphasisRule}
 
 Mixed _ok emphasis_ and _ broken emphasis _ {NoSpaceInEmphasisRule}
+{ConsistentEmphasisStyleRule:21}
 
 Mixed __ok strong__ and __ broken strong __ {NoSpaceInEmphasisRule}
+{ConsistentEmphasisStyleRule:24}
 
 Mixed *ok emphasis* **ok strong** * broken emphasis * {NoSpaceInEmphasisRule}
 

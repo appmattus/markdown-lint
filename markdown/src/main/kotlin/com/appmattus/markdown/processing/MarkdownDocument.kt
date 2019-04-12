@@ -6,6 +6,7 @@ import com.vladsch.flexmark.ast.BlockQuote
 import com.vladsch.flexmark.ast.BulletList
 import com.vladsch.flexmark.ast.BulletListItem
 import com.vladsch.flexmark.ast.Code
+import com.vladsch.flexmark.ast.Emphasis
 import com.vladsch.flexmark.ast.FencedCodeBlock
 import com.vladsch.flexmark.ast.Heading
 import com.vladsch.flexmark.ast.HtmlBlock
@@ -22,6 +23,7 @@ import com.vladsch.flexmark.ast.OrderedList
 import com.vladsch.flexmark.ast.OrderedListItem
 import com.vladsch.flexmark.ast.Paragraph
 import com.vladsch.flexmark.ast.Reference
+import com.vladsch.flexmark.ast.StrongEmphasis
 import com.vladsch.flexmark.ast.Text
 import com.vladsch.flexmark.ast.ThematicBreak
 import com.vladsch.flexmark.ext.gfm.tasklist.TaskListItem
@@ -63,6 +65,8 @@ class MarkdownDocument(val filename: String, val document: Document) {
     val horizontalRules: List<ThematicBreak>  by lazy { document.find(ThematicBreak::class) }
     val topLevelParagraphs: List<Paragraph> by lazy { document.find(Paragraph::class, visitChildren = false) }
     val allText by lazy { document.find(Text::class) }
+
+    val allEmphasis by lazy { document.find(Emphasis::class, StrongEmphasis::class) }
 
     val chars: BasedSequence by lazy { document.chars }
     val lines by lazy { chars.splitIntoLines() }

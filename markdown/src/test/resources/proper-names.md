@@ -6,7 +6,7 @@ Quoted "Markdownlint" {ProperNamesRule}
 
 Emphasized *Markdownlint* {ProperNamesRule}
 
-Emphasized _Markdownlint_ {ProperNamesRule}
+Emphasized _Markdownlint_ {ProperNamesRule} {ConsistentEmphasisStyleRule}
 
 JavaScript is a language
 
