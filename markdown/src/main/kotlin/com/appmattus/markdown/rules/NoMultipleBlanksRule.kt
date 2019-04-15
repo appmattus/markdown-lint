@@ -3,6 +3,8 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
+import com.appmattus.markdown.rules.extentions.endLineNumberFixed
+import com.appmattus.markdown.rules.extentions.startLineNumberFixed
 
 /**
  * # Multiple consecutive blank lines
@@ -33,7 +35,7 @@ class NoMultipleBlanksRule(
     private val regex = Regex("^\\s*(\r?\n|\n)\\s*(\r?\n|\n|$)", RegexOption.MULTILINE)
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-        val codeBlocks = document.codeBlocks.map { IntRange(it.startLineNumber, it.endLineNumber) }
+        val codeBlocks = document.codeBlocks.map { IntRange(it.startLineNumberFixed, it.endLineNumberFixed) }
 
         regex.findAll(document.chars).map { match ->
             IntRange(match.range.start, match.range.endInclusive)
