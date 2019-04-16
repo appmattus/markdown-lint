@@ -2,6 +2,7 @@ import com.vladsch.flexmark.util.Utils
 import com.vladsch.flexmark.util.ast.Document
 import com.vladsch.flexmark.util.sequence.BasedSequence
 
+@Suppress("ReturnCount")
 fun Document.getLineNumberFixed(offset: Int): Int {
     val lineSegments = contentLines
     if (lineSegments === BasedSequence.EMPTY_LIST) {
