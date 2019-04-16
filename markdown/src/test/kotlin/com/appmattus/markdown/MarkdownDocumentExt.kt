@@ -3,18 +3,24 @@ package com.appmattus.markdown
 import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.processing.ParserFactory
 
-fun createDocument(documentText: String) =
-    MarkdownDocument(
-        "test.md",
-        ParserFactory.parser.parse(documentText)
-    )
+private val eolRegex = "(\\r?\\n|\\n)".toRegex()
 
-fun loadDocument(filename: String) =
+fun loadDocumentUnixEol(filename: String) =
     MarkdownDocument(
         filename,
         ParserFactory.parser.parse(
             MarkdownDocument::class.java.classLoader.getResource(
                 filename
-            ).readText(Charsets.UTF_8)
+            ).readText(Charsets.UTF_8).replace(eolRegex, "\n")
+        )
+    )
+
+fun loadDocumentWindowsEol(filename: String) =
+    MarkdownDocument(
+        filename,
+        ParserFactory.parser.parse(
+            MarkdownDocument::class.java.classLoader.getResource(
+                filename
+            ).readText(Charsets.UTF_8).replace(eolRegex, "\r\n")
         )
     )

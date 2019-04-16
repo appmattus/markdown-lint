@@ -1,7 +1,8 @@
 package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.errors.Error
-import com.appmattus.markdown.loadDocument
+import com.appmattus.markdown.loadDocumentUnixEol
+import com.appmattus.markdown.loadDocumentWindowsEol
 import com.appmattus.markdown.processing.MarkdownDocument
 import mockDocument
 import org.assertj.core.api.Assertions.assertThat
@@ -18,49 +19,61 @@ fun FeatureBody.FileRuleScenario(
     files.toMutableList().apply {
         removeAll(exclude)
     }.forEach { filename ->
-        val document = loadDocument(filename)
+        val document = loadDocumentUnixEol(filename)
+        val documentWindows = loadDocumentWindowsEol(filename)
+
         val expectedErrorCount =
             Regex("\\{${Regex.escape(rule::class.java.simpleName)}(:[0-9]+)?}").findAll(document.chars).count()
 
-        Scenario(filename) {
-            lateinit var ruleErrors: List<Error>
+        documentScenario("$filename (unix eol)", rule, document, expectedErrorCount)
+        documentScenario("$filename (windows eol)", rule, documentWindows, expectedErrorCount)
+    }
+}
 
-            Given("the file $filename") {}
+private fun FeatureBody.documentScenario(
+    scenarioName: String,
+    rule: Rule,
+    document: MarkdownDocument,
+    expectedErrorCount: Int
+) {
+    Scenario(scenarioName) {
+        lateinit var ruleErrors: List<Error>
 
-            When("we run ${rule.javaClass.simpleName}") {
-                ruleErrors = rule.processDocument(document)
-            }
+        Given("the file $scenarioName") {}
 
-            Then("we expect $expectedErrorCount errors") {
-                assertThat(ruleErrors.size).describedAs("Number of errors")
-                    .withFailMessage(ruleErrors.joinToString("\n")).isEqualTo(expectedErrorCount)
-            }
+        When("we run ${rule.javaClass.simpleName}") {
+            ruleErrors = rule.processDocument(document)
+        }
 
-            if (expectedErrorCount > 0) {
-                And("the location of errors match") {
-                    val failures = mutableListOf<String>()
-                    ruleErrors.forEach { error ->
-                        val errorRange =
-                            IntRange(document.getLineNumber(error.startOffset), document.getLineNumber(error.endOffset))
+        Then("we expect $expectedErrorCount errors") {
+            assertThat(ruleErrors.size).describedAs("Number of errors")
+                .withFailMessage(ruleErrors.joinToString("\n")).isEqualTo(expectedErrorCount)
+        }
 
-                        val hasError = errorRange.any { line ->
-                            document.lines[line].contains("{${rule::class.java.simpleName}}") ||
-                                    document.chars.contains("{${rule::class.java.simpleName}:${line + 1}}")
-                        }
+        if (expectedErrorCount > 0) {
+            And("the location of errors match") {
+                val failures = mutableListOf<String>()
+                ruleErrors.forEach { error ->
+                    val errorRange =
+                        IntRange(document.getLineNumber(error.startOffset), document.getLineNumber(error.endOffset))
 
-                        if (!hasError) {
-                            println("Unexpected: $error")
-                            failures.add(
-                                document.chars.midSequence(
-                                    error.startOffset,
-                                    error.endOffset
-                                ).toString()
-                            )
-                        }
+                    val hasError = errorRange.any { line ->
+                        document.lines[line].contains("{${rule::class.java.simpleName}}") ||
+                                document.chars.contains("{${rule::class.java.simpleName}:${line + 1}}")
                     }
-                    if (failures.isNotEmpty()) {
-                        fail(failures.joinToString())
+
+                    if (!hasError) {
+                        println("Unexpected: $error")
+                        failures.add(
+                            document.chars.midSequence(
+                                error.startOffset,
+                                error.endOffset
+                            ).toString()
+                        )
                     }
+                }
+                if (failures.isNotEmpty()) {
+                    fail(failures.joinToString())
                 }
             }
         }

@@ -3,7 +3,9 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
+import com.appmattus.markdown.rules.extentions.endLineNumberFixed
 import com.appmattus.markdown.rules.extentions.splitIntoLines
+import com.appmattus.markdown.rules.extentions.startLineNumberFixed
 import com.vladsch.flexmark.ast.Emphasis
 import com.vladsch.flexmark.ast.StrongEmphasis
 import com.vladsch.flexmark.util.ast.Node
@@ -65,21 +67,21 @@ class LineLengthRule(
         }
 
         if (!headings) {
-            val codeBlocks = document.headings.map { IntRange(it.startLineNumber, it.endLineNumber) }
+            val codeBlocks = document.headings.map { IntRange(it.startLineNumberFixed, it.endLineNumberFixed) }
             result = result.filter { range ->
                 (codeBlocks.find { it.contains(document.getLineNumber(range.start)) } == null)
             }
         }
 
         if (!codeBlocks) {
-            val codeBlocks = document.codeBlocks.map { IntRange(it.startLineNumber, it.endLineNumber) }
+            val codeBlocks = document.codeBlocks.map { IntRange(it.startLineNumberFixed, it.endLineNumberFixed) }
             result = result.filter { range ->
                 (codeBlocks.find { it.contains(document.getLineNumber(range.start)) } == null)
             }
         }
 
         if (!tables) {
-            val tables = document.tables.map { IntRange(it.startLineNumber, it.endLineNumber) }
+            val tables = document.tables.map { IntRange(it.startLineNumberFixed, it.endLineNumberFixed) }
             result = result.filter { range ->
                 (tables.find { it.contains(document.getLineNumber(range.start)) } == null)
             }
@@ -101,13 +103,13 @@ class LineLengthRule(
                 item = item.parent
             }
 
-            AllowedBlock(item.startOffset, item.endOffset, document.getLineNumber(item.startOffset))
+            AllowedBlock(item.startOffset, item.endOffset, getLineNumber(item.startOffset))
         }
     }
 
     private fun MarkdownDocument.allowedImages(): List<AllowedBlock> {
         return allImages.map {
-            AllowedBlock(it.startOffset, it.endOffset, document.getLineNumber(it.startOffset))
+            AllowedBlock(it.startOffset, it.endOffset, getLineNumber(it.startOffset))
         }
     }
 
@@ -128,7 +130,7 @@ class LineLengthRule(
                     it.endOffset
                 }
 
-                AllowedBlock(start, end, document.getLineNumber(it.startOffset))
+                AllowedBlock(start, end, getLineNumber(it.startOffset))
             }
         }
     }
