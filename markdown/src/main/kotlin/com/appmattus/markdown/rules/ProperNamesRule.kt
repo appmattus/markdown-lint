@@ -5,6 +5,7 @@ import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
 import com.vladsch.flexmark.ast.AutoLink
 import com.vladsch.flexmark.ast.Code
+import com.vladsch.flexmark.ast.FencedCodeBlock
 import com.vladsch.flexmark.ast.Link
 import com.vladsch.flexmark.util.sequence.BasedSequence
 import org.nibor.autolink.LinkExtractor
@@ -53,10 +54,11 @@ class ProperNamesRule(
 
         elements.addAll(
             document.allText
-                .filterNot { it.parent is Link || it.parent is Code || it.parent is AutoLink }
+                .filterNot {
+                    it.parent is Link || it.parent is Code || it.parent is AutoLink || it.parent is FencedCodeBlock
+                }
                 .map { it.chars }
         )
-
 
         elements.addAll(
             document.links
@@ -64,9 +66,9 @@ class ProperNamesRule(
                 .map { it.text }
         )
 
-        if (!codeBlocks) {
+        if (codeBlocks) {
             elements.addAll(document.inlineCode.map { it.text })
-            elements.addAll(document.codeBlocks.map { it.chars })
+            elements.addAll(document.codeBlocks.map { it.contentChars })
         }
 
         elements.forEach { text ->
