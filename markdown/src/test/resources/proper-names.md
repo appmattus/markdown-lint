@@ -69,3 +69,7 @@ Bare URL exempt https://github.com/DavidAnson/MARKDOWNLINT {NoBareUrlsRule}
 A short paragraph
 about node.js and {ProperNamesRule}
 javascript. {ProperNamesRule}
+
+```java
+java will trigger {ProperNamesRule} but the block language will not
+```
