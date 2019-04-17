@@ -3,9 +3,7 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
-import com.appmattus.markdown.rules.extentions.endLineNumberFixed
 import com.appmattus.markdown.rules.extentions.splitIntoLines
-import com.appmattus.markdown.rules.extentions.startLineNumberFixed
 import com.vladsch.flexmark.ast.Emphasis
 import com.vladsch.flexmark.ast.StrongEmphasis
 import com.vladsch.flexmark.util.ast.Node
@@ -67,21 +65,21 @@ class LineLengthRule(
         }
 
         if (!headings) {
-            val codeBlocks = document.headings.map { IntRange(it.startLineNumberFixed, it.endLineNumberFixed) }
+            val codeBlocks = document.headings.map { IntRange(it.startLineNumber, it.endLineNumber) }
             result = result.filter { range ->
                 (codeBlocks.find { it.contains(document.getLineNumber(range.start)) } == null)
             }
         }
 
         if (!codeBlocks) {
-            val codeBlocks = document.codeBlocks.map { IntRange(it.startLineNumberFixed, it.endLineNumberFixed) }
+            val codeBlocks = document.codeBlocks.map { IntRange(it.startLineNumber, it.endLineNumber) }
             result = result.filter { range ->
                 (codeBlocks.find { it.contains(document.getLineNumber(range.start)) } == null)
             }
         }
 
         if (!tables) {
-            val tables = document.tables.map { IntRange(it.startLineNumberFixed, it.endLineNumberFixed) }
+            val tables = document.tables.map { IntRange(it.startLineNumber, it.endLineNumber) }
             result = result.filter { range ->
                 (tables.find { it.contains(document.getLineNumber(range.start)) } == null)
             }

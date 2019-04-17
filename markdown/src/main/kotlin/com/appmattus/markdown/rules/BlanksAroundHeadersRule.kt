@@ -3,8 +3,6 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
-import com.appmattus.markdown.rules.extentions.endLineNumberFixed
-import com.appmattus.markdown.rules.extentions.startLineNumberFixed
 import com.vladsch.flexmark.ast.ListItem
 
 /**
@@ -44,12 +42,12 @@ class BlanksAroundHeadersRule(
         document.headings.filterNot { it.parent is ListItem }.forEach { heading ->
 
             val prefixLineNotEmpty =
-                heading.startLineNumberFixed > 0 && !document.lines[heading.startLineNumberFixed - 1].matches(
+                heading.startLineNumber > 0 && !document.lines[heading.startLineNumber - 1].matches(
                     whitespaceRegex
                 )
 
-            val suffixLineNotEmpty = heading.endLineNumberFixed < document.lines.size - 2
-                    && !document.lines[heading.endLineNumberFixed + 1].matches(whitespaceRegex)
+            val suffixLineNotEmpty = heading.endLineNumber < document.lines.size - 2
+                    && !document.lines[heading.endLineNumber + 1].matches(whitespaceRegex)
 
             val description = when {
                 prefixLineNotEmpty && suffixLineNotEmpty ->

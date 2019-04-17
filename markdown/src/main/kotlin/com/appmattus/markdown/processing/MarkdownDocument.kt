@@ -34,7 +34,6 @@ import com.vladsch.flexmark.util.ast.Node
 import com.vladsch.flexmark.util.ast.NodeVisitor
 import com.vladsch.flexmark.util.ast.VisitHandler
 import com.vladsch.flexmark.util.sequence.BasedSequence
-import getLineNumberFixed
 import java.io.File
 import kotlin.reflect.KClass
 
@@ -75,7 +74,7 @@ class MarkdownDocument constructor(val file: File, val document: Document) {
     val chars: BasedSequence by lazy { document.chars }
     val lines by lazy { chars.splitIntoLines() }
 
-    fun getLineNumber(offset: Int) = document.getLineNumberFixed(offset)
+    fun getLineNumber(offset: Int) = document.getLineNumber(offset)
 
     fun getColumnNumber(offset: Int) = chars.getColumnAtIndex(offset)
 

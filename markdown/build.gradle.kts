@@ -41,10 +41,10 @@ dependencies {
     implementation(kotlin("compiler-embeddable"))
     implementation(kotlin("script-util"))
 
-    api("com.vladsch.flexmark:flexmark-ext-tables:0.42.0")
-    api("com.vladsch.flexmark:flexmark-ext-gfm-strikethrough:0.42.0")
-    api("com.vladsch.flexmark:flexmark-ext-autolink:0.42.0")
-    api("com.vladsch.flexmark:flexmark-ext-gfm-tasklist:0.42.0")
+    api("com.vladsch.flexmark:flexmark-ext-tables:0.42.6")
+    api("com.vladsch.flexmark:flexmark-ext-gfm-strikethrough:0.42.6")
+    api("com.vladsch.flexmark:flexmark-ext-autolink:0.42.6")
+    api("com.vladsch.flexmark:flexmark-ext-gfm-tasklist:0.42.6")
 
     testImplementation(kotlin("test"))
     testImplementation(gradleTestKit())
