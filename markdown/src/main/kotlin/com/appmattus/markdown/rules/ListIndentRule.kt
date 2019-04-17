@@ -49,10 +49,10 @@ class ListIndentRule(
             val hierarchy = listItemHierarchy(b)
 
             var cur = root
-            hierarchy.forEach {
-                cur = when (it) {
-                    is BulletListItem -> (cur.unordered ?: ItemLevel(it.indent())).also { cur.unordered = it }
-                    is OrderedListItem -> (cur.ordered ?: ItemLevel(it.indent())).also { cur.ordered = it }
+            hierarchy.forEach { listItem ->
+                cur = when (listItem) {
+                    is BulletListItem -> (cur.unordered ?: ItemLevel(listItem.indent())).also { cur.unordered = it }
+                    is OrderedListItem -> (cur.ordered ?: ItemLevel(listItem.indent())).also { cur.ordered = it }
                     else -> throw IllegalStateException()
                 }
             }

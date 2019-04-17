@@ -50,7 +50,7 @@ class HrStyleRule(
 
             hr.forEach {
                 if (it.chars.toString() != expectedChars) {
-                    val description = "Horizontal rule expected as ${expectedChars} but is ${it.chars}. " +
+                    val description = "Horizontal rule expected as $expectedChars but is ${it.chars}. " +
                             "Configuration: style=${style.description()}."
 
                     errorReporter.reportError(it.startOffset, it.endOffset, description)

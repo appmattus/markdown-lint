@@ -69,7 +69,7 @@ class UlIndentRule(
         }
     }
 
-    fun BulletListItem.parentListItemOrNull(): ListItem? {
+    private fun BulletListItem.parentListItemOrNull(): ListItem? {
         var cur = parent
         while (cur !is Document) {
             cur = cur.parent

@@ -75,7 +75,7 @@ class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
 
         if (fileErrors.isNotEmpty()) {
             println("Errors:")
-            fileErrors.forEach { file, errors ->
+            fileErrors.forEach { (file, errors) ->
                 errors.forEach { error ->
                     println(
                         "    ${error.ruleClass.simpleName} at ${file.path}:${error.lineNumber}:${error.columnNumber}"
@@ -138,7 +138,7 @@ class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
 
             logger.auditStarted()
 
-            this.forEach { file, errors ->
+            forEach { (file, errors) ->
 
                 val filePath = file.path
 

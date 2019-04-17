@@ -1,6 +1,5 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
-import org.gradle.jvm.tasks.Jar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -35,7 +34,6 @@ group = "com.appmattus"
 
 dependencies {
     compileOnly(gradleApi())
-    //compileOnly(gradleKotlinDsl())
 
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("compiler-embeddable"))
@@ -59,15 +57,6 @@ dependencies {
     testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.2")
     // spek requires kotlin-reflect, can be omitted if already in the classpath
     testRuntimeOnly(kotlin("reflect"))
-}
-
-tasks.withType<Jar> {
-    manifest {
-        attributes(
-            "Manifest-Version" to 1.0,
-            "Lint-Registry-v2" to "com.appmattus.markdown.MarkdownIssueRegistry"
-        )
-    }
 }
 
 tasks.withType<Test> {

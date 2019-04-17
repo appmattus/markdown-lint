@@ -26,6 +26,7 @@ class NoInlineHtmlRule(
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.htmlElements.forEach {
+            @Suppress("MoveVariableDeclarationIntoWhen")
             val htmlTag = "^</?([a-zA-Z0-9]+)\\s*/?>".toRegex().find(it.chars)?.groupValues?.get(1)?.toLowerCase()
 
             val example = when (htmlTag) {

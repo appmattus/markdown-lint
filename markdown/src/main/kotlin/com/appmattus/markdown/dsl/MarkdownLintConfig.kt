@@ -23,6 +23,7 @@ data class MarkdownLintConfig(
         private var includes: List<String> = listOf(".*")
         private var excludes: List<String> = emptyList()
 
+        @Suppress("unused")
         fun reports(body: Report.Builder.() -> Unit) = apply {
             reports = Report.Builder().apply(body).build()
         }
@@ -31,14 +32,17 @@ data class MarkdownLintConfig(
             rules = RulesBuilder().apply(body).build()
         }
 
+        @Suppress("unused")
         fun threshold(threshold: Int) = apply {
             this.threshold = threshold
         }
 
+        @Suppress("unused")
         fun includes(patterns: List<String>) = apply {
             this.includes = patterns
         }
 
+        @Suppress("unused")
         fun excludes(patterns: List<String>) = apply {
             this.excludes = patterns
         }
