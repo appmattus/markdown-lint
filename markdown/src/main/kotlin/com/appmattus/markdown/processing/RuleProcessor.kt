@@ -105,10 +105,8 @@ class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
         val parser = ParserFactory.parser
 
         return associateWith { file ->
-            val document = MarkdownDocument(
-                file.name,
-                parser.parse(file.readText(Charsets.UTF_8))
-            )
+            val document = MarkdownDocument(file, parser.parse(file.readText(Charsets.UTF_8)))
+
             rules.flatMap { rule ->
                 val includes = MultiPathFilter(rule.configuration.includes, rootDir.toPath())
                 val excludes = MultiPathFilter(rule.configuration.excludes, rootDir.toPath())

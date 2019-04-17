@@ -9,7 +9,9 @@ class AllRules(private val config: MarkdownLintConfig) {
         BlanksAroundListsRule(),
         CodeBlockStyleRule(),
         CommandsShowOutputRule(),
+        ConsistentEmphasisStyleRule(),
         ConsistentHeaderStyleRule(),
+        ConsistentTaskListMarkerStyleRule(),
         ConsistentUlStyleRule(),
         FencedCodeLanguageRule(),
         FirstHeaderH1Rule(),
@@ -21,6 +23,7 @@ class AllRules(private val config: MarkdownLintConfig) {
         ListIndentRule(),
         ListMarkerSpaceRule(),
         LowerCaseFilenameRule(),
+        MissingLinkSchemeRule(),
         NoBareUrlsRule(),
         NoBlanksBlockquoteRule(),
         NoConsecutiveHyphensFilenameRule(),
@@ -34,7 +37,7 @@ class AllRules(private val config: MarkdownLintConfig) {
         NoMultipleBlanksRule(),
         NoMultipleSpaceAtxRule(),
         NoMultipleSpaceBlockquoteRule(),
-        NoMissingSpaceClosedAtxRule(),
+        NoMultipleSpaceClosedAtxRule(),
         NoPunctuationFilenameRule(),
         NoReversedLinksRule(),
         NoSpaceInCodeRule(),
@@ -47,8 +50,10 @@ class AllRules(private val config: MarkdownLintConfig) {
         OlPrefixRule(),
         ProperNamesRule(),
         SingleH1Rule(),
+        TaskListMarkerSpaceRule(),
         UlIndentRule(),
-        UlStartLeftRule()
+        UlStartLeftRule(),
+        ValidRelativeLinksRule()
     )
 
     val rules: List<Rule> by lazy {

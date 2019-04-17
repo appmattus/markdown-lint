@@ -3,14 +3,18 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.dsl.MarkdownLintConfig
 import com.appmattus.markdown.dsl.markdownLintConfig
 import com.appmattus.markdown.processing.MarkdownDocument
+import io.github.classgraph.ClassGraph
 import mockDocument
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
+import java.io.File
 
 object AllRulesTest : Spek({
     Feature("AllRules") {
         val mockDocument = mockDocument()
+        val scanResult = ClassGraph().enableAllInfo().whitelistPackages("com.appmattus.markdown").scan()
+        val allExpectedRules = scanResult.getSubclasses(Rule::class.java.name).loadClasses()
 
         Scenario("empty configuration returns all rules") {
             lateinit var config: MarkdownLintConfig
@@ -27,7 +31,14 @@ object AllRulesTest : Spek({
             }
 
             Then("all rules are returned") {
-                assertThat(rules).size().isEqualTo(45)
+                val missing = allExpectedRules.filter { clazz ->
+                    rules.find { rule -> rule::class.java == clazz } == null
+                }.map {
+                    it.simpleName
+                }.toString()
+
+                assertThat(rules.size).`as`("Missing $missing")
+                    .isEqualTo(allExpectedRules.size)
             }
         }
 
@@ -50,7 +61,7 @@ object AllRulesTest : Spek({
             }
 
             Then("one less rule is returned") {
-                assertThat(rules).size().isEqualTo(44)
+                assertThat(rules.size).isEqualTo(allExpectedRules.size - 1)
             }
 
             And("all rules are active") {
@@ -75,24 +86,24 @@ object AllRulesTest : Spek({
             }
 
             Then("all rules are returned") {
-                assertThat(rules).size().isEqualTo(45)
+                assertThat(rules.size).isEqualTo(allExpectedRules.size)
             }
 
             And("the specified rule does not trigger as expected") {
                 val rule = rules.filterIsInstance(NoPunctuationFilenameRule::class.java).first()
-                val errors = rule.processDocument(MarkdownDocument("Z", mockDocument))
+                val errors = rule.processDocument(MarkdownDocument(File("Z"), mockDocument))
                 assertThat(errors).size().isZero
             }
 
             And("the specified rule triggers as expected") {
                 val rule = rules.filterIsInstance(NoPunctuationFilenameRule::class.java).first()
-                val errors = rule.processDocument(MarkdownDocument("A", mockDocument))
+                val errors = rule.processDocument(MarkdownDocument(File("A"), mockDocument))
                 assertThat(errors).size().isOne
             }
 
             And("the specified rule result differs to default config") {
                 val rule = NoPunctuationFilenameRule()
-                val errors = rule.processDocument(MarkdownDocument("A", mockDocument))
+                val errors = rule.processDocument(MarkdownDocument(File("A"), mockDocument))
                 assertThat(errors).size().isZero
             }
         }

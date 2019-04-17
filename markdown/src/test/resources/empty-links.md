@@ -14,11 +14,11 @@
 
 ## Non-empty links
 
-[text](link)
+[text](link) {ValidRelativeLinksRule}
 
-[text](link "title")
+[text](link "title") {ValidRelativeLinksRule}
 
-[text](<link>)
+[text](<link>) {ValidRelativeLinksRule}
 
 [text](#frag)
 
@@ -29,3 +29,5 @@
 [text]
 
 [text]: link
+
+{ValidRelativeLinksRule:27} {ValidRelativeLinksRule:31}

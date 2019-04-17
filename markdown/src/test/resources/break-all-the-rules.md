@@ -68,10 +68,12 @@ Emphasis *with * space {NoSpaceInEmphasisRule}
 
 Code `with ` space {NoSpaceInCodeRule}
 
-[link with space ](link) {NoSpaceInLinksRule}
+[link with space ](link) {NoSpaceInLinksRule} {ValidRelativeLinksRule}
+
+[link without scheme](www.example.com) {MissingLinkSchemeRule}
 
 ```
-code fence without language {FencedCodeLanguageRule:73}
+code fence without language {FencedCodeLanguageRule:75}
 ```
 
 [empty link]() {NoEmptyLinksRule}

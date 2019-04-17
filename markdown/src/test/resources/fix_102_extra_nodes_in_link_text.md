@@ -11,3 +11,7 @@
 {ConsistentEmphasisStyleRule:4} {ConsistentEmphasisStyleRule:5}
 {ConsistentEmphasisStyleRule:5} {ConsistentEmphasisStyleRule:5}
 {ConsistentEmphasisStyleRule:6}
+
+{MissingLinkSchemeRule:1} {MissingLinkSchemeRule:2} {MissingLinkSchemeRule:3}
+{MissingLinkSchemeRule:4} {MissingLinkSchemeRule:5} {MissingLinkSchemeRule:6}
+{MissingLinkSchemeRule:7} {MissingLinkSchemeRule:8}

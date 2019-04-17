@@ -7,6 +7,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
 import mockDocument
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.style.gherkin.FeatureBody
+import java.io.File
 import kotlin.test.fail
 
 fun FeatureBody.FileRuleScenario(
@@ -91,7 +92,7 @@ fun FeatureBody.FilenameScenario(description: String, errors: Int, rules: () -> 
         lateinit var ruleErrors: List<Error>
 
         Given("a document with filename \"$_filename\"") {
-            document = MarkdownDocument(_filename, mockDocument)
+            document = MarkdownDocument(File(_filename), mockDocument)
         }
 
         When("we visit the document") {

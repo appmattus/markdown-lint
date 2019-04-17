@@ -2,12 +2,13 @@ package com.appmattus.markdown
 
 import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.processing.ParserFactory
+import java.io.File
 
 private val eolRegex = "(\\r?\\n|\\n)".toRegex()
 
 fun loadDocumentUnixEol(filename: String) =
     MarkdownDocument(
-        filename,
+        File(MarkdownDocument::class.java.classLoader.getResource(filename).file),
         ParserFactory.parser.parse(
             MarkdownDocument::class.java.classLoader.getResource(
                 filename
@@ -17,7 +18,7 @@ fun loadDocumentUnixEol(filename: String) =
 
 fun loadDocumentWindowsEol(filename: String) =
     MarkdownDocument(
-        filename,
+        File(MarkdownDocument::class.java.classLoader.getResource(filename).file),
         ParserFactory.parser.parse(
             MarkdownDocument::class.java.classLoader.getResource(
                 filename
