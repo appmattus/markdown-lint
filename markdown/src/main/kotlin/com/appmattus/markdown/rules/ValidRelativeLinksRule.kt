@@ -3,6 +3,7 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
+import com.appmattus.markdown.rules.extentions.isEmail
 import com.appmattus.markdown.rules.extentions.referenceUrl
 import com.vladsch.flexmark.ast.LinkRef
 import com.vladsch.flexmark.ast.Reference
@@ -43,5 +44,5 @@ class ValidRelativeLinksRule(
     }
 
     private val URI.isRelative
-        get() = !isAbsolute && !path.startsWith("www.") && !path.startsWith("/")
+        get() = !isAbsolute && !path.startsWith("www.") && !path.startsWith("/") && !path.isEmail
 }

@@ -3,6 +3,7 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
+import com.appmattus.markdown.rules.extentions.isEmail
 import com.appmattus.markdown.rules.extentions.referenceUrl
 import com.vladsch.flexmark.ast.LinkRef
 import com.vladsch.flexmark.ast.Reference
@@ -34,8 +35,10 @@ class MissingLinkSchemeRule(
                 val uri = URI(url.toString())
 
                 if (uri.scheme.isNullOrBlank() && uri.path.startsWith("www.")) {
-                    val description = "Link is missing http/https scheme, for example 'https://${link.chars}'"
-
+                    val description = "Link is missing http/https scheme, for example 'https://$url'"
+                    errorReporter.reportError(url.startOffset, url.endOffset, description)
+                } else if (url.isEmail) {
+                    val description = "Link is missing mailto scheme, for example 'mailto:$url'"
                     errorReporter.reportError(url.startOffset, url.endOffset, description)
                 }
             }

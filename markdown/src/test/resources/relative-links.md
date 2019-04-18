@@ -11,3 +11,7 @@
 [This is a web url](www.example.com) {MissingLinkSchemeRule}
 
 [This is a web url](https://www.example.com)
+
+[This is an email without scheme](example@example.com) {MissingLinkSchemeRule}
+
+[This is an email with scheme](mailto:example@example.com)
