@@ -4,11 +4,13 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 buildscript {
     repositories {
+        google()
         jcenter()
     }
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.21")
         classpath("org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2")
+        classpath("com.android.tools.build:gradle:3.4.0")
     }
 }
 

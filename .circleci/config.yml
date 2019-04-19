@@ -31,6 +31,9 @@ jobs:
       - store_artifacts:
           path: markdown/build/reports
           destination: reports
+      - store_artifacts:
+          path: markdown/test-results/lint-results.html
+          destination: reports
       - store_test_results:
           path: ~/junit
       - persist_to_workspace:
