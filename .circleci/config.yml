@@ -40,7 +40,7 @@ jobs:
       - store_artifacts:
           name: Upload lint report
           path: markdown/build/test-results/lint-results.html
-          destination: reports
+          destination: reports/lint-results.html
       - store_test_results:
           name: Upload test results
           path: ~/junit
