@@ -12,29 +12,37 @@ jobs:
     steps:
       - checkout
       - restore_cache:
+          name: Restore gradle cache
           key: jars-{{ checksum "build.gradle.kts" }}-{{ checksum  "markdown/build.gradle.kts" }}
       - run:
-          name: Run Tests
+          name: Build
           command: ./gradlew assemble check
       - save_cache:
+          name: Save gradle cache
           paths:
             - ~/.gradle
             - ~/.m2
           key: jars-{{ checksum "build.gradle.kts" }}-{{ checksum  "markdown/build.gradle.kts" }}
       - run:
-          name: Save test results 
+          name: Copy test results
           command: |
             mkdir -p ~/junit/
-            find . -type f -regex ".*/build/test-results/test/.*xml" -exec cp {} ~/junit/ \;
-            find . -type f -regex ".*/build/test-results/testDebug*/.*xml" -exec cp {} ~/junit/ \;
+            cp -r markdown/build/test-results/test ~/junit/markdown
           when: always
       - store_artifacts:
+          name: Upload detekt report
+          path: build/reports
+          destination: reports
+      - store_artifacts:
+          name: Upload test and jacoco reports
           path: markdown/build/reports
           destination: reports
       - store_artifacts:
-          path: markdown/test-results/lint-results.html
+          name: Upload lint report
+          path: markdown/build/test-results/lint-results.html
           destination: reports
       - store_test_results:
+          name: Upload test results
           path: ~/junit
       - persist_to_workspace:
           root: ./
