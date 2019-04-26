@@ -150,12 +150,8 @@ object MarkdownLintPluginTest : Spek({
         Scenario("empty report config generates no reports") {
             lateinit var output: String
 
-            Given("a build script with default configuration") {
-                temporaryFolder.createBuildScriptWithConfigFile()
-            }
-
-            And("config file disabling reports") {
-                temporaryFolder.createPluginConfigurationWithNoReports()
+            Given("a build script with config disabling reports") {
+                temporaryFolder.createBuildScriptWithNoReports()
             }
 
             When("we execute the markdownlint task") {
@@ -176,12 +172,8 @@ object MarkdownLintPluginTest : Spek({
         Scenario("html only report config generates only html report") {
             lateinit var output: String
 
-            Given("a build script with default configuration") {
-                temporaryFolder.createBuildScriptWithConfigFile()
-            }
-
-            And("config file with html only") {
-                temporaryFolder.createPluginConfigurationWithHtmlReportOnly()
+            Given("a build script with html only") {
+                temporaryFolder.createBuildScriptWithHtmlReportOnly()
             }
 
             When("we execute the markdownlint task") {
@@ -202,12 +194,8 @@ object MarkdownLintPluginTest : Spek({
         Scenario("xml only report config generates only xml report") {
             lateinit var output: String
 
-            Given("a build script with default configuration") {
-                temporaryFolder.createBuildScriptWithConfigFile()
-            }
-
-            And("config file with xml only") {
-                temporaryFolder.createPluginConfigurationWithXmlReportOnly()
+            Given("a build script with xml only") {
+                temporaryFolder.createBuildScriptWithXmlReportOnly()
             }
 
             When("we execute the markdownlint task") {
@@ -222,31 +210,6 @@ object MarkdownLintPluginTest : Spek({
             And("no html report generated") {
                 assertThat(output).doesNotContain("Successfully generated HTML report")
                 assertThat(output).doesNotContainPattern(htmlReportPattern)
-            }
-        }
-
-        Scenario("invalid configuration throws an exception") {
-            lateinit var output: String
-
-            Given("a build script with default configuration") {
-                temporaryFolder.createBuildScriptWithConfigFile()
-            }
-
-            And("invalid configuration") {
-                temporaryFolder.createPluginConfigurationWithNoConfiguration()
-            }
-
-            When("we execute the markdownlint task") {
-                output = buildAndFail(
-                    temporaryFolder,
-                    "markdownlint",
-                    "-q",
-                    "--stacktrace"
-                ).output.trimEnd()
-            }
-
-            Then("build fails with invalid configuration") {
-                assertThat(output).contains("Invalid configuration of markdownlint")
             }
         }
 
@@ -314,12 +277,8 @@ object MarkdownLintPluginTest : Spek({
         Scenario("configuration changes errors reported") {
             lateinit var output: String
 
-            Given("a build script with config file") {
-                temporaryFolder.createBuildScriptWithConfigFile()
-            }
-
-            And("a config file disabling rule") {
-                temporaryFolder.createPluginConfigurationDisablingRule()
+            Given("a build script with config disabling rule") {
+                temporaryFolder.createBuildScriptWithConfigDisablingRule()
             }
 
             And("a bad markdown file") {
@@ -369,12 +328,8 @@ object MarkdownLintPluginTest : Spek({
         Scenario("one bad markdown file and adjusted threshold doesn't throw an exception") {
             lateinit var output: String
 
-            Given("a build script with increased threshold") {
-                temporaryFolder.createBuildScriptWithConfigFile()
-            }
-
-            And("config file increasing threshold") {
-                temporaryFolder.createPluginConfigurationWithIncreasedThreshold()
+            Given("a build script with config increasing threshold") {
+                temporaryFolder.createBuildScriptWithIncreasedThreshold()
             }
 
             And("a bad markdown file") {
@@ -400,35 +355,52 @@ private fun TemporaryFolder.createBuildScriptWithDefaultConfig() = createFile("b
     """.trimIndent()
 }
 
-private fun TemporaryFolder.createBuildScriptWithConfigFile() = createFile("build.gradle.kts") {
+private fun TemporaryFolder.createBuildScriptWithNoReports() = createFile("build.gradle.kts") {
     """
     plugins {
         id("com.appmattus.markdown")
     }
     markdownlint {
-        configFile = File(projectDir, "markdownlint.kts")
+        reports {
+        }
     }
     """.trimIndent()
 }
 
-private fun TemporaryFolder.createPluginConfigurationWithEmptyConfiguration() = createFile("markdownlint.kts") {
+private fun TemporaryFolder.createBuildScriptWithHtmlReportOnly() = createFile("build.gradle.kts") {
     """
+    plugins {
+        id("com.appmattus.markdown")
+    }
     markdownlint {
-
+        reports {
+            html()
+        }
     }
     """.trimIndent()
 }
 
-private fun TemporaryFolder.createPluginConfigurationWithNoConfiguration() = createFile("markdownlint.kts") {
-    ""
+private fun TemporaryFolder.createBuildScriptWithXmlReportOnly() = createFile("build.gradle.kts") {
+    """
+    plugins {
+        id("com.appmattus.markdown")
+    }
+    markdownlint {
+        reports {
+            checkstyle()
+        }
+    }
+    """.trimIndent()
 }
 
-private fun TemporaryFolder.createPluginConfigurationDisablingRule() = createFile("markdownlint.kts") {
+private fun TemporaryFolder.createBuildScriptWithConfigDisablingRule() = createFile("build.gradle.kts") {
     """
-    import com.appmattus.markdown.dsl.markdownLintConfig
     import com.appmattus.markdown.rules.SingleH1Rule
 
-    markdownLintConfig {
+    plugins {
+        id("com.appmattus.markdown")
+    }
+    markdownlint {
         rules {
             +SingleH1Rule {
                 active = false
@@ -438,51 +410,18 @@ private fun TemporaryFolder.createPluginConfigurationDisablingRule() = createFil
     """.trimIndent()
 }
 
-private fun TemporaryFolder.createPluginConfigurationWithIncreasedThreshold() = createFile("markdownlint.kts") {
+private fun TemporaryFolder.createBuildScriptWithIncreasedThreshold() = createFile("build.gradle.kts") {
     """
-    import com.appmattus.markdown.dsl.markdownLintConfig
+    import com.appmattus.markdown.rules.SingleH1Rule
 
-    markdownLintConfig {
-        threshold(1)
+    plugins {
+        id("com.appmattus.markdown")
+    }
+    markdownlint {
+        threshold = 1
     }
     """.trimIndent()
 }
-
-private fun TemporaryFolder.createPluginConfigurationWithXmlReportOnly() = createFile("markdownlint.kts") {
-    """
-    import com.appmattus.markdown.dsl.markdownLintConfig
-
-    markdownLintConfig {
-        reports {
-            checkstyle()
-        }
-    }
-    """.trimIndent()
-}
-
-private fun TemporaryFolder.createPluginConfigurationWithHtmlReportOnly() = createFile("markdownlint.kts") {
-    """
-    import com.appmattus.markdown.dsl.markdownLintConfig
-
-    markdownLintConfig {
-        reports {
-            html()
-        }
-    }
-    """.trimIndent()
-}
-
-private fun TemporaryFolder.createPluginConfigurationWithNoReports() = createFile("markdownlint.kts") {
-    """
-    import com.appmattus.markdown.dsl.markdownLintConfig
-
-    markdownLintConfig {
-        reports {
-        }
-    }
-    """.trimIndent()
-}
-
 
 private fun TemporaryFolder.createMarkdownFileWithNoErrors(filename: String) = createFile(filename) {
     """

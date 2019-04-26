@@ -5,7 +5,7 @@ import com.appmattus.markdown.checkstyle.LocalizedMessage
 import com.appmattus.markdown.checkstyle.OutputStreamOptions
 import com.appmattus.markdown.checkstyle.SeverityLevel
 import com.appmattus.markdown.checkstyle.XMLLogger
-import com.appmattus.markdown.dsl.MarkdownLintConfig
+import com.appmattus.markdown.dsl.Config
 import com.appmattus.markdown.dsl.Report
 import com.appmattus.markdown.errors.Error
 import com.appmattus.markdown.filter.MultiPathFilter
@@ -14,7 +14,6 @@ import com.appmattus.markdown.rules.AllRules
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.PrintStream
-import javax.script.ScriptEngineManager
 import javax.xml.transform.TransformerFactory
 import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
@@ -22,9 +21,7 @@ import javax.xml.transform.stream.StreamSource
 
 class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
 
-    fun process(configFile: File?, summaryStream: PrintStream? = null) {
-        val config = configFile?.evaluate() ?: MarkdownLintConfig.Builder().build()
-
+    fun process(config: Config, summaryStream: PrintStream? = null) {
         val markdownFiles = rootDir.listMarkdownFiles(config)
         val fileErrors = markdownFiles.scanForErrors(config)
 
@@ -88,17 +85,7 @@ class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
         println()
     }
 
-    private fun File.evaluate(): MarkdownLintConfig {
-        val engine = ScriptEngineManager().getEngineByName("kotlin")
-        val result = engine.eval(readText())
-        if (result is MarkdownLintConfig) {
-            return result
-        } else {
-            throw IllegalStateException("Invalid configuration of markdownlint in $path")
-        }
-    }
-
-    private fun List<File>.scanForErrors(config: MarkdownLintConfig): Map<File, List<Error>> {
+    private fun List<File>.scanForErrors(config: Config): Map<File, List<Error>> {
 
         val rules = AllRules(config).rules
 
@@ -120,7 +107,7 @@ class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
         }.filterValues { it.isNotEmpty() }
     }
 
-    private fun File.listMarkdownFiles(config: MarkdownLintConfig): List<File> {
+    private fun File.listMarkdownFiles(config: Config): List<File> {
         val includes = MultiPathFilter(config.includes, toPath())
         val excludes = MultiPathFilter(config.excludes, toPath())
 
@@ -182,6 +169,6 @@ class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
         transformer.transform(DOMSource(document), result)
     }
 
-    private fun MarkdownLintConfig.generateXmlReport() = reports.contains(Report.Checkstyle)
-    private fun MarkdownLintConfig.generateHtmlReport() = reports.contains(Report.Html)
+    private fun Config.generateXmlReport() = reports.contains(Report.Checkstyle)
+    private fun Config.generateHtmlReport() = reports.contains(Report.Html)
 }

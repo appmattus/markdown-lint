@@ -37,8 +37,6 @@ dependencies {
     compileOnly(gradleApi())
 
     implementation(kotlin("stdlib-jdk8"))
-    implementation(kotlin("compiler-embeddable"))
-    implementation(kotlin("script-util"))
 
     api("com.vladsch.flexmark:flexmark-ext-tables:0.42.6")
     api("com.vladsch.flexmark:flexmark-ext-gfm-strikethrough:0.42.6")
@@ -52,7 +50,7 @@ dependencies {
     testImplementation("org.mockito:mockito-core:2.27.0")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
     testImplementation("com.flextrade.jfixture:jfixture:2.7.2")
-    testImplementation("io.github.classgraph:classgraph:4.8.25")
+    testImplementation("io.github.classgraph:classgraph:4.8.26")
 
     testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.2")
     testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.2")

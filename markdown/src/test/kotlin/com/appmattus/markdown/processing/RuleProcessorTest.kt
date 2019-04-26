@@ -1,5 +1,7 @@
 package com.appmattus.markdown.processing
 
+import com.appmattus.markdown.dsl.Config
+import com.appmattus.markdown.plugin.MarkdownLint
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.rules.TemporaryFolder
 import org.spekframework.spek2.Spek
@@ -7,12 +9,11 @@ import org.spekframework.spek2.style.gherkin.Feature
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.PrintStream
-import kotlin.test.assertFailsWith
 
 object RuleProcessorTest : Spek({
-    fun RuleProcessor.processAndReturnOutput(configFile: File?): String {
+    fun RuleProcessor.processAndReturnOutput(config: Config): String {
         val byteArrayOutputStream = ByteArrayOutputStream()
-        process(configFile, PrintStream(byteArrayOutputStream))
+        process(config, PrintStream(byteArrayOutputStream))
         return byteArrayOutputStream.toByteArray().toString(Charsets.UTF_8)
     }
 
@@ -35,32 +36,12 @@ object RuleProcessorTest : Spek({
         val htmlReportPattern = "reportsDir${slash}markdownlint\\.html".toRegex().toPattern()
         val xmlReportPattern = "reportsDir${slash}markdownlint\\.xml".toRegex().toPattern()
 
-        Scenario("invalid config file throws an exception") {
-            lateinit var configFile: File
+        Scenario("default config executes successfully") {
+            lateinit var config: Config
             lateinit var ruleProcessor: RuleProcessor
 
-            Given("an invalid config file") {
-                configFile = temporaryFolder.newFile("markdownConfig.gradle.kts")
-            }
-
-            When("we create the rule processor") {
-                ruleProcessor = RuleProcessor(rootDir, reportsDir)
-            }
-
-            Then("processing the config file throws an exception") {
-                assertFailsWith<IllegalStateException> {
-                    ruleProcessor.process(configFile)
-                }
-            }
-
-        }
-
-        Scenario("default config file executes successfully") {
-            var configFile: File? = null
-            lateinit var ruleProcessor: RuleProcessor
-
-            Given("a null config file") {
-                configFile = null
+            Given("a default config") {
+                config = MarkdownLint().build()
             }
 
             When("we create the rule processor") {
@@ -68,45 +49,20 @@ object RuleProcessorTest : Spek({
             }
 
             Then("processing the config file is successful") {
-                ruleProcessor.process(configFile)
-            }
-        }
-
-        Scenario("valid config file executes successfully") {
-            lateinit var configFile: File
-            lateinit var ruleProcessor: RuleProcessor
-
-            Given("a valid config file") {
-                configFile = temporaryFolder.newFile("markdownConfig.gradle.kts").apply {
-                    writeText(
-                        """
-                            import com.appmattus.markdown.dsl.markdownLintConfig
-
-                            markdownLintConfig {}
-                        """.trimIndent()
-                    )
-                }
-            }
-
-            When("we create the rule processor") {
-                ruleProcessor = RuleProcessor(rootDir, reportsDir)
-            }
-
-            Then("processing the config file is successful") {
-                ruleProcessor.process(configFile)
+                ruleProcessor.process(config)
             }
         }
 
         Scenario("default config generates both xml and html reports") {
-            var configFile: File? = null
+            lateinit var config: Config
             lateinit var output: String
 
-            Given("a null config file") {
-                configFile = null
+            Given("a default config") {
+                config = MarkdownLint().build()
             }
 
             When("we execute the rule processor") {
-                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(configFile)
+                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
             }
 
             Then("xml report generated") {
@@ -123,26 +79,15 @@ object RuleProcessorTest : Spek({
         }
 
         Scenario("empty report config generates no reports") {
-            lateinit var configFile: File
+            lateinit var config: Config
             lateinit var output: String
 
-            Given("config file disabling reports") {
-                configFile = temporaryFolder.newFile("markdownConfig.gradle.kts").apply {
-                    writeText(
-                        """
-                            import com.appmattus.markdown.dsl.markdownLintConfig
-
-                            markdownLintConfig {
-                                reports {
-                                }
-                            }
-                        """.trimIndent()
-                    )
-                }
+            Given("config disabling reports") {
+                config = MarkdownLint().reports { }.build()
             }
 
             When("we execute the rule processor") {
-                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(configFile)
+                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
             }
 
             Then("no xml report generated") {
@@ -159,27 +104,15 @@ object RuleProcessorTest : Spek({
         }
 
         Scenario("html only report config generates only html report") {
-            lateinit var configFile: File
+            lateinit var config: Config
             lateinit var output: String
 
-            Given("config file with html only") {
-                configFile = temporaryFolder.newFile("markdownConfig.gradle.kts").apply {
-                    writeText(
-                        """
-                            import com.appmattus.markdown.dsl.markdownLintConfig
-
-                            markdownLintConfig {
-                                reports {
-                                    html()
-                                }
-                            }
-                        """.trimIndent()
-                    )
-                }
+            Given("config with html only") {
+                config = MarkdownLint().reports { html() }.build()
             }
 
             When("we execute the rule processor") {
-                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(configFile)
+                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
             }
 
             Then("html report generated") {
@@ -196,27 +129,15 @@ object RuleProcessorTest : Spek({
         }
 
         Scenario("xml only report config generates only xml report") {
-            lateinit var configFile: File
+            lateinit var config: Config
             lateinit var output: String
 
-            Given("config file with xml only") {
-                configFile = temporaryFolder.newFile("markdownConfig.gradle.kts").apply {
-                    writeText(
-                        """
-                            import com.appmattus.markdown.dsl.markdownLintConfig
-
-                            markdownLintConfig {
-                                reports {
-                                    checkstyle()
-                                }
-                            }
-                        """.trimIndent()
-                    )
-                }
+            Given("config with xml only") {
+                config = MarkdownLint().reports { checkstyle() }.build()
             }
 
             When("we execute the rule processor") {
-                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(configFile)
+                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
             }
 
             Then("xml report generated") {
@@ -234,14 +155,19 @@ object RuleProcessorTest : Spek({
 
 
         Scenario("no files analysed when no markdown files defined") {
+            lateinit var config: Config
             lateinit var output: String
 
             Given("no markdown files") {
 
             }
 
+            And("a default config") {
+                config = MarkdownLint().build()
+            }
+
             When("we execute the rule processor") {
-                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(null)
+                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
             }
 
             Then("no files analysed") {
@@ -250,14 +176,19 @@ object RuleProcessorTest : Spek({
         }
 
         Scenario("one file analysed when one markdown file defined") {
+            lateinit var config: Config
             lateinit var output: String
 
             Given("one markdown files") {
                 File(rootDir, "a-valid-file.md").writeText("# A valid file")
             }
 
+            And("a default config") {
+                config = MarkdownLint().build()
+            }
+
             When("we execute the rule processor") {
-                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(null)
+                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
             }
 
             Then("one file analysed") {
@@ -266,6 +197,7 @@ object RuleProcessorTest : Spek({
         }
 
         Scenario("two files analysed when two markdown files defined") {
+            lateinit var config: Config
             lateinit var output: String
 
             Given("two markdown files") {
@@ -273,8 +205,12 @@ object RuleProcessorTest : Spek({
                 File(rootDir, "another-valid-file.md").writeText("# Another valid file")
             }
 
+            And("a default config") {
+                config = MarkdownLint().build()
+            }
+
             When("we execute the rule processor") {
-                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(null)
+                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
             }
 
             Then("two file analysed") {
@@ -283,7 +219,7 @@ object RuleProcessorTest : Spek({
         }
 
         Scenario("one file analysed when one file excluded") {
-            lateinit var configFile: File
+            lateinit var config: Config
             lateinit var output: String
 
             Given("two markdown files") {
@@ -291,22 +227,14 @@ object RuleProcessorTest : Spek({
                 File(rootDir, "an-invalid-file.md").writeText("")
             }
 
-            And("config file with exclude rule") {
-                configFile = temporaryFolder.newFile("markdownConfig.gradle.kts").apply {
-                    writeText(
-                        """
-                            import com.appmattus.markdown.dsl.markdownLintConfig
-
-                            markdownLintConfig {
-                                excludes(listOf(".*/an-invalid-file.md"))
-                            }
-                        """.trimIndent()
-                    )
-                }
+            And("config with exclude rule") {
+                config = MarkdownLint().apply {
+                    excludes = listOf(".*/an-invalid-file.md")
+                }.build()
             }
 
             When("we execute the rule processor") {
-                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(configFile)
+                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
             }
 
             Then("one file analysed") {
@@ -315,7 +243,7 @@ object RuleProcessorTest : Spek({
         }
 
         Scenario("one file analysed when one file included") {
-            lateinit var configFile: File
+            lateinit var config: Config
             lateinit var output: String
 
             Given("two markdown files") {
@@ -323,22 +251,14 @@ object RuleProcessorTest : Spek({
                 File(rootDir, "an-invalid-file.md").writeText("")
             }
 
-            And("config file with exclude rule") {
-                configFile = temporaryFolder.newFile("markdownConfig.gradle.kts").apply {
-                    writeText(
-                        """
-                            import com.appmattus.markdown.dsl.markdownLintConfig
-
-                            markdownLintConfig {
-                                includes(listOf(".*/a-valid-file.md"))
-                            }
-                        """.trimIndent()
-                    )
-                }
+            And("config with exclude rule") {
+                config = MarkdownLint().apply {
+                    includes = listOf(".*/a-valid-file.md")
+                }.build()
             }
 
             When("we execute the rule processor") {
-                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(configFile)
+                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
             }
 
             Then("one file analysed") {
@@ -351,7 +271,7 @@ object RuleProcessorTest : Spek({
         }
 
         Scenario("no files analysed when a file is both included and excluded") {
-            lateinit var configFile: File
+            lateinit var config: Config
             lateinit var output: String
 
             Given("two markdown files") {
@@ -359,23 +279,15 @@ object RuleProcessorTest : Spek({
                 File(rootDir, "an-invalid-file.md").writeText("")
             }
 
-            And("config file with exclude rule") {
-                configFile = temporaryFolder.newFile("markdownConfig.gradle.kts").apply {
-                    writeText(
-                        """
-                            import com.appmattus.markdown.dsl.markdownLintConfig
-
-                            markdownLintConfig {
-                                includes(listOf(".*/a-valid-file.md"))
-                                excludes(listOf(".*/a-valid-file.md"))
-                            }
-                        """.trimIndent()
-                    )
-                }
+            And("config with exclude rule") {
+                config = MarkdownLint().apply {
+                    includes = listOf(".*/a-valid-file.md")
+                    excludes = listOf(".*/a-valid-file.md")
+                }.build()
             }
 
             When("we execute the rule processor") {
-                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(configFile)
+                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
             }
 
             Then("no files analysed") {
@@ -388,7 +300,7 @@ object RuleProcessorTest : Spek({
         }
 
         Scenario("one file analysed when directory excluded") {
-            lateinit var configFile: File
+            lateinit var config: Config
             lateinit var output: String
 
             Given("two markdown files") {
@@ -397,22 +309,14 @@ object RuleProcessorTest : Spek({
                 File(rootDir, "directory/an-invalid-file.md").writeText("")
             }
 
-            And("config file with exclude rule") {
-                configFile = temporaryFolder.newFile("markdownConfig.gradle.kts").apply {
-                    writeText(
-                        """
-                            import com.appmattus.markdown.dsl.markdownLintConfig
-
-                            markdownLintConfig {
-                                excludes(listOf(".*/directory/.*"))
-                            }
-                        """.trimIndent()
-                    )
-                }
+            And("config with exclude rule") {
+                config = MarkdownLint().apply {
+                    excludes = listOf(".*/directory/.*")
+                }.build()
             }
 
             When("we execute the rule processor") {
-                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(configFile)
+                output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
             }
 
             Then("one file analysed") {
@@ -423,6 +327,5 @@ object RuleProcessorTest : Spek({
                 assertThat(output).contains("No errors reported")
             }
         }
-
     }
 })
