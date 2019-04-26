@@ -12,7 +12,7 @@ Apply the plugin in your `build.gradle.kts` script. Further instructions on the
 
 ```kotlin
 plugins {
-  id("com.appmattus.markdown") version "0.3.0"
+  id("com.appmattus.markdown") version "0.4.0"
 }
 ```
 
@@ -29,25 +29,15 @@ tasks.getByName("check")
     .finalizedBy(rootProject.tasks.getByName("markdownlint"))
 ```
 
-To customise the rules and report generation specify a configuration file in
+To customise the rules and report generation specify the configuration in
 your `build.gradle.kts` script:
 
 ```kotlin
-markdownlint {
-    configFile = File(projectDir, "markdownlint.gradle.kts")
-}
-```
-
-Then in your `markdownlint.gradle.kts` file use the DSL to configure the rules
-and report generation as you wish:
-
-```kotlin
-import com.appmattus.markdown.dsl.markdownLintConfig
 import com.appmattus.markdown.rules.config.HeaderStyle
 import com.appmattus.markdown.rules.ConsistentHeaderStyleRule
 import com.appmattus.markdown.rules.SingleH1Rule
 
-markdownLintConfig {
+markdownlint {
     rules {
         // Change the default settings of a rule
         +ConsistentHeaderStyleRule(HeaderStyle.Atx)
@@ -69,7 +59,7 @@ markdownLintConfig {
     }
 
     // Specify the error count threshold that triggers a failed build
-    threshold(10)
+    threshold = 10
 }
 ```
 
