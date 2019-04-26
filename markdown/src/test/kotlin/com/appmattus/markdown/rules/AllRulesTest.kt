@@ -1,7 +1,7 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.dsl.MarkdownLintConfig
-import com.appmattus.markdown.dsl.markdownLintConfig
+import com.appmattus.markdown.dsl.Config
+import com.appmattus.markdown.plugin.MarkdownLint
 import com.appmattus.markdown.processing.MarkdownDocument
 import io.github.classgraph.ClassGraph
 import mockDocument
@@ -17,13 +17,13 @@ object AllRulesTest : Spek({
         val allExpectedRules = scanResult.getSubclasses(Rule::class.java.name).loadClasses()
 
         Scenario("empty configuration returns all rules") {
-            lateinit var config: MarkdownLintConfig
+            lateinit var config: Config
             lateinit var rules: List<Rule>
 
             Given("an empty rule config") {
-                config = markdownLintConfig {
+                config = MarkdownLint().apply {
                     rules { }
-                }
+                }.build()
             }
 
             When("we ask for the rules") {
@@ -43,17 +43,17 @@ object AllRulesTest : Spek({
         }
 
         Scenario("config disables rules") {
-            lateinit var config: MarkdownLintConfig
+            lateinit var config: Config
             lateinit var rules: List<Rule>
 
             Given("config disables one rule") {
-                config = markdownLintConfig {
+                config = MarkdownLint().apply {
                     rules {
                         +BlanksAroundFencesRule {
                             active = false
                         }
                     }
-                }
+                }.build()
             }
 
             When("we ask for the rules") {
@@ -70,15 +70,15 @@ object AllRulesTest : Spek({
         }
 
         Scenario("replacement rule configuration") {
-            lateinit var config: MarkdownLintConfig
+            lateinit var config: Config
             lateinit var rules: List<Rule>
 
             Given("we configure one rule") {
-                config = markdownLintConfig {
+                config = MarkdownLint().apply {
                     rules {
                         +NoPunctuationFilenameRule(punctuation = "ABC")
                     }
-                }
+                }.build()
             }
 
             When("we ask for the rules") {

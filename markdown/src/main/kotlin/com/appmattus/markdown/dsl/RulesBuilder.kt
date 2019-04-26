@@ -2,6 +2,7 @@ package com.appmattus.markdown.dsl
 
 import com.appmattus.markdown.rules.Rule
 
+@MarkdownDsl
 class RulesBuilder {
     private val rules = mutableListOf<Rule>()
 

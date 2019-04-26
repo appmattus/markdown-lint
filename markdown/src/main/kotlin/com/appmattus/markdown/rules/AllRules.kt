@@ -1,8 +1,8 @@
 package com.appmattus.markdown.rules
 
-import com.appmattus.markdown.dsl.MarkdownLintConfig
+import com.appmattus.markdown.dsl.Config
 
-class AllRules(private val config: MarkdownLintConfig) {
+class AllRules(private val config: Config) {
     private val allRules = listOf(
         BlanksAroundFencesRule(),
         BlanksAroundHeadersRule(),
