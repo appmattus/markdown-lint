@@ -13,6 +13,9 @@ class MarkdownLintPlugin : Plugin<Project> {
         val markdownlint = extensions.create("markdownlint", MarkdownLint::class.java)
 
         tasks.register("markdownlint") {
+            it.group = "verification"
+            it.description = "Runs lint checks on your markdown files."
+
             it.outputs.upToDateWhen { false }
 
             it.doLast {
