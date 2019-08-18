@@ -38,16 +38,32 @@ import com.appmattus.markdown.rules.ConsistentHeaderStyleRule
 import com.appmattus.markdown.rules.SingleH1Rule
 
 markdownlint {
+    // Optional - Use to override settings for individual rules or add in custom rules
     rules {
         // Change the default settings of a rule
         +ConsistentHeaderStyleRule(HeaderStyle.Atx)
+
+        +NoDuplicateHeaderRule {
+            // Include files using RegEx for this rule, default=".*" (i.e. all files)
+            includes = listOf(".*/directory_to_include/.*")
+
+            // Exclude files using RegEx for this rule, default=empty (i.e. exclude nothing)
+            excludes = listOf(".*/a_file_to_exclude.md")
+        }
 
         // Disable a rule by setting active to false
         +SingleH1Rule {
             active = false
         }
     }
+    
+    // Optional - Include files using RegEx for ALL rules, default=".*" (i.e. all files in root project directory)
+    includes = listOf(".*/directory_to_include/.*")
 
+    // Optional - Exclude files using RegEx for ALL rules, default=empty (i.e. exclude nothing)
+    excludes = listOf(".*/a_file_to_exclude.md")
+
+    // Optional - Specify the reports to generate, default=html,checkstyle
     // If you specify the reports block the plugin will output only the types
     // specified i.e. to output no reports implement an empty block
     reports {
@@ -58,7 +74,7 @@ markdownlint {
         checkstyle()
     }
 
-    // Specify the error count threshold that triggers a failed build
+    // Optional - Specify the error count threshold that triggers a failed build, default=0
     threshold = 10
 }
 ```
