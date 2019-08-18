@@ -88,9 +88,9 @@ class ListMarkerSpaceRule(
                 item as ListItem
 
                 // For task lists we look at the marker suffix as the opening content
-                val startContent = item.markerSuffix.takeIf(CharSequence::isNotEmpty) ?: item.firstChild.chars
+                val startContent = item.markerSuffix.takeIf(CharSequence::isNotEmpty) ?: item.firstChild?.chars
 
-                if (startContent.startOffset - item.openingMarker.endOffset != indent) {
+                if (startContent != null && startContent.startOffset - item.openingMarker.endOffset != indent) {
                     val description = "Ensure $indent spaces after list marker. Configuration: ulSingle=$ulSingle, " +
                             "olSingle=$olSingle, ulMulti=$ulMulti, olMulti=$olMulti."
 
