@@ -20,6 +20,7 @@ val allFiles = listOf(
     "consistent_bullet_styles_plus.md",
     "emphasis_instead_of_headers.md",
     "empty_doc.md",
+    "empty-list.md",
     "fenced_code_blocks.md",
     "fenced_code_with_nesting.md",
     "fenced_code_without_blank_lines.md",

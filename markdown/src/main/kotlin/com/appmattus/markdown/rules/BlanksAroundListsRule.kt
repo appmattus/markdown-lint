@@ -49,7 +49,7 @@ class BlanksAroundListsRule(
 ) : Rule() {
 
     private val fenceRegEx = Regex("^(`{3,}|~{3,})")
-    private val listRegEx = Regex("^([*+\\-]|(\\d+\\.))\\s")
+    private val listRegEx = Regex("^([*+\\-]|(\\d+\\.))(\\s|$)")
     private val emptyRegEx = Regex("^(\\s|$)")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
