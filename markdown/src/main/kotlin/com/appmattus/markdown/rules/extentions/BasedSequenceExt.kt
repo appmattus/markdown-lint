@@ -20,3 +20,22 @@ fun BasedSequence.splitIntoLines(): Array<BasedSequence> {
 
     return items.toTypedArray()
 }
+
+// Required until https://github.com/vsch/flexmark-java/issues/362 is resolved
+fun BasedSequence.indexOfAllList(s: CharSequence): List<Int> {
+    val indices = mutableListOf<Int>()
+
+    var currentIndex = 0
+
+    while (true) {
+        currentIndex = indexOf(s, currentIndex)
+
+        if (currentIndex == -1) {
+            return indices.toList()
+        }
+
+        indices.add(currentIndex)
+
+        currentIndex += s.length
+    }
+}

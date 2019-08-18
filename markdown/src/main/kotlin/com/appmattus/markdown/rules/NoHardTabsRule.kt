@@ -3,6 +3,7 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
+import com.appmattus.markdown.rules.extentions.indexOfAllList
 
 /**
  * # Hard tabs
@@ -31,7 +32,7 @@ class NoHardTabsRule(
     private val description = "Replace hard tab characters with spaces."
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-        document.chars.indexOfAll("\t").forEach {
+        document.chars.indexOfAllList("\t").forEach {
             errorReporter.reportError(it, it + 1, description)
         }
     }
