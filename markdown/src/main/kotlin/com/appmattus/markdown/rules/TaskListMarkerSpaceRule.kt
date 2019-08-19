@@ -7,8 +7,8 @@ import com.appmattus.markdown.processing.MarkdownDocument
 /**
  * # Spaces after list markers
  *
- * This rule checks for the number of spaces between a task list marker (e.g. '[ ]', '&#91;x]' or '&#91;X]') and the text of
- * the list item.
+ * This rule checks for the number of spaces between a task list marker (e.g. '[ ]', '&#91;x]' or '&#91;X]') and the
+ * text of the list item.
  *
  * The number of spaces checked for depends on the document style in use, but the default is 1 space after any task list
  * marker:

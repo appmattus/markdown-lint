@@ -8,15 +8,15 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.31")
-        classpath("org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2")
-        classpath("com.android.tools.build:gradle:3.4.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.41")
+        classpath("org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.3")
+        classpath("com.android.tools.build:gradle:3.4.2")
     }
 }
 
 plugins {
-    id("com.github.ben-manes.versions") version "0.21.0"
-    id("io.gitlab.arturbosch.detekt") version "1.0.0-RC14"
+    id("com.github.ben-manes.versions") version "0.22.0"
+    id("io.gitlab.arturbosch.detekt") version "1.0.0"
 }
 
 allprojects {
@@ -49,6 +49,8 @@ tasks.withType(DependencyUpdatesTask::class.java).all {
 
 detekt {
     input = files("$projectDir")
+
+    buildUponDefaultConfig = true
 
     // To override MaxLineLength:excludeCommentStatements
     config = files("detekt-config.yml")
