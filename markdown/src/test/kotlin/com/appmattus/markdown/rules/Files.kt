@@ -89,5 +89,6 @@ val allFiles = listOf(
     "proper-names.md",
     "proper-names-projects.md",
     "no_newline.md",
-    "has_newline.md"
+    "has_newline.md",
+    "no-alt-text.md"
 )

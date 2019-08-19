@@ -80,7 +80,7 @@ code fence without language {FencedCodeLanguageRule:75}
 
 markdownLint {ProperNamesRule}
 
-![](image.jpg) {MD045} {ValidRelativeImagesRule}
+![](image.jpg) {NoAltTextRule} {ValidRelativeImagesRule}
 
 - [ ] First task item
 -  [x] Second item {ListMarkerSpaceRule}

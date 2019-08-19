@@ -24,6 +24,7 @@ class AllRules(private val config: Config) {
         ListMarkerSpaceRule(),
         LowerCaseFilenameRule(),
         MissingLinkSchemeRule(),
+        NoAltTextRule(),
         NoBareUrlsRule(),
         NoBlanksBlockquoteRule(),
         NoConsecutiveHyphensFilenameRule(),
