@@ -84,10 +84,10 @@ val allFiles = listOf(
     "spaces_inside_link_text.md",
     "trailing_spaces_br.md",
     "whitespace_issues.md",
-
     "break-all-the-rules.md",
     "empty-links.md",
-
     "proper-names.md",
-    "proper-names-projects.md"
+    "proper-names-projects.md",
+    "no_newline.md",
+    "has_newline.md"
 )
