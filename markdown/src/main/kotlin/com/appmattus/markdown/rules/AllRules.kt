@@ -50,6 +50,7 @@ class AllRules(private val config: Config) {
         OlPrefixRule(),
         ProperNamesRule(),
         SingleH1Rule(),
+        SingleTrailingNewlineRule(),
         TaskListMarkerSpaceRule(),
         UlIndentRule(),
         UlStartLeftRule(),

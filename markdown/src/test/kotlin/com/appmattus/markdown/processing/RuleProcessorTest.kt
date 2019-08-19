@@ -180,7 +180,7 @@ object RuleProcessorTest : Spek({
             lateinit var output: String
 
             Given("one markdown files") {
-                File(rootDir, "a-valid-file.md").writeText("# A valid file")
+                File(rootDir, "a-valid-file.md").writeText("# A valid file\n")
             }
 
             And("a default config") {
@@ -201,8 +201,8 @@ object RuleProcessorTest : Spek({
             lateinit var output: String
 
             Given("two markdown files") {
-                File(rootDir, "a-valid-file.md").writeText("# A valid file")
-                File(rootDir, "another-valid-file.md").writeText("# Another valid file")
+                File(rootDir, "a-valid-file.md").writeText("# A valid file\n")
+                File(rootDir, "another-valid-file.md").writeText("# Another valid file\n")
             }
 
             And("a default config") {
@@ -223,7 +223,7 @@ object RuleProcessorTest : Spek({
             lateinit var output: String
 
             Given("two markdown files") {
-                File(rootDir, "a-valid-file.md").writeText("# A valid file")
+                File(rootDir, "a-valid-file.md").writeText("# A valid file\n")
                 File(rootDir, "an-invalid-file.md").writeText("")
             }
 
@@ -247,7 +247,7 @@ object RuleProcessorTest : Spek({
             lateinit var output: String
 
             Given("two markdown files") {
-                File(rootDir, "a-valid-file.md").writeText("# A valid file")
+                File(rootDir, "a-valid-file.md").writeText("# A valid file\n")
                 File(rootDir, "an-invalid-file.md").writeText("")
             }
 
@@ -275,7 +275,7 @@ object RuleProcessorTest : Spek({
             lateinit var output: String
 
             Given("two markdown files") {
-                File(rootDir, "a-valid-file.md").writeText("# A valid file")
+                File(rootDir, "a-valid-file.md").writeText("# A valid file\n")
                 File(rootDir, "an-invalid-file.md").writeText("")
             }
 
@@ -304,7 +304,7 @@ object RuleProcessorTest : Spek({
             lateinit var output: String
 
             Given("two markdown files") {
-                File(rootDir, "a-valid-file.md").writeText("# A valid file")
+                File(rootDir, "a-valid-file.md").writeText("# A valid file\n")
                 File(rootDir, "directory").mkdir()
                 File(rootDir, "directory/an-invalid-file.md").writeText("")
             }
