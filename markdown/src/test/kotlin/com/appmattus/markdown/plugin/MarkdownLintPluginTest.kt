@@ -431,7 +431,7 @@ private fun TemporaryFolder.createMarkdownFileWithNoErrors(filename: String) = c
 
     ## Section 2
 
-    This is the next section
+    This is the next section\n
     """.trimIndent()
 }
 
@@ -443,7 +443,7 @@ private fun TemporaryFolder.createMarkdownFileWithAnError(filename: String) = cr
 
     # Section 2
 
-    This is the next section
+    This is the next section\n
     """.trimIndent()
 }
 
