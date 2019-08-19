@@ -4,9 +4,6 @@ import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.extentions.isEmail
-import com.appmattus.markdown.rules.extentions.referenceUrl
-import com.vladsch.flexmark.ast.LinkRef
-import com.vladsch.flexmark.ast.Reference
 import java.net.URI
 
 /**
@@ -25,22 +22,18 @@ class MissingLinkSchemeRule(
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-        document.allLinks.forEach { link ->
 
-            when (link) {
-                is LinkRef -> link.referenceUrl()
-                is Reference -> null
-                else -> link.url
-            }?.let { url ->
-                val uri = URI(url.toString())
+        val urls = document.allLinkUrls + document.allImageUrls
 
-                if (uri.scheme.isNullOrBlank() && uri.path.startsWith("www.")) {
-                    val description = "Link is missing http/https scheme, for example 'https://$url'"
-                    errorReporter.reportError(url.startOffset, url.endOffset, description)
-                } else if (url.isEmail) {
-                    val description = "Link is missing mailto scheme, for example 'mailto:$url'"
-                    errorReporter.reportError(url.startOffset, url.endOffset, description)
-                }
+        urls.forEach { url ->
+            val uri = URI(url.toString())
+
+            if (uri.scheme.isNullOrBlank() && uri.path.startsWith("www.")) {
+                val description = "Link is missing http/https scheme, for example 'https://$url'"
+                errorReporter.reportError(url.startOffset, url.endOffset, description)
+            } else if (url.isEmail) {
+                val description = "Link is missing mailto scheme, for example 'mailto:$url'"
+                errorReporter.reportError(url.startOffset, url.endOffset, description)
             }
         }
     }

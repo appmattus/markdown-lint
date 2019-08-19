@@ -16,19 +16,19 @@ import java.net.URI
  *
  * To fix the violation, ensure the linked file exists.
  */
-class ValidRelativeLinksRule(
+class ValidRelativeImagesRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val parentDir = document.file.parent
-        document.allLinkUrls.forEach { url ->
+        document.allImageUrls.forEach { url ->
             val uri = URI(url.toString())
 
             if (uri.isRelative && uri.path.isNotEmpty() && !File(parentDir, uri.path).exists()) {
                 val expected = File(document.file.parent, uri.path).normalize().path
                 val description =
-                    "Relative link does not exist, '$url', expected at '$expected'"
+                    "Relative image does not exist, '$url', expected at '$expected'"
                 errorReporter.reportError(url.startOffset, url.endOffset, description)
             }
         }

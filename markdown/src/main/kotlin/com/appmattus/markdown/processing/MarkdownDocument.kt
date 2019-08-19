@@ -1,5 +1,6 @@
 package com.appmattus.markdown.processing
 
+import com.appmattus.markdown.rules.extentions.referenceUrl
 import com.appmattus.markdown.rules.extentions.splitIntoLines
 import com.vladsch.flexmark.ast.AutoLink
 import com.vladsch.flexmark.ast.BlockQuote
@@ -59,6 +60,23 @@ class MarkdownDocument constructor(val file: File, val document: Document) {
     val inlineCode: List<Code> by lazy { document.find(Code::class) }
     val allLinks: List<LinkNodeBase> by lazy {
         document.find(Link::class, Reference::class, AutoLink::class, LinkRef::class)
+    }
+    val allLinkUrls: List<BasedSequence> by lazy {
+        allLinks.mapNotNull { link ->
+            when (link) {
+                is LinkRef -> link.referenceUrl()
+                is Reference -> null
+                else -> link.url
+            }
+        }
+    }
+    val allImageUrls: List<BasedSequence> by lazy {
+        allImages.map { link ->
+            when (link) {
+                is ImageRef -> link.getReferenceNode(document).url
+                else -> link.url
+            }
+        }
     }
     val links: List<Link> by lazy { document.find(Link::class) }
     val autoLinks: List<AutoLink> by lazy { document.find(AutoLink::class) }
