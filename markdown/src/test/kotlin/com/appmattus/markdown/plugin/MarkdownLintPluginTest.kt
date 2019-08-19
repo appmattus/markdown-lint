@@ -11,7 +11,7 @@ import java.io.InputStream
 import java.util.concurrent.TimeUnit
 
 object MarkdownLintPluginTest : Spek({
-    val timeout: Long = TimeUnit.SECONDS.toMillis(20)
+    val timeout: Long = TimeUnit.SECONDS.toMillis(30)
 
     Feature("MarkdownLintPlugin") {
         val temporaryFolder by memoized {
