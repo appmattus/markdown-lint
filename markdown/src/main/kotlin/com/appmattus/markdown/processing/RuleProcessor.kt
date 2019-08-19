@@ -14,11 +14,13 @@ import com.appmattus.markdown.rules.AllRules
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.PrintStream
+import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.transform.TransformerFactory
 import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
 import javax.xml.transform.stream.StreamSource
 
+@Suppress("TooManyFunctions")
 class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
 
     fun process(config: Config, summaryStream: PrintStream? = null) {
@@ -157,7 +159,7 @@ class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
         htmlFile: File,
         checkstyleXmlBytes: ByteArray
     ) {
-        val factory = javax.xml.parsers.DocumentBuilderFactory.newInstance()
+        val factory = DocumentBuilderFactory.newInstance()
         val builder = factory.newDocumentBuilder()
         val document = builder.parse(checkstyleXmlBytes.inputStream())
 

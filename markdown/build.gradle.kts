@@ -9,7 +9,7 @@ plugins {
     id("jacoco")
     id("com.github.kt3k.coveralls")
     id("com.gradle.plugin-publish") version "0.10.1"
-    id("pl.droidsonroids.jacoco.testkit") version "1.0.3"
+    id("pl.droidsonroids.jacoco.testkit") version "1.0.4"
     id("com.android.lint")
 }
 
@@ -38,22 +38,22 @@ dependencies {
 
     implementation(kotlin("stdlib-jdk8"))
 
-    api("com.vladsch.flexmark:flexmark-ext-tables:0.42.6")
-    api("com.vladsch.flexmark:flexmark-ext-gfm-strikethrough:0.42.6")
-    api("com.vladsch.flexmark:flexmark-ext-autolink:0.42.6")
-    api("com.vladsch.flexmark:flexmark-ext-gfm-tasklist:0.42.6")
+    api("com.vladsch.flexmark:flexmark-ext-tables:0.50.26")
+    api("com.vladsch.flexmark:flexmark-ext-gfm-strikethrough:0.50.26")
+    api("com.vladsch.flexmark:flexmark-ext-autolink:0.50.26")
+    api("com.vladsch.flexmark:flexmark-ext-gfm-tasklist:0.50.26")
 
     testImplementation(kotlin("test"))
     testImplementation(gradleTestKit())
     testImplementation("junit:junit:4.12")
-    testImplementation("org.assertj:assertj-core:3.12.2")
-    testImplementation("org.mockito:mockito-core:2.27.0")
+    testImplementation("org.assertj:assertj-core:3.13.2")
+    testImplementation("org.mockito:mockito-core:3.0.0")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
     testImplementation("com.flextrade.jfixture:jfixture:2.7.2")
-    testImplementation("io.github.classgraph:classgraph:4.8.27")
+    testImplementation("io.github.classgraph:classgraph:4.8.45")
 
-    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.2")
-    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.2")
+    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.6")
+    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.6")
     // spek requires kotlin-reflect, can be omitted if already in the classpath
     testRuntimeOnly(kotlin("reflect"))
 }
