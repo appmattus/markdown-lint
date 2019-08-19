@@ -431,8 +431,8 @@ private fun TemporaryFolder.createMarkdownFileWithNoErrors(filename: String) = c
 
     ## Section 2
 
-    This is the next section\n
-    """.trimIndent()
+    This is the next section
+    """.trimIndent() + "\n"
 }
 
 private fun TemporaryFolder.createMarkdownFileWithAnError(filename: String) = createFile(filename) {
@@ -443,8 +443,8 @@ private fun TemporaryFolder.createMarkdownFileWithAnError(filename: String) = cr
 
     # Section 2
 
-    This is the next section\n
-    """.trimIndent()
+    This is the next section
+    """.trimIndent() + "\n"
 }
 
 private fun build(temporaryFolder: TemporaryFolder, vararg arguments: String): BuildResult =
