@@ -53,6 +53,7 @@ class AllRules(private val config: Config) {
         TaskListMarkerSpaceRule(),
         UlIndentRule(),
         UlStartLeftRule(),
+        ValidRelativeImagesRule(),
         ValidRelativeLinksRule()
     )
 

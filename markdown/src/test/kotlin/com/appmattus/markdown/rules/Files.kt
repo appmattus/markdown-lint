@@ -76,6 +76,8 @@ val allFiles = listOf(
     "ordered_list_item_prefix.md",
     "ordered_list_item_prefix_ordered.md",
     "reversed_link.md",
+    "relative-links.md",
+    "relative-images.md",
     "spaces_after_list_marker.md",
     "spaces_inside_codespan_elements.md",
     "spaces_inside_emphasis_markers.md",
