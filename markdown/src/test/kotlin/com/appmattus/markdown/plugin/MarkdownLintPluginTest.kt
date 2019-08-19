@@ -8,8 +8,11 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import java.io.File
 import java.io.InputStream
+import java.util.concurrent.TimeUnit
 
 object MarkdownLintPluginTest : Spek({
+    val timeout: Long = TimeUnit.SECONDS.toMillis(20)
+
     Feature("MarkdownLintPlugin") {
         val temporaryFolder by memoized {
             TemporaryFolder().apply {
@@ -30,7 +33,7 @@ object MarkdownLintPluginTest : Spek({
                 temporaryFolder.createBuildScriptWithDefaultConfig()
             }
 
-            When("we execute the markdownlint task") {
+            When("we execute the markdownlint task", timeout) {
                 output = build(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
             }
 
@@ -54,7 +57,7 @@ object MarkdownLintPluginTest : Spek({
                 temporaryFolder.createMarkdownFileWithNoErrors("README.md")
             }
 
-            When("we execute the markdownlint task") {
+            When("we execute the markdownlint task", timeout) {
                 output = build(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
             }
 
@@ -83,7 +86,7 @@ object MarkdownLintPluginTest : Spek({
                 temporaryFolder.createMarkdownFileWithNoErrors("build/README.md")
             }
 
-            When("we execute the markdownlint task") {
+            When("we execute the markdownlint task", timeout) {
                 output = build(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
             }
 
@@ -112,7 +115,7 @@ object MarkdownLintPluginTest : Spek({
                 temporaryFolder.createMarkdownFileWithNoErrors("random/README.md")
             }
 
-            When("we execute the markdownlint task") {
+            When("we execute the markdownlint task", timeout) {
                 output = build(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
             }
 
@@ -132,7 +135,7 @@ object MarkdownLintPluginTest : Spek({
                 temporaryFolder.createBuildScriptWithDefaultConfig()
             }
 
-            When("we execute the markdownlint task") {
+            When("we execute the markdownlint task", timeout) {
                 output = build(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
             }
 
@@ -154,7 +157,7 @@ object MarkdownLintPluginTest : Spek({
                 temporaryFolder.createBuildScriptWithNoReports()
             }
 
-            When("we execute the markdownlint task") {
+            When("we execute the markdownlint task", timeout) {
                 output = build(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
             }
 
@@ -176,7 +179,7 @@ object MarkdownLintPluginTest : Spek({
                 temporaryFolder.createBuildScriptWithHtmlReportOnly()
             }
 
-            When("we execute the markdownlint task") {
+            When("we execute the markdownlint task", timeout) {
                 output = build(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
             }
 
@@ -198,7 +201,7 @@ object MarkdownLintPluginTest : Spek({
                 temporaryFolder.createBuildScriptWithXmlReportOnly()
             }
 
-            When("we execute the markdownlint task") {
+            When("we execute the markdownlint task", timeout) {
                 output = build(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
             }
 
@@ -224,7 +227,7 @@ object MarkdownLintPluginTest : Spek({
                 temporaryFolder.createMarkdownFileWithAnError("README.md")
             }
 
-            When("we execute the markdownlint task") {
+            When("we execute the markdownlint task", timeout) {
                 output = buildAndFail(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
             }
 
@@ -257,7 +260,7 @@ object MarkdownLintPluginTest : Spek({
                 temporaryFolder.createMarkdownFileWithAnError("build/README.md")
             }
 
-            When("we execute the markdownlint task") {
+            When("we execute the markdownlint task", timeout) {
                 output = buildAndFail(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
             }
 
@@ -285,7 +288,7 @@ object MarkdownLintPluginTest : Spek({
                 temporaryFolder.createMarkdownFileWithAnError("README.md")
             }
 
-            When("we execute the markdownlint task") {
+            When("we execute the markdownlint task", timeout) {
                 output = build(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
             }
 
@@ -316,7 +319,7 @@ object MarkdownLintPluginTest : Spek({
                 temporaryFolder.createMarkdownFileWithAnError("README.md")
             }
 
-            When("we execute the markdownlint task") {
+            When("we execute the markdownlint task", timeout) {
                 output = buildAndFail(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
             }
 
@@ -336,7 +339,7 @@ object MarkdownLintPluginTest : Spek({
                 temporaryFolder.createMarkdownFileWithAnError("README.md")
             }
 
-            When("we execute the markdownlint task") {
+            When("we execute the markdownlint task", timeout) {
                 output = build(temporaryFolder, "markdownlint", "-q", "--stacktrace").output.trimEnd()
             }
 
