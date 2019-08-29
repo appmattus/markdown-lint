@@ -1,7 +1,7 @@
 package com.appmattus.markdown.processing
 
-import com.appmattus.markdown.rules.extentions.referenceUrl
-import com.appmattus.markdown.rules.extentions.splitIntoLines
+import com.appmattus.markdown.rules.extensions.referenceUrl
+import com.appmattus.markdown.rules.extensions.splitIntoLines
 import com.vladsch.flexmark.ast.AutoLink
 import com.vladsch.flexmark.ast.BlockQuote
 import com.vladsch.flexmark.ast.BulletList

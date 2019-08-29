@@ -1,4 +1,4 @@
-package com.appmattus.markdown.rules.extentions
+package com.appmattus.markdown.rules.extensions
 
 import com.appmattus.markdown.rules.config.TaskListItemMarkerStyle
 import com.vladsch.flexmark.ext.gfm.tasklist.TaskListItem

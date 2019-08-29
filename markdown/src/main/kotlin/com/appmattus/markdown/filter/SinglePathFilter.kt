@@ -19,9 +19,7 @@ class SinglePathFilter(
     private val independentPattern: String
 
     init {
-        if (pattern.isBlank()) {
-            throw IllegalArgumentException("Empty patterns aren't acceptable")
-        }
+        require(!pattern.isBlank()) { "Empty patterns aren't acceptable" }
 
         try {
             FileSystems.getDefault().apply {

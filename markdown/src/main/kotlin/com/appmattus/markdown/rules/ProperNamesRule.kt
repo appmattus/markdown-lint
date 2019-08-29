@@ -75,7 +75,7 @@ class ProperNamesRule(
 
             regex.findAll(text).map { match ->
                 val range = match.groups[1]!!.range
-                text.subSequence(range.start, range.endInclusive + 1)
+                text.subSequence(range.first, range.last + 1)
             }.filter {
                 !names.contains(it.toString())
             }.forEach {

@@ -3,7 +3,7 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
-import com.appmattus.markdown.rules.extentions.indent
+import com.appmattus.markdown.rules.extensions.indent
 
 /**
  * Consider starting bulleted lists at the beginning of the line

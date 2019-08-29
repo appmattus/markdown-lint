@@ -3,7 +3,7 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
-import com.appmattus.markdown.rules.extentions.splitIntoLines
+import com.appmattus.markdown.rules.extensions.splitIntoLines
 import com.vladsch.flexmark.ast.Emphasis
 import com.vladsch.flexmark.ast.StrongEmphasis
 import com.vladsch.flexmark.util.ast.Node
@@ -50,7 +50,7 @@ class LineLengthRule(
 
         result = result.filter { range ->
             allowedBlocks.find { linkRef ->
-                val lineNumber = document.getLineNumber(range.start)
+                val lineNumber = document.getLineNumber(range.first)
 
                 if (linkRef.lineNumber == lineNumber
                     && document.getColumnNumber(linkRef.startOffset) + 1 <= lineLength
@@ -67,30 +67,30 @@ class LineLengthRule(
         if (!headings) {
             val codeBlocks = document.headings.map { IntRange(it.startLineNumber, it.endLineNumber) }
             result = result.filter { range ->
-                (codeBlocks.find { it.contains(document.getLineNumber(range.start)) } == null)
+                (codeBlocks.find { it.contains(document.getLineNumber(range.first)) } == null)
             }
         }
 
         if (!codeBlocks) {
             val codeBlocks = document.codeBlocks.map { IntRange(it.startLineNumber, it.endLineNumber) }
             result = result.filter { range ->
-                (codeBlocks.find { it.contains(document.getLineNumber(range.start)) } == null)
+                (codeBlocks.find { it.contains(document.getLineNumber(range.first)) } == null)
             }
         }
 
         if (!tables) {
             val tables = document.tables.map { IntRange(it.startLineNumber, it.endLineNumber) }
             result = result.filter { range ->
-                (tables.find { it.contains(document.getLineNumber(range.start)) } == null)
+                (tables.find { it.contains(document.getLineNumber(range.first)) } == null)
             }
         }
 
         result.forEach { range ->
-            val description = "Line length greater than $lineLength by ${range.endInclusive - range.start} " +
+            val description = "Line length greater than $lineLength by ${range.last - range.first} " +
                     "characters. Configuration: lineLength=$lineLength, codeBlocks=$codeBlocks, tables=$tables, " +
                     "headings=$headings, punctuation=$punctuation."
 
-            errorReporter.reportError(range.start, range.endInclusive, description)
+            errorReporter.reportError(range.first, range.last, description)
         }
     }
 
