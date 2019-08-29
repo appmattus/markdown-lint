@@ -1,4 +1,4 @@
-package com.appmattus.markdown.rules.extentions
+package com.appmattus.markdown.rules.extensions
 
 import com.appmattus.markdown.rules.config.UnorderedListStyle
 import com.vladsch.flexmark.ast.BulletListItem

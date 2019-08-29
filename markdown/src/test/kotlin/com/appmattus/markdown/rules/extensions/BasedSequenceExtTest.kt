@@ -1,4 +1,4 @@
-package com.appmattus.markdown.rules.extentions
+package com.appmattus.markdown.rules.extensions
 
 import com.vladsch.flexmark.util.sequence.BasedSequence
 import com.vladsch.flexmark.util.sequence.CharSubSequence

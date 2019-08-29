@@ -4,7 +4,7 @@ import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.config.OrderedListStyle
-import com.appmattus.markdown.rules.extentions.index
+import com.appmattus.markdown.rules.extensions.index
 import com.vladsch.flexmark.ast.OrderedList
 
 /**

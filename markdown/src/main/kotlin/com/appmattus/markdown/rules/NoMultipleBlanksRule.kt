@@ -36,11 +36,11 @@ class NoMultipleBlanksRule(
         val codeBlocks = document.codeBlocks.map { IntRange(it.startLineNumber, it.endLineNumber) }
 
         regex.findAll(document.chars).map { match ->
-            IntRange(match.range.start, match.range.endInclusive)
+            IntRange(match.range.first, match.range.last)
         }.filter { range ->
-            (codeBlocks.find { it.contains(document.getLineNumber(range.start)) } == null)
+            (codeBlocks.find { it.contains(document.getLineNumber(range.first)) } == null)
         }.forEach { range ->
-            errorReporter.reportError(range.start, range.endInclusive, description)
+            errorReporter.reportError(range.first, range.last, description)
         }
     }
 }

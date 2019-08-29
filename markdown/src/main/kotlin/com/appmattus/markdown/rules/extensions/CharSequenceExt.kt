@@ -1,4 +1,4 @@
-package com.appmattus.markdown.rules.extentions
+package com.appmattus.markdown.rules.extensions
 
 private val emailRegex = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\$".toRegex(RegexOption.IGNORE_CASE)
 

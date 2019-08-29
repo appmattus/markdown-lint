@@ -4,7 +4,7 @@ import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.config.TaskListItemMarkerStyle
-import com.appmattus.markdown.rules.extentions.style
+import com.appmattus.markdown.rules.extensions.style
 
 /**
  * # Task list item marker style

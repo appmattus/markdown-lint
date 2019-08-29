@@ -78,10 +78,9 @@ class XMLLogger : AuditListener {
      * @param outputStreamOptions if `CLOSE` stream should be closed in auditFinished()
      */
     constructor(outputStream: OutputStream, outputStreamOptions: OutputStreamOptions?) {
+        requireNotNull(outputStreamOptions) { "Parameter outputStreamOptions can not be null" }
+
         writer = PrintWriter(outputStream.writer())
-        if (outputStreamOptions == null) {
-            throw IllegalArgumentException("Parameter outputStreamOptions can not be null")
-        }
         closeStream = outputStreamOptions == OutputStreamOptions.CLOSE
     }
 
@@ -217,8 +216,8 @@ class XMLLogger : AuditListener {
     @Suppress("ComplexMethod")
     private fun encode(value: String): String {
         val sb = StringBuilder()
-        for (i in 0 until value.length) {
-            when (val chr = value[i]) {
+        for (chr in value) {
+            when (chr) {
                 '<' -> sb.append("&lt;")
                 '>' -> sb.append("&gt;")
                 '\'' -> sb.append("&apos;")

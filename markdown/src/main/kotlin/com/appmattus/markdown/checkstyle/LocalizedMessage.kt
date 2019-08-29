@@ -55,10 +55,10 @@ data class LocalizedMessage(
             if (columnNo == other.columnNo) {
                 message.compareTo(other.message)
             } else {
-                Integer.compare(columnNo, other.columnNo)
+                columnNo.compareTo(other.columnNo)
             }
         } else {
-            Integer.compare(lineNo, other.lineNo)
+            lineNo.compareTo(other.lineNo)
         }
     }
 }

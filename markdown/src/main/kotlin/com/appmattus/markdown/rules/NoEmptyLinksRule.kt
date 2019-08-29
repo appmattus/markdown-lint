@@ -3,7 +3,7 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
-import com.appmattus.markdown.rules.extentions.referenceUrl
+import com.appmattus.markdown.rules.extensions.referenceUrl
 import com.vladsch.flexmark.ast.LinkRef
 import com.vladsch.flexmark.ast.Reference
 
