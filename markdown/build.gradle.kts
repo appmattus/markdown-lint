@@ -9,7 +9,7 @@ plugins {
     id("jacoco")
     id("com.github.kt3k.coveralls")
     id("com.gradle.plugin-publish") version "0.10.1"
-    id("pl.droidsonroids.jacoco.testkit") version "1.0.4"
+    id("pl.droidsonroids.jacoco.testkit") version "1.0.5"
     id("com.android.lint")
 }
 
@@ -38,22 +38,22 @@ dependencies {
 
     implementation(kotlin("stdlib-jdk8"))
 
-    api("com.vladsch.flexmark:flexmark-ext-tables:0.50.30")
-    api("com.vladsch.flexmark:flexmark-ext-gfm-strikethrough:0.50.30")
-    api("com.vladsch.flexmark:flexmark-ext-autolink:0.50.30")
-    api("com.vladsch.flexmark:flexmark-ext-gfm-tasklist:0.50.30")
+    api("com.vladsch.flexmark:flexmark-ext-tables:0.50.40")
+    api("com.vladsch.flexmark:flexmark-ext-gfm-strikethrough:0.50.40")
+    api("com.vladsch.flexmark:flexmark-ext-autolink:0.50.40")
+    api("com.vladsch.flexmark:flexmark-ext-gfm-tasklist:0.50.40")
 
     testImplementation(kotlin("test"))
     testImplementation(gradleTestKit())
     testImplementation("junit:junit:4.12")
     testImplementation("org.assertj:assertj-core:3.13.2")
     testImplementation("org.mockito:mockito-core:3.0.0")
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
     testImplementation("com.flextrade.jfixture:jfixture:2.7.2")
     testImplementation("io.github.classgraph:classgraph:4.8.47")
 
-    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.6")
-    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.6")
+    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.7")
+    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.7")
     // spek requires kotlin-reflect, can be omitted if already in the classpath
     testRuntimeOnly(kotlin("reflect"))
 }
@@ -64,7 +64,7 @@ tasks.withType<Test> {
     }
 
     testLogging {
-        events(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
+        events(TestLogEvent.SKIPPED, TestLogEvent.FAILED)
         exceptionFormat = TestExceptionFormat.SHORT
     }
 }
