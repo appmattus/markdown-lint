@@ -36,10 +36,15 @@ import com.appmattus.markdown.processing.MarkdownDocument
 class LowerCaseFilenameRule(
     private val exclusions: List<String> = listOf(
         "README.md",
-        "LICENSE.md",
-        "NOTICE.md",
+        "CHANGELOG.md",
         "CONTRIBUTING.md",
-        "CHANGELOG.md"
+        "SUPPORT.md",
+        "LICENSE.md",
+        "CONTRIBUTORS.md",
+        "AUTHORS.md",
+        "ACKNOWLEDGMENTS.md",
+        "CODE_OF_CONDUCT.md",
+        "NOTICE.md"
     ),
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
