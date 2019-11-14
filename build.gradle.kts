@@ -8,15 +8,15 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.50")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.60")
         classpath("org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.3")
-        classpath("com.android.tools.build:gradle:3.5.0")
+        classpath("com.android.tools.build:gradle:3.5.2")
     }
 }
 
 plugins {
-    id("com.github.ben-manes.versions") version "0.25.0"
-    id("io.gitlab.arturbosch.detekt") version "1.0.1"
+    id("com.github.ben-manes.versions") version "0.27.0"
+    id("io.gitlab.arturbosch.detekt") version "1.1.1"
 }
 
 allprojects {

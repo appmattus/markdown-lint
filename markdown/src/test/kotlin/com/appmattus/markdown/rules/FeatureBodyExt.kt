@@ -10,12 +10,13 @@ import org.spekframework.spek2.style.gherkin.FeatureBody
 import java.io.File
 import kotlin.test.fail
 
+@Suppress("TestFunctionName")
 fun FeatureBody.FileRuleScenario(
     files: List<String> = allFiles,
     exclude: List<String> = emptyList(),
     rules: () -> Rule
 ) {
-    val rule by memoized { rules() }
+    val rule = rules()
 
     files.toMutableList().apply {
         removeAll(exclude)
@@ -81,7 +82,9 @@ private fun FeatureBody.documentScenario(
     }
 }
 
+@Suppress("TestFunctionName")
 fun FeatureBody.FilenameScenario(description: String, errors: Int, rules: () -> Rule, filename: () -> String) {
+    @Suppress("LocalVariableName")
     val _filename = filename()
     val mockDocument = mockDocument()
 
@@ -99,16 +102,14 @@ fun FeatureBody.FilenameScenario(description: String, errors: Int, rules: () -> 
             ruleErrors = rule.processDocument(document)
         }
 
-        if (errors == 0) {
-            Then("we have no errors") {
+        when (errors) {
+            0 -> Then("we have no errors") {
                 assertThat(ruleErrors).isEmpty()
             }
-        } else if (errors == 1) {
-            Then("we have 1 error") {
+            1 -> Then("we have 1 error") {
                 assertThat(ruleErrors).size().isOne
             }
-        } else {
-            Then("we have $errors errors") {
+            else -> Then("we have $errors errors") {
                 assertThat(ruleErrors).size().isEqualTo(errors)
             }
         }
