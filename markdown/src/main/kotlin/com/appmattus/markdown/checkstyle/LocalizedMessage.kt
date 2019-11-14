@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////////////
 // checkstyle: Checks Java source code for adherence to a set of rules.
 // Copyright (C) 2001-2019 the original author or authors.
 //
@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-////////////////////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////////////
 
 package com.appmattus.markdown.checkstyle
 
@@ -24,11 +24,11 @@ package com.appmattus.markdown.checkstyle
  * message.properties files. The underlying implementation uses
  * java.text.MessageFormat.
  *
- * @param lineNo        line number associated with the message
- * @param columnNo      column number associated with the message
- * @param message       the error message
+ * @param lineNo line number associated with the message
+ * @param columnNo column number associated with the message
+ * @param message the error message
  * @param severityLevel severity level for the message
- * @param sourceClass   the Class that is the source of the message
+ * @param sourceClass the Class that is the source of the message
  */
 data class LocalizedMessage(
     val lineNo: Int,
@@ -45,9 +45,9 @@ data class LocalizedMessage(
      */
     val sourceName: String = sourceClass.name
 
-    ////////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////////
     // Interface Comparable methods
-    ////////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////////
 
     @Suppress("ComplexMethod")
     override fun compareTo(other: LocalizedMessage): Int {

@@ -43,7 +43,7 @@ class MarkdownDocument constructor(val file: File, val document: Document) {
     val filename: String = file.name
 
     val headings: List<Heading> by lazy { document.find(Heading::class) }
-    val htmlElements: List<Node>  by lazy { document.find(HtmlBlock::class, HtmlInline::class) }
+    val htmlElements: List<Node> by lazy { document.find(HtmlBlock::class, HtmlInline::class) }
     val orderedListItems: List<OrderedListItem> by lazy { document.find(OrderedListItem::class) }
     val unorderedListItems: List<BulletListItem> by lazy { document.find(BulletListItem::class) }
     val taskListItems: List<TaskListItem> by lazy { document.find(TaskListItem::class) }
@@ -83,7 +83,7 @@ class MarkdownDocument constructor(val file: File, val document: Document) {
     val allImages: List<LinkNodeBase> by lazy { document.find(Image::class, ImageRef::class) }
     val tables: List<TableBlock> by lazy { document.find(TableBlock::class) }
     val blockQuotes: List<BlockQuote> by lazy { document.find(BlockQuote::class) }
-    val horizontalRules: List<ThematicBreak>  by lazy { document.find(ThematicBreak::class) }
+    val horizontalRules: List<ThematicBreak> by lazy { document.find(ThematicBreak::class) }
     val topLevelParagraphs: List<Paragraph> by lazy { document.find(Paragraph::class, visitChildren = false) }
     val allText by lazy { document.find(Text::class) }
 

@@ -93,6 +93,6 @@ class ProperNamesRule(
 
     private fun BasedSequence.isLink(): Boolean {
         return linkExtractor.extractLinks(this).any() ||
-                !this.startsWithIgnoreCase("www.") && linkExtractor.extractLinks("www.${this}").any()
+                !this.startsWithIgnoreCase("www.") && linkExtractor.extractLinks("www.$this").any()
     }
 }

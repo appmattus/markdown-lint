@@ -12,7 +12,8 @@ import java.util.regex.PatternSyntaxException
  * Respects both *nix and Windows paths.
  */
 class SinglePathFilter(
-    private val pattern: String, override val root: Path = Paths.get("").toAbsolutePath()
+    private val pattern: String,
+    override val root: Path = Paths.get("").toAbsolutePath()
 ) : PathFilter {
 
     private val matcher: PathMatcher

@@ -47,6 +47,10 @@ tasks.withType(DependencyUpdatesTask::class.java).all {
     }
 }
 
+dependencies {
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.1.1")
+}
+
 detekt {
     input = files("$projectDir")
 
@@ -54,4 +58,6 @@ detekt {
 
     // To override MaxLineLength:excludeCommentStatements
     config = files("detekt-config.yml")
+
+    autoCorrect = true
 }

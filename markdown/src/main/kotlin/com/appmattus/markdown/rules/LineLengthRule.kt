@@ -52,9 +52,9 @@ class LineLengthRule(
             allowedBlocks.find { linkRef ->
                 val lineNumber = document.getLineNumber(range.first)
 
-                if (linkRef.lineNumber == lineNumber
-                    && document.getColumnNumber(linkRef.startOffset) + 1 <= lineLength
-                    && document.getColumnNumber(linkRef.endOffset - 1) + 2 >= lineLength
+                if (linkRef.lineNumber == lineNumber &&
+                    document.getColumnNumber(linkRef.startOffset) + 1 <= lineLength &&
+                    document.getColumnNumber(linkRef.endOffset - 1) + 2 >= lineLength
                 ) {
                     val eol = document.chars.subSequence(linkRef.endOffset, document.chars.endOfLine(linkRef.endOffset))
                     eol.matches(terminatingPunctuationRegex)

@@ -109,7 +109,6 @@ object SinglePathFilterTest : Spek({
             }
         }
 
-
         Scenario("does not match an unrelated path") {
             lateinit var pattern: String
             lateinit var root: Path
@@ -153,7 +152,6 @@ object SinglePathFilterTest : Spek({
                 assertThat(SinglePathFilter(pattern, root).matches(path)).isFalse()
             }
         }
-
 
         Scenario("does not match the pattern in the absolute path with pattern but the relative path") {
             lateinit var pattern: String

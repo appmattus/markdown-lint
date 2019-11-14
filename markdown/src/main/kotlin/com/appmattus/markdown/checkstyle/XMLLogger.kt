@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////////////
 // checkstyle: Checks Java source code for adherence to a set of rules.
 // Copyright (C) 2001-2019 the original author or authors.
 //
@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-////////////////////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////////////
 
 package com.appmattus.markdown.checkstyle
 
@@ -61,7 +61,7 @@ class XMLLogger : AuditListener {
      * Sets the output to a defined stream.
      *
      * @param outputStream the stream to write logs to.
-     * @param closeStream  close oS in auditFinished
+     * @param closeStream close oS in auditFinished
      * @noinspection BooleanParameter
      */
     @Deprecated("in order to fulfill demands of BooleanParameter IDEA check.")
@@ -74,7 +74,7 @@ class XMLLogger : AuditListener {
      * Creates a new `XMLLogger` instance.
      * Sets the output to a defined stream.
      *
-     * @param outputStream        the stream to write logs to.
+     * @param outputStream the stream to write logs to.
      * @param outputStreamOptions if `CLOSE` stream should be closed in auditFinished()
      */
     constructor(outputStream: OutputStream, outputStreamOptions: OutputStreamOptions?) {
@@ -175,14 +175,14 @@ class XMLLogger : AuditListener {
             writer.print(" column=\"" + event.column + "\"")
         }
         writer.print(
-            " severity=\""
-                    + event.severityLevel.value
-                    + "\""
+            " severity=\"" +
+                    event.severityLevel.value +
+                    "\""
         )
         writer.print(
-            " message=\""
-                    + encode(event.message)
-                    + "\""
+            " message=\"" +
+                    encode(event.message) +
+                    "\""
         )
         writer.print(" source=\"")
         writer.print(encode(event.sourceName))

@@ -25,7 +25,7 @@ object NoWhitespaceFilenameRuleTest : Spek({
 
         FilenameScenario("whitespace in filename before extension", 1, rule) {
             val whitespace = JFixture().create().fromList(" ", "\t", "\n", "\r")
-            "hello-world${whitespace}.md"
+            "hello-world$whitespace.md"
         }
 
         FilenameScenario("no whitespace filename", 0, rule) {

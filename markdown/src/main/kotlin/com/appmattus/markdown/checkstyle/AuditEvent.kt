@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////////////
 // checkstyle: Checks Java source code for adherence to a set of rules.
 // Copyright (C) 2001-2019 the original author or authors.
 //
@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-////////////////////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////////////
 
 package com.appmattus.markdown.checkstyle
 
@@ -32,7 +32,7 @@ package com.appmattus.markdown.checkstyle
  *
  * Creates a new `AuditEvent` instance.
  *
- * @param fileName         file associated with the event
+ * @param fileName file associated with the event
  * @param localizedMessage the actual message
  * @see AuditListener
  */

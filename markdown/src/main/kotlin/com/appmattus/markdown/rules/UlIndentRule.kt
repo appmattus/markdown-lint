@@ -73,8 +73,9 @@ class UlIndentRule(
         var cur = parent
         while (cur !is Document) {
             cur = cur.parent
-            if (cur is ListItem)
+            if (cur is ListItem) {
                 return cur
+            }
         }
         return null
     }

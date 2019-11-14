@@ -21,6 +21,5 @@ object FirstLineH1RuleTest : Spek({
 
             )
         ) { FirstLineH1Rule() }
-
     }
 })

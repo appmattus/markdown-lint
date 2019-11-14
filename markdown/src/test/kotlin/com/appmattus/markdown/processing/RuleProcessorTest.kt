@@ -153,13 +153,11 @@ object RuleProcessorTest : Spek({
             }
         }
 
-
         Scenario("no files analysed when no markdown files defined") {
             lateinit var config: Config
             lateinit var output: String
 
             Given("no markdown files") {
-
             }
 
             And("a default config") {

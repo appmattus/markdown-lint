@@ -9,7 +9,8 @@ import java.nio.file.Paths
  * Respects both *nix and Windows paths.
  */
 class MultiPathFilter(
-    private val patterns: List<String>, override val root: Path = Paths.get("").toAbsolutePath()
+    private val patterns: List<String>,
+    override val root: Path = Paths.get("").toAbsolutePath()
 ) : PathFilter {
 
     private val filters = patterns.map {
