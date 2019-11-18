@@ -2,6 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/appmattus/markdown-lint/tree/master.svg?style=svg)](https://circleci.com/gh/appmattus/markdown-lint/tree/master)
 [![Coverage Status](https://coveralls.io/repos/github/appmattus/markdown-lint/badge.svg?branch=master)](https://coveralls.io/github/appmattus/markdown-lint?branch=master)
+[![Plugin Portal](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/com/appmattus/markdown/com.appmattus.markdown.gradle.plugin/maven-metadata.xml.svg?label=plugin%20portal)](https://plugins.gradle.org/plugin/com.appmattus.markdown)
 
 Linting for markdown files
 
@@ -12,7 +13,7 @@ Apply the plugin in your `build.gradle.kts` script. Further instructions on the
 
 ```kotlin
 plugins {
-  id("com.appmattus.markdown") version "0.5.0"
+  id("com.appmattus.markdown") version "<latestVersion>"
 }
 ```
 

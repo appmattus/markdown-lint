@@ -19,6 +19,7 @@ object ProperNamesRuleTest : Spek({
                     "NPM",
                     "Vuex",
                     "Vue",
+                    "Vue.js",
                     "vue-router"
                 ),
                 codeBlocks = false
@@ -26,5 +27,9 @@ object ProperNamesRuleTest : Spek({
         }
 
         FileRuleScenario(exclude = listOf("proper-names-projects.md")) { ProperNamesRule(codeBlocks = true) }
+
+        FileRuleScenario(listOf("proper-names-files.md")) {
+            ProperNamesRule(names = listOf("Gradle"), codeBlocks = false)
+        }
     }
 })
