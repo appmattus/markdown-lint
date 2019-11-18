@@ -22,23 +22,12 @@ import org.nibor.autolink.LinkExtractor
  *
  *     listOf("JavaScript")
  *
- * Set the [codeBlocks] parameter to false to disable this rule for code blocks.
+ * Set the [codeBlocks] parameter to true to enable this rule for code blocks.
  *
  * Based on [MD044](https://github.com/DavidAnson/markdownlint/blob/master/lib/md044.js)
  */
 class ProperNamesRule(
-    private val names: List<String> = listOf(
-        "markdownlint",
-        "JavaScript",
-        "Node.js",
-        "GitHub",
-        "npm",
-        "Internet Explorer",
-        "Java",
-        "Android Studio",
-        "IntelliJ IDEA",
-        "IntelliJ"
-    ),
+    private val names: List<String> = DefaultNames,
     private val codeBlocks: Boolean = false,
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
@@ -47,7 +36,11 @@ class ProperNamesRule(
 
     // Order of the names matters
     private val escapedList = names.sortedDescending().joinToString(separator = "|") { Regex.escape(it) }
-    private val regex = Regex("\\S*\\b($escapedList)\\b\\S*", setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE))
+    private val notWordChar = "[^\\pL\\pM\\p{Nd}\\p{Nl}\\p{Pc}[\\p{InEnclosedAlphanumerics}&&\\p{So}]]"
+    private val regex = Regex(
+        "(^|[\\s\"'(])($escapedList)([\\s\"')]|[.,;:!?]($notWordChar|$)|$)",
+        setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE)
+    )
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val elements = mutableListOf<BasedSequence>()
@@ -74,7 +67,7 @@ class ProperNamesRule(
         elements.forEach { text ->
 
             regex.findAll(text).map { match ->
-                val range = match.groups[1]!!.range
+                val range = match.groups[2]!!.range
                 text.subSequence(range.first, range.last + 1)
             }.filter {
                 !names.contains(it.toString())
@@ -94,5 +87,43 @@ class ProperNamesRule(
     private fun BasedSequence.isLink(): Boolean {
         return linkExtractor.extractLinks(this).any() ||
                 !this.startsWithIgnoreCase("www.") && linkExtractor.extractLinks("www.$this").any()
+    }
+
+    companion object {
+        val DefaultNames = listOf(
+            "markdownlint",
+            "JavaScript",
+            "Node.js",
+            "GitHub",
+            "npm",
+            "Internet Explorer",
+            "Google Chrome",
+            "Firefox",
+            "Java",
+            "Android Studio",
+            "IntelliJ IDEA",
+            "IntelliJ",
+            "Kotlin",
+            "API",
+            "APIs",
+            "SDK",
+            "SDKs",
+            "URL",
+            "URLs",
+            "JUnit",
+            "APK",
+            "AAR",
+            "Gradle",
+            "Gradle Enterprise",
+            "Dagger",
+            "Android",
+            "Lint",
+            "Artifactory",
+            "Bintray",
+            "Git",
+            "Jenkins",
+            "CircleCI",
+            "Travis"
+        )
     }
 }

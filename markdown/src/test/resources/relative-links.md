@@ -8,9 +8,9 @@
 
 [This is absolute](/so-should-not-trigger.md)
 
-[This is a web url](www.example.com) {MissingLinkSchemeRule}
+[This is a web URL](www.example.com) {MissingLinkSchemeRule}
 
-[This is a web url](https://www.example.com)
+[This is a web URL](https://www.example.com)
 
 [This is an email without scheme](example@example.com) {MissingLinkSchemeRule}
 
