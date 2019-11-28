@@ -50,7 +50,7 @@ dependencies {
     testImplementation("org.mockito:mockito-core:3.1.0")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
     testImplementation("com.flextrade.jfixture:jfixture:2.7.2")
-    testImplementation("io.github.classgraph:classgraph:4.8.53")
+    testImplementation("io.github.classgraph:classgraph:4.8.56")
 
     testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.8")
     testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.8")
