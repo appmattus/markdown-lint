@@ -3,7 +3,7 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.dsl.Config
 
 class AllRules(private val config: Config) {
-    private val allRules = listOf(
+    private val all = listOf(
         BlanksAroundFencesRule(),
         BlanksAroundHeadersRule(),
         BlanksAroundListsRule(),
@@ -59,7 +59,7 @@ class AllRules(private val config: Config) {
     )
 
     val rules: List<Rule> by lazy {
-        allRules.filterNot { rule ->
+        all.filterNot { rule ->
             config.rules.any { it::class == rule::class }
         } + config.rules.filter {
             it.configuration.active
