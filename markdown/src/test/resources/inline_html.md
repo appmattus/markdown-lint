@@ -15,3 +15,25 @@ but this time on multiple lines
 sample <b>sample</b> sample {NoInlineHtmlRule}{NoInlineHtmlRule}
 
 <a /> {NoInlineHtmlRule}
+
+<h2>{NoInlineHtmlRule}</h2>
+
+<h3>{NoInlineHtmlRule}</h3>
+
+<h4>{NoInlineHtmlRule}</h4>
+
+<h5>{NoInlineHtmlRule}</h5>
+
+<h6>{NoInlineHtmlRule}</h6>
+
+<p>{NoInlineHtmlRule}</p>
+
+<b>{NoInlineHtmlRule}</b>{NoInlineHtmlRule}
+
+<u>{NoInlineHtmlRule}</u>{NoInlineHtmlRule}
+
+{NoInlineHtmlRule} <br />
+
+<a href="https://localhost.com/">{NoInlineHtmlRule}</a>{NoInlineHtmlRule}
+
+<strikethrough>{NoInlineHtmlRule}</strikethrough>{NoInlineHtmlRule}

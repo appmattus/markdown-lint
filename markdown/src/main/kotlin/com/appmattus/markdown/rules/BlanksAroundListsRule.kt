@@ -52,6 +52,7 @@ class BlanksAroundListsRule(
     private val listRegEx = Regex("^([*+\\-]|(\\d+\\.))(\\s|$)")
     private val emptyRegEx = Regex("^(\\s|$)")
 
+    @Suppress("ComplexMethod", "NestedBlockDepth")
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         var inList = false

@@ -45,6 +45,7 @@ class NoDuplicateHeaderRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
+    @Suppress("NestedBlockDepth")
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         if (!allowDifferentNesting) {
             val headingsMap = mutableListOf<String>()

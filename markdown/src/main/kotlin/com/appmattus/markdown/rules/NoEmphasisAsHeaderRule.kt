@@ -43,6 +43,7 @@ class NoEmphasisAsHeaderRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
+    @Suppress("NestedBlockDepth")
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         document.topLevelParagraphs.filter { it.lineCount == 1 }.filter { it.firstChild == it.lastChild }.forEach {

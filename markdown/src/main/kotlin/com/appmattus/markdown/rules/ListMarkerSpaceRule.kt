@@ -69,6 +69,7 @@ class ListMarkerSpaceRule(
     override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
+    @Suppress("ComplexMethod")
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
 
         document.listBlocks.forEach { listBlock ->

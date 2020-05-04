@@ -8,15 +8,15 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.60")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.72")
         classpath("org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.3")
-        classpath("com.android.tools.build:gradle:3.5.2")
+        classpath("com.android.tools.build:gradle:3.6.3")
     }
 }
 
 plugins {
-    id("com.github.ben-manes.versions") version "0.27.0"
-    id("io.gitlab.arturbosch.detekt") version "1.1.1"
+    id("com.github.ben-manes.versions") version "0.28.0"
+    id("io.gitlab.arturbosch.detekt") version "1.8.0"
 }
 
 allprojects {
@@ -48,7 +48,7 @@ tasks.withType(DependencyUpdatesTask::class.java).all {
 }
 
 dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.1.1")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.8.0")
 }
 
 detekt {
