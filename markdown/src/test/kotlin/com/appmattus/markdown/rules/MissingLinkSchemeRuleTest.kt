@@ -1,12 +1,13 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object MissingLinkSchemeRuleTest : Spek({
-    Feature("MissingLinkSchemeRule") {
-        FileRuleScenario(listOf("relative-links.md")) { MissingLinkSchemeRule() }
+class MissingLinkSchemeRuleTest {
 
-        FileRuleScenario { MissingLinkSchemeRule() }
-    }
-})
+    @TestFactory
+    fun `missingLinkSchemeRule relative links`() =
+        FileTestFactory(listOf("relative-links.md")) { MissingLinkSchemeRule() }
+
+    @TestFactory
+    fun missingLinkSchemeRule() = FileTestFactory { MissingLinkSchemeRule() }
+}

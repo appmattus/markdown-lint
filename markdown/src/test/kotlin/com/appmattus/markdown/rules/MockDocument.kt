@@ -1,3 +1,5 @@
+package com.appmattus.markdown.rules
+
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import com.vladsch.flexmark.util.ast.Document

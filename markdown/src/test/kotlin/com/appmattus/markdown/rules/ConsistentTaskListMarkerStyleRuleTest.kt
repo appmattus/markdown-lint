@@ -1,28 +1,28 @@
 package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.rules.config.TaskListItemMarkerStyle
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object ConsistentTaskListMarkerStyleRuleTest : Spek({
-    Feature("ConsistentTaskListMarkerStyleRule") {
+class ConsistentTaskListMarkerStyleRuleTest {
 
-        FileRuleScenario(listOf("task-list-marker.md")) {
+    @TestFactory
+    fun `consistentTaskListMarkerStyleRule consistent`() =
+        FileTestFactory(listOf("task-list-marker.md", "task-list-marker-no-complete.md")) {
             ConsistentTaskListMarkerStyleRule(TaskListItemMarkerStyle.Consistent)
         }
 
-        FileRuleScenario(listOf("task-list-marker.md")) {
+    @TestFactory
+    fun `consistentTaskListMarkerStyleRule lowercase`() =
+        FileTestFactory(listOf("task-list-marker.md")) {
             ConsistentTaskListMarkerStyleRule(TaskListItemMarkerStyle.Lowercase)
         }
 
-        FileRuleScenario(listOf("task-list-marker-uppercase.md")) {
+    @TestFactory
+    fun `consistentTaskListMarkerStyleRule uppercase`() =
+        FileTestFactory(listOf("task-list-marker-uppercase.md")) {
             ConsistentTaskListMarkerStyleRule(TaskListItemMarkerStyle.Uppercase)
         }
 
-        FileRuleScenario(listOf("task-list-marker-no-complete.md")) {
-            ConsistentTaskListMarkerStyleRule(TaskListItemMarkerStyle.Consistent)
-        }
-
-        FileRuleScenario { ConsistentTaskListMarkerStyleRule() }
-    }
-})
+    @TestFactory
+    fun consistentTaskListMarkerStyleRule() = FileTestFactory { ConsistentTaskListMarkerStyleRule() }
+}

@@ -1,24 +1,27 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object UlIndentRuleTest : Spek({
-    Feature("UlIndentRule") {
-        FileRuleScenario(listOf("ul_indent_bugfixes.md")) { UlIndentRule() }
+class UlIndentRuleTest {
 
-        FileRuleScenario(listOf("ul_indent_bugfixes_4_spaces.md")) { UlIndentRule(indent = 4) }
+    @TestFactory
+    fun ulIndentRule() = FileTestFactory(
+        exclude = listOf(
+            "bulleted_list_2_space_indent.md",
+            "spaces_after_list_marker.md",
+            "bulleted_list_not_at_beginning_of_line.md"
+        )
+    ) { UlIndentRule() }
 
-        FileRuleScenario(listOf("bulleted_list_2_space_indent.md")) { UlIndentRule(indent = 4) }
+    @TestFactory
+    fun `ulIndentRule indent 4`() = FileTestFactory(
+        listOf(
+            "spaces_after_list_marker.md",
+            "bulleted_list_2_space_indent.md",
+            "ul_indent_bugfixes_4_spaces.md"
+        )
+    ) { UlIndentRule(indent = 4) }
 
-        FileRuleScenario(listOf("spaces_after_list_marker.md")) { UlIndentRule(indent = 4) }
-
-        FileRuleScenario(
-            exclude = listOf(
-                "bulleted_list_2_space_indent.md",
-                "spaces_after_list_marker.md",
-                "bulleted_list_not_at_beginning_of_line.md"
-            )
-        ) { UlIndentRule() }
-    }
-})
+    @TestFactory
+    fun `ulIndentRule bugfixes`() = FileTestFactory(listOf("ul_indent_bugfixes.md")) { UlIndentRule() }
+}

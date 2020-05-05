@@ -1,14 +1,13 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object TaskListMarkerSpaceRuleTest : Spek({
-    Feature("TaskListMarkerSpaceRule") {
-        FileRuleScenario(listOf("task-list-marker.md")) { TaskListMarkerSpaceRule() }
+class TaskListMarkerSpaceRuleTest {
 
-        FileRuleScenario(listOf("task-list-marker-large-indent.md")) { TaskListMarkerSpaceRule(indent = 2) }
+    @TestFactory
+    fun taskListMarkerSpaceRule() = FileTestFactory(allFiles + "task-list-marker.md") { TaskListMarkerSpaceRule() }
 
-        FileRuleScenario { TaskListMarkerSpaceRule() }
-    }
-})
+    @TestFactory
+    fun `taskListMarkerSpaceRule indent 2`() =
+        FileTestFactory(listOf("task-list-marker-large-indent.md")) { TaskListMarkerSpaceRule(indent = 2) }
+}

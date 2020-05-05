@@ -1,12 +1,13 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object ListIndentRuleTest : Spek({
-    Feature("ListIndentRule") {
-        FileRuleScenario(files = listOf("list-indent-rule-different-parents.md")) { ListIndentRule() }
+class ListIndentRuleTest {
 
-        FileRuleScenario { ListIndentRule() }
-    }
-})
+    @TestFactory
+    fun listIndentRule() = FileTestFactory { ListIndentRule() }
+
+    @TestFactory
+    fun `listIndentRule different parents`() =
+        FileTestFactory(files = listOf("list-indent-rule-different-parents.md")) { ListIndentRule() }
+}

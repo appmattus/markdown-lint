@@ -1,12 +1,13 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object NoTrailingSpacesRuleTest : Spek({
-    Feature("NoTrailingSpacesRule") {
-        FileRuleScenario(listOf("trailing_spaces_br.md")) { NoTrailingSpacesRule(brSpaces = 2) }
+class NoTrailingSpacesRuleTest {
 
-        FileRuleScenario(exclude = listOf("trailing_spaces_br.md")) { NoTrailingSpacesRule() }
-    }
-})
+    @TestFactory
+    fun noTrailingSpacesRule() = FileTestFactory(exclude = listOf("trailing_spaces_br.md")) { NoTrailingSpacesRule() }
+
+    @TestFactory
+    fun `noTrailingSpacesRule br spaces 2`() =
+        FileTestFactory(listOf("trailing_spaces_br.md")) { NoTrailingSpacesRule(brSpaces = 2) }
+}

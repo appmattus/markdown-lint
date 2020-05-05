@@ -1,10 +1,9 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object ValidRelativeLinksRuleTest : Spek({
-    Feature("ValidRelativeLinksRule") {
-        FileRuleScenario { ValidRelativeLinksRule() }
-    }
-})
+class ValidRelativeLinksRuleTest {
+
+    @TestFactory
+    fun validRelativeLinksRule() = FileTestFactory { ValidRelativeLinksRule() }
+}

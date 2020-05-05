@@ -1,15 +1,19 @@
 package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.rules.config.CodeBlockStyle
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object CodeBlockStyleRuleTest : Spek({
-    Feature("CodeBlockStyleRule") {
-        FileRuleScenario(listOf("code_block_consistency.md")) { CodeBlockStyleRule(style = CodeBlockStyle.Consistent) }
+class CodeBlockStyleRuleTest {
 
-        FileRuleScenario(listOf("code_block_fenced.md")) { CodeBlockStyleRule(style = CodeBlockStyle.Fenced) }
+    @TestFactory
+    fun `codeBlockStyleRule consistent`() =
+        FileTestFactory(listOf("code_block_consistency.md")) { CodeBlockStyleRule(style = CodeBlockStyle.Consistent) }
 
-        FileRuleScenario(listOf("code_block_indented.md")) { CodeBlockStyleRule(style = CodeBlockStyle.Indented) }
-    }
-})
+    @TestFactory
+    fun `codeBlockStyleRule fenced`() =
+        FileTestFactory(listOf("code_block_fenced.md")) { CodeBlockStyleRule(style = CodeBlockStyle.Fenced) }
+
+    @TestFactory
+    fun `codeBlockStyleRule indented`() =
+        FileTestFactory(listOf("code_block_indented.md")) { CodeBlockStyleRule(style = CodeBlockStyle.Indented) }
+}

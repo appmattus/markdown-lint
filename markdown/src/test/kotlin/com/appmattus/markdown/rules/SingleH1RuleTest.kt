@@ -1,12 +1,12 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object SingleH1RuleTest : Spek({
-    Feature("SingleH1Rule") {
-        FileRuleScenario(listOf("alternate_top_level_header.md")) { SingleH1Rule(level = 2) }
+class SingleH1RuleTest {
 
-        FileRuleScenario(exclude = listOf("alternate_top_level_header.md")) { SingleH1Rule() }
-    }
-})
+    @TestFactory
+    fun singleH1Rule() = FileTestFactory(exclude = listOf("alternate_top_level_header.md")) { SingleH1Rule() }
+
+    @TestFactory
+    fun `singleH1Rule level 2`() = FileTestFactory(listOf("alternate_top_level_header.md")) { SingleH1Rule(level = 2) }
+}

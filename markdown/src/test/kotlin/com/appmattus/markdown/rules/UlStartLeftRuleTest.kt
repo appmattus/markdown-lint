@@ -1,10 +1,9 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object UlStartLeftRuleTest : Spek({
-    Feature("UlStartLeftRule") {
-        FileRuleScenario { UlStartLeftRule() }
-    }
-})
+class UlStartLeftRuleTest {
+
+    @TestFactory
+    fun ulStartLeftRule() = FileTestFactory { UlStartLeftRule() }
+}

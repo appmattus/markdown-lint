@@ -1,14 +1,16 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object ListMarkerSpaceRuleTest : Spek({
-    Feature("ListMarkerSpaceRule") {
-        FileRuleScenario(listOf("task-list-marker.md")) { ListMarkerSpaceRule() }
+class ListMarkerSpaceRuleTest {
 
-        FileRuleScenario(listOf("spaces_after_list_marker.md")) { ListMarkerSpaceRule(ulMulti = 3, olMulti = 2) }
+    @TestFactory
+    fun listMarkerSpaceRule() = FileTestFactory(
+        allFiles + "task-list-marker.md",
+        exclude = listOf("spaces_after_list_marker.md")
+    ) { ListMarkerSpaceRule() }
 
-        FileRuleScenario(exclude = listOf("spaces_after_list_marker.md")) { ListMarkerSpaceRule() }
-    }
-})
+    @TestFactory
+    fun `listMarkerSpaceRule with overrides`() =
+        FileTestFactory(listOf("spaces_after_list_marker.md")) { ListMarkerSpaceRule(ulMulti = 3, olMulti = 2) }
+}

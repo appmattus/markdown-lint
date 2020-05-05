@@ -1,12 +1,14 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object NoTrailingPunctuationRuleTest : Spek({
-    Feature("NoTrailingPunctuationRule") {
-        FileRuleScenario(listOf("header_trailing_punctuation_customized.md")) { NoTrailingPunctuationRule(punctuation = ".,;:!") }
+class NoTrailingPunctuationRuleTest {
 
-        FileRuleScenario(exclude = listOf("header_trailing_punctuation_customized.md")) { NoTrailingPunctuationRule() }
-    }
-})
+    @TestFactory
+    fun noTrailingPunctuationRule() =
+        FileTestFactory(exclude = listOf("header_trailing_punctuation_customized.md")) { NoTrailingPunctuationRule() }
+
+    @TestFactory
+    fun `noTrailingPunctuationRule custom punctuation`() =
+        FileTestFactory(listOf("header_trailing_punctuation_customized.md")) { NoTrailingPunctuationRule(punctuation = ".,;:!") }
+}

@@ -1,10 +1,9 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object ValidRelativeImagesRuleTest : Spek({
-    Feature("ValidRelativeImagesRule") {
-        FileRuleScenario { ValidRelativeImagesRule() }
-    }
-})
+class ValidRelativeImagesRuleTest {
+
+    @TestFactory
+    fun validRelativeImagesRule() = FileTestFactory { ValidRelativeImagesRule() }
+}

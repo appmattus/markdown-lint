@@ -1,24 +1,29 @@
 package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.rules.config.UnorderedListStyle
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object ConsistentUlStyleRuleTest : Spek({
-    Feature("ConsistentUlStyleRule") {
-        FileRuleScenario(listOf("incorrect_bullet_style_asterisk.md")) { ConsistentUlStyleRule(UnorderedListStyle.Asterisk) }
+class ConsistentUlStyleRuleTest {
 
-        FileRuleScenario(listOf("incorrect_bullet_style_dash.md")) { ConsistentUlStyleRule(UnorderedListStyle.Dash) }
+    @TestFactory
+    fun `consistentUlStyleRule consistent`() = FileTestFactory(
+        exclude = listOf(
+            "incorrect_bullet_style_asterisk.md",
+            "incorrect_bullet_style_dash.md",
+            "incorrect_bullet_style_plus.md",
+            "lists_without_blank_lines.md"
+        )
+    ) { ConsistentUlStyleRule(UnorderedListStyle.Consistent) }
 
-        FileRuleScenario(listOf("incorrect_bullet_style_plus.md")) { ConsistentUlStyleRule(UnorderedListStyle.Plus) }
+    @TestFactory
+    fun `consistentUlStyleRule plus`() =
+        FileTestFactory(listOf("incorrect_bullet_style_plus.md")) { ConsistentUlStyleRule(UnorderedListStyle.Plus) }
 
-        FileRuleScenario(
-            exclude = listOf(
-                "incorrect_bullet_style_asterisk.md",
-                "incorrect_bullet_style_dash.md",
-                "incorrect_bullet_style_plus.md",
-                "lists_without_blank_lines.md"
-            )
-        ) { ConsistentUlStyleRule(UnorderedListStyle.Consistent) }
-    }
-})
+    @TestFactory
+    fun `consistentUlStyleRule dash`() =
+        FileTestFactory(listOf("incorrect_bullet_style_dash.md")) { ConsistentUlStyleRule(UnorderedListStyle.Dash) }
+
+    @TestFactory
+    fun `consistentUlStyleRule asterisk`() =
+        FileTestFactory(listOf("incorrect_bullet_style_asterisk.md")) { ConsistentUlStyleRule(UnorderedListStyle.Asterisk) }
+}

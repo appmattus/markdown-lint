@@ -1,10 +1,9 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object NoMultipleSpaceClosedAtxRuleTest : Spek({
-    Feature("NoMultipleSpaceClosedAtxRule") {
-        FileRuleScenario { NoMultipleSpaceClosedAtxRule() }
-    }
-})
+class NoMultipleSpaceClosedAtxRuleTest {
+
+    @TestFactory
+    fun noMultipleSpaceClosedAtxRule() = FileTestFactory { NoMultipleSpaceClosedAtxRule() }
+}

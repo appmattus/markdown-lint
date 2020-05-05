@@ -52,15 +52,16 @@ dependencies {
     testImplementation("com.flextrade.jfixture:jfixture:2.7.2")
     testImplementation("io.github.classgraph:classgraph:4.8.78")
 
-    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.10")
-    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.10")
-    // spek requires kotlin-reflect, can be omitted if already in the classpath
-    testRuntimeOnly(kotlin("reflect"))
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.6.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
+
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2")
 }
 
 tasks.withType<Test> {
     useJUnitPlatform {
-        includeEngines = setOf("spek2")
+        includeEngines = setOf("junit-jupiter")
     }
 
     testLogging {

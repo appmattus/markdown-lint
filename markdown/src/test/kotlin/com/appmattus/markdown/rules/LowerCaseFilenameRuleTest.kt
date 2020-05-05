@@ -1,71 +1,74 @@
 package com.appmattus.markdown.rules
 
+import com.appmattus.gherkin.dsl.Given
+import com.appmattus.gherkin.dsl.Then
+import com.appmattus.gherkin.dsl.When
+import com.appmattus.gherkin.jupiter.gherkin
 import com.appmattus.markdown.errors.Error
 import com.appmattus.markdown.processing.MarkdownDocument
-import mockDocument
 import org.assertj.core.api.Assertions.assertThat
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 import java.io.File
 import java.util.UUID
 
-object LowerCaseFilenameRuleTest : Spek({
+class LowerCaseFilenameRuleTest {
 
-    Feature("LowerCaseFilenameRule") {
-        val rule by memoized { LowerCaseFilenameRule() }
-        val mockDocument = mockDocument()
+    private val rule = LowerCaseFilenameRule()
+    private val mockDocument = mockDocument()
 
-        Scenario("all lowercase filename") {
-            lateinit var document: MarkdownDocument
-            lateinit var ruleErrors: List<Error>
+    @TestFactory
+    fun `all lowercase filename`() = gherkin {
+        val document: MarkdownDocument
+        val ruleErrors: List<Error>
 
-            Given("a document with lowercase filename") {
-                val filename = UUID.randomUUID().toString().toLowerCase()
-                document = MarkdownDocument(File(filename), mockDocument)
-            }
-
-            When("we visit the document") {
-                ruleErrors = rule.processDocument(document)
-            }
-
-            Then("we have no errors") {
-                assertThat(ruleErrors).isEmpty()
-            }
+        Given("a document with lowercase filename") {
+            val filename = UUID.randomUUID().toString().toLowerCase()
+            document = MarkdownDocument(File(filename), mockDocument)
         }
 
-        Scenario("uppercase in filename") {
-            lateinit var document: MarkdownDocument
-            lateinit var ruleErrors: List<Error>
-
-            Given("a document with uppercase filename") {
-                val filename = UUID.randomUUID().toString().toUpperCase()
-                document = MarkdownDocument(File(filename), mockDocument)
-            }
-
-            When("we visit the document") {
-                ruleErrors = rule.processDocument(document)
-            }
-
-            Then("we have 1 error") {
-                assertThat(ruleErrors).size().isOne
-            }
+        When("we visit the document") {
+            ruleErrors = rule.processDocument(document)
         }
 
-        Scenario("empty filename") {
-            lateinit var document: MarkdownDocument
-            lateinit var ruleErrors: List<Error>
-
-            Given("a document with empty filename") {
-                document = MarkdownDocument(File(""), mockDocument)
-            }
-
-            When("we visit the document") {
-                ruleErrors = rule.processDocument(document)
-            }
-
-            Then("we have no errors") {
-                assertThat(ruleErrors).isEmpty()
-            }
+        Then("we have no errors") {
+            assertThat(ruleErrors).isEmpty()
         }
     }
-})
+
+    @TestFactory
+    fun `uppercase in filename`() = gherkin {
+        val document: MarkdownDocument
+        val ruleErrors: List<Error>
+
+        Given("a document with uppercase filename") {
+            val filename = UUID.randomUUID().toString().toUpperCase()
+            document = MarkdownDocument(File(filename), mockDocument)
+        }
+
+        When("we visit the document") {
+            ruleErrors = rule.processDocument(document)
+        }
+
+        Then("we have 1 error") {
+            assertThat(ruleErrors).size().isOne
+        }
+    }
+
+    @TestFactory
+    fun `empty filename`() = gherkin {
+        val document: MarkdownDocument
+        val ruleErrors: List<Error>
+
+        Given("a document with empty filename") {
+            document = MarkdownDocument(File(""), mockDocument)
+        }
+
+        When("we visit the document") {
+            ruleErrors = rule.processDocument(document)
+        }
+
+        Then("we have no errors") {
+            assertThat(ruleErrors).isEmpty()
+        }
+    }
+}

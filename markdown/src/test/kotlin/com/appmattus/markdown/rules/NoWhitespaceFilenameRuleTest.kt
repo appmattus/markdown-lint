@@ -1,43 +1,42 @@
 package com.appmattus.markdown.rules
 
 import com.flextrade.jfixture.JFixture
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 import java.util.UUID
 
-object NoWhitespaceFilenameRuleTest : Spek({
-    Feature("NoWhitespaceFilenameRule") {
-        val rule = { NoWhitespaceFilenameRule() }
+class NoWhitespaceFilenameRuleTest {
+    val rule = NoWhitespaceFilenameRule()
 
-        FilenameScenario("no whitespace filename", 0, rule) {
-            UUID.randomUUID().toString().toLowerCase()
-        }
-
-        FilenameScenario("whitespace in filename", 1, rule) {
-            val whitespace = JFixture().create().fromList(" ", "\t", "\n", "\r")
-            "hello${whitespace}world.md"
-        }
-
-        FilenameScenario("whitespace in start of filename", 1, rule) {
-            val whitespace = JFixture().create().fromList(" ", "\t", "\n", "\r")
-            "${whitespace}helloworld.md"
-        }
-
-        FilenameScenario("whitespace in filename before extension", 1, rule) {
-            val whitespace = JFixture().create().fromList(" ", "\t", "\n", "\r")
-            "hello-world$whitespace.md"
-        }
-
-        FilenameScenario("no whitespace filename", 0, rule) {
-            UUID.randomUUID().toString().toLowerCase()
-        }
-
-        FilenameScenario("empty filename without extension", 0, rule) {
-            ""
-        }
-
-        FilenameScenario("empty filename with markdown extension", 0, rule) {
-            ".md"
-        }
+    @TestFactory
+    fun `no whitespace filename`() = FilenameTestFactory(0, rule) {
+        UUID.randomUUID().toString().toLowerCase()
     }
-})
+
+    @TestFactory
+    fun `whitespace in filename`() = FilenameTestFactory(1, rule) {
+        val whitespace = JFixture().create().fromList(" ", "\t", "\n", "\r")
+        "hello${whitespace}world.md"
+    }
+
+    @TestFactory
+    fun `whitespace in start of filename`() = FilenameTestFactory(1, rule) {
+        val whitespace = JFixture().create().fromList(" ", "\t", "\n", "\r")
+        "${whitespace}helloworld.md"
+    }
+
+    @TestFactory
+    fun `whitespace in filename before extension`() = FilenameTestFactory(1, rule) {
+        val whitespace = JFixture().create().fromList(" ", "\t", "\n", "\r")
+        "hello-world$whitespace.md"
+    }
+
+    @TestFactory
+    fun `empty filename without extension`() = FilenameTestFactory(0, rule) {
+        ""
+    }
+
+    @TestFactory
+    fun `empty filename with markdown extension`() = FilenameTestFactory(0, rule) {
+        ".md"
+    }
+}

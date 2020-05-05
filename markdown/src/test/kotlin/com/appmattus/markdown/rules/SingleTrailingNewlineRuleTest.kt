@@ -1,12 +1,10 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object SingleTrailingNewlineRuleTest : Spek({
-    Feature("SingleTrailingNewlineRule") {
-        FileRuleScenario(listOf("no_newline.md")) { SingleTrailingNewlineRule() }
+class SingleTrailingNewlineRuleTest {
 
-        FileRuleScenario(listOf("has_newline.md")) { SingleTrailingNewlineRule() }
-    }
-})
+    @TestFactory
+    fun singleTrailingNewlineRule() =
+        FileTestFactory(listOf("no_newline.md", "has_newline.md")) { SingleTrailingNewlineRule() }
+}

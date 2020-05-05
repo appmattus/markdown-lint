@@ -1,39 +1,44 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 import java.util.UUID
 
-object NoConsecutiveHyphensFilenameRuleTest : Spek({
-    Feature("NoConsecutiveHyphensFilenameRule") {
-        val rule = { NoConsecutiveHyphensFilenameRule() }
+class NoConsecutiveHyphensFilenameRuleTest {
 
-        FilenameScenario("no consecutive hyphens in filename", 0, rule) {
-            UUID.randomUUID().toString().toLowerCase()
-        }
+    val rule = NoConsecutiveHyphensFilenameRule()
 
-        FilenameScenario("2 hyphens in filename", 1, rule) {
-            "hello--world.md"
-        }
-
-        FilenameScenario("3 hyphens in filename", 1, rule) {
-            "hello---.md"
-        }
-
-        FilenameScenario("4 hyphens in filename", 1, rule) {
-            "hello----.md"
-        }
-
-        FilenameScenario("2 hyphens twice in filename", 1, rule) {
-            "hello--world--.md"
-        }
-
-        FilenameScenario("empty filename without extension", 0, rule) {
-            ""
-        }
-
-        FilenameScenario("empty filename with markdown extension", 0, rule) {
-            ".md"
-        }
+    @TestFactory
+    fun `no consecutive hyphens in filename`() = FilenameTestFactory(0, rule) {
+        UUID.randomUUID().toString().toLowerCase()
     }
-})
+
+    @TestFactory
+    fun `2 hyphens in filename`() = FilenameTestFactory(1, rule) {
+        "hello--world.md"
+    }
+
+    @TestFactory
+    fun `3 hyphens in filename`() = FilenameTestFactory(1, rule) {
+        "hello---.md"
+    }
+
+    @TestFactory
+    fun `4 hyphens in filename`() = FilenameTestFactory(1, rule) {
+        "hello----.md"
+    }
+
+    @TestFactory
+    fun `2 hyphens twice in filename`() = FilenameTestFactory(1, rule) {
+        "hello--world--.md"
+    }
+
+    @TestFactory
+    fun `empty filename without extension`() = FilenameTestFactory(0, rule) {
+        ""
+    }
+
+    @TestFactory
+    fun `empty filename with markdown extension`() = FilenameTestFactory(0, rule) {
+        ".md"
+    }
+}

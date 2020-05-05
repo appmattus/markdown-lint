@@ -1,10 +1,9 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object NoSpaceInLinksRuleTest : Spek({
-    Feature("NoSpaceInLinksRule") {
-        FileRuleScenario { NoSpaceInLinksRule() }
-    }
-})
+class NoSpaceInLinksRuleTest {
+
+    @TestFactory
+    fun noSpaceInLinksRule() = FileTestFactory { NoSpaceInLinksRule() }
+}

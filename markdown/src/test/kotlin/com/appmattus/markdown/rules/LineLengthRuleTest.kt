@@ -1,22 +1,24 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object LineLengthRuleTest : Spek({
-    Feature("LineLengthRule") {
-        FileRuleScenario(listOf("long_lines_inline_code.md")) { LineLengthRule() }
+class LineLengthRuleTest {
 
-        FileRuleScenario(listOf("long_lines_image.md")) { LineLengthRule() }
+    @TestFactory
+    fun lineLengthRule() = FileTestFactory(
+        allFiles + "long_lines_inline_code.md" + "long_lines_image.md" + "long_lines_close.md",
+        exclude = listOf("long_lines_100.md", "long_lines_code.md")
+    ) { LineLengthRule() }
 
-        FileRuleScenario(listOf("long_lines_close.md")) { LineLengthRule() }
+    @TestFactory
+    fun `lineLengthRule with line length`() =
+        FileTestFactory(listOf("long_lines_100.md")) { LineLengthRule(lineLength = 100) }
 
-        FileRuleScenario(listOf("long_lines_100.md")) { LineLengthRule(lineLength = 100) }
+    @TestFactory
+    fun `lineLengthRule code blocks and tables disabled`() =
+        FileTestFactory(listOf("long_lines_code.md")) { LineLengthRule(codeBlocks = false, tables = false) }
 
-        FileRuleScenario(listOf("long_lines_code.md")) { LineLengthRule(codeBlocks = false, tables = false) }
-
-        FileRuleScenario(listOf("long_lines_heading_exceptions.md")) { LineLengthRule(headings = false) }
-
-        FileRuleScenario(exclude = listOf("long_lines_100.md", "long_lines_code.md")) { LineLengthRule() }
-    }
-})
+    @TestFactory
+    fun `lineLengthRule headings disabled`() =
+        FileTestFactory(listOf("long_lines_heading_exceptions.md")) { LineLengthRule(headings = false) }
+}

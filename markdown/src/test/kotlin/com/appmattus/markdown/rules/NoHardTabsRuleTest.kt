@@ -1,12 +1,12 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object NoHardTabsRuleTest : Spek({
-    Feature("NoHardTabsRule") {
-        FileRuleScenario(listOf("nohardtabs_issues.md")) { NoHardTabsRule() }
+class NoHardTabsRuleTest {
 
-        FileRuleScenario { NoHardTabsRule() }
-    }
-})
+    @TestFactory
+    fun noHardTabsRule() = FileTestFactory { NoHardTabsRule() }
+
+    @TestFactory
+    fun `noHardTabsRule issues`() = FileTestFactory(listOf("nohardtabs_issues.md")) { NoHardTabsRule() }
+}

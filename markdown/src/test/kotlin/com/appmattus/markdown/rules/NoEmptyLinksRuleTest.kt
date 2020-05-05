@@ -1,10 +1,9 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import org.junit.jupiter.api.TestFactory
 
-object NoEmptyLinksRuleTest : Spek({
-    Feature("NoEmptyLinksRule") {
-        FileRuleScenario(exclude = listOf("reversed_link.md")) { NoEmptyLinksRule() }
-    }
-})
+class NoEmptyLinksRuleTest {
+
+    @TestFactory
+    fun noEmptyLinksRule() = FileTestFactory(exclude = listOf("reversed_link.md")) { NoEmptyLinksRule() }
+}
