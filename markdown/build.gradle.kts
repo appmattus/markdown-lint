@@ -49,7 +49,6 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.15.0")
     testImplementation("org.mockito:mockito-core:3.3.3")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
-    testImplementation("com.flextrade.jfixture:jfixture:2.7.2")
     testImplementation("io.github.classgraph:classgraph:4.8.78")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")

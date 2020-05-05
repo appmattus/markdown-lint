@@ -1,6 +1,5 @@
 package com.appmattus.markdown.rules
 
-import com.flextrade.jfixture.JFixture
 import org.junit.jupiter.api.TestFactory
 import java.util.UUID
 
@@ -19,7 +18,7 @@ class NoPunctuationFilenameRuleTest {
 
     @TestFactory
     fun `punctuation in filename`() = FilenameTestFactory(1, rule) {
-        val whitespace = JFixture().create().fromList("_", ".", "?")
+        val whitespace = listOf("_", ".", "?").random()
         "hello${whitespace}world.md"
     }
 

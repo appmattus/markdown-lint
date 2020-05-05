@@ -1,6 +1,5 @@
 package com.appmattus.markdown.rules
 
-import com.flextrade.jfixture.JFixture
 import org.junit.jupiter.api.TestFactory
 import java.util.UUID
 
@@ -14,19 +13,19 @@ class NoWhitespaceFilenameRuleTest {
 
     @TestFactory
     fun `whitespace in filename`() = FilenameTestFactory(1, rule) {
-        val whitespace = JFixture().create().fromList(" ", "\t", "\n", "\r")
+        val whitespace = listOf(" ", "\t", "\n", "\r").random()
         "hello${whitespace}world.md"
     }
 
     @TestFactory
     fun `whitespace in start of filename`() = FilenameTestFactory(1, rule) {
-        val whitespace = JFixture().create().fromList(" ", "\t", "\n", "\r")
+        val whitespace = listOf(" ", "\t", "\n", "\r").random()
         "${whitespace}helloworld.md"
     }
 
     @TestFactory
     fun `whitespace in filename before extension`() = FilenameTestFactory(1, rule) {
-        val whitespace = JFixture().create().fromList(" ", "\t", "\n", "\r")
+        val whitespace = listOf(" ", "\t", "\n", "\r").random()
         "hello-world$whitespace.md"
     }
 
