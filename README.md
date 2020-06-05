@@ -26,8 +26,9 @@ Run the plugin with:
 or by adding a dependency to the task:
 
 ```kotlin
-tasks.getByName("check")
-    .finalizedBy(rootProject.tasks.getByName("markdownlint"))
+tasks.named("check") {
+  dependsOn(tasks.named("markdownlint"))
+}
 ```
 
 To customise the rules and report generation specify the configuration in
