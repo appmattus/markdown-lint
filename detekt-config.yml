@@ -1,8 +1,0 @@
-style:
-  MaxLineLength:
-    excludes: "**/test/**,**/androidTest/**,**/*.Test.kt,**/*.Spec.kt,**/*.Spek.kt"
-    excludeCommentStatements: true
-
-formatting:
-  MaximumLineLength:
-    active: false

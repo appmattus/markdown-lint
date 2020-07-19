@@ -1,6 +1,18 @@
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+/*
+ * Copyright 2020 Appmattus Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 buildscript {
     repositories {
@@ -10,16 +22,11 @@ buildscript {
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.72")
         classpath("org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.3")
-        classpath("com.android.tools.build:gradle:3.6.3")
+        classpath("com.android.tools.build:gradle:4.0.1")
     }
 }
 
-plugins {
-    id("com.github.ben-manes.versions") version "0.28.0"
-    id("io.gitlab.arturbosch.detekt") version "1.8.0"
-}
-
-allprojects {
+subprojects {
     repositories {
         google()
         jcenter()
@@ -27,37 +34,9 @@ allprojects {
     }
 }
 
-task("clean", type = Delete::class) {
+tasks.register<Delete>("clean") {
     delete(rootProject.buildDir)
 }
 
-tasks.withType(DependencyUpdatesTask::class.java).all {
-    resolutionStrategy {
-        componentSelection {
-            all {
-                val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview")
-                    .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-]*") }
-                    .any { it.matches(candidate.version) }
-
-                if (rejected) {
-                    reject("Release candidate")
-                }
-            }
-        }
-    }
-}
-
-dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.8.0")
-}
-
-detekt {
-    input = files("$projectDir")
-
-    buildUponDefaultConfig = true
-
-    // To override MaxLineLength:excludeCommentStatements
-    config = files("detekt-config.yml")
-
-    autoCorrect = true
-}
+apply(from = "$rootDir/gradle/scripts/detekt.gradle.kts")
+apply(from = "$rootDir/gradle/scripts/dependencyUpdates.gradle.kts")
