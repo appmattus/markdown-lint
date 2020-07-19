@@ -1,6 +1,5 @@
 package com.appmattus.gherkin.dsl
 
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -12,8 +11,7 @@ class Gherkin internal constructor() {
 }
 
 @GherkinDsl
-@UseExperimental(ExperimentalContracts::class)
-@Suppress("DEPRECATION", "TestFunctionName")
+@Suppress("DEPRECATION", "TestFunctionName", "unused")
 fun Gherkin.Before(block: suspend GherkinClass.() -> Unit) {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
@@ -23,8 +21,7 @@ fun Gherkin.Before(block: suspend GherkinClass.() -> Unit) {
 }
 
 @GherkinDsl
-@UseExperimental(ExperimentalContracts::class)
-@Suppress("DEPRECATION", "TestFunctionName")
+@Suppress("DEPRECATION", "TestFunctionName", "unused")
 fun Gherkin.After(block: suspend GherkinClass.() -> Unit) {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
@@ -34,7 +31,6 @@ fun Gherkin.After(block: suspend GherkinClass.() -> Unit) {
 }
 
 @GherkinDsl
-@UseExperimental(ExperimentalContracts::class)
 @Suppress("DEPRECATION", "TestFunctionName")
 fun Gherkin.Given(description: String, block: suspend GherkinClass.() -> Unit) {
     contract {
@@ -46,7 +42,6 @@ fun Gherkin.Given(description: String, block: suspend GherkinClass.() -> Unit) {
 }
 
 @GherkinDsl
-@UseExperimental(ExperimentalContracts::class)
 @Suppress("DEPRECATION", "TestFunctionName")
 fun Gherkin.When(description: String, block: suspend GherkinClass.() -> Unit) {
     contract {
@@ -58,7 +53,6 @@ fun Gherkin.When(description: String, block: suspend GherkinClass.() -> Unit) {
 }
 
 @GherkinDsl
-@UseExperimental(ExperimentalContracts::class)
 @Suppress("DEPRECATION", "TestFunctionName")
 fun Gherkin.Then(description: String, block: suspend GherkinClass.() -> Unit) {
     contract {
@@ -71,7 +65,6 @@ fun Gherkin.Then(description: String, block: suspend GherkinClass.() -> Unit) {
 
 @GherkinDsl
 @Suppress("DEPRECATION", "TestFunctionName")
-@UseExperimental(ExperimentalContracts::class)
 fun Gherkin.And(description: String, block: suspend GherkinClass.() -> Unit) {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)

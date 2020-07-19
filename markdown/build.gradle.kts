@@ -110,6 +110,8 @@ tasks.named("coveralls") { onlyIf { System.getenv("CI")?.isNotEmpty() == true } 
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+    kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.contracts.ExperimentalContracts"
 }
 
 lintOptions {

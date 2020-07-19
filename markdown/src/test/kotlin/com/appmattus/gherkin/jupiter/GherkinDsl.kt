@@ -4,19 +4,19 @@ import com.appmattus.gherkin.dsl.Gherkin
 import com.appmattus.gherkin.dsl.GherkinClass
 import com.appmattus.gherkin.dsl.GherkinDsl
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.DynamicContainer
 import org.junit.jupiter.api.DynamicNode
 import org.junit.jupiter.api.DynamicTest
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @GherkinDsl
 @Suppress("DEPRECATION")
-@UseExperimental(ExperimentalContracts::class)
 fun gherkin(
+    @OptIn(ExperimentalCoroutinesApi::class)
     coroutineDispatcher: CoroutineDispatcher = TestCoroutineDispatcher(),
     test: suspend Gherkin.() -> Unit
 ): Iterable<DynamicNode> {
@@ -27,12 +27,14 @@ fun gherkin(
     val executables = mutableListOf<DynamicNode>()
 
     Gherkin().apply {
+        @OptIn(ExperimentalCoroutinesApi::class)
         runBlockingTest(coroutineDispatcher) {
             test()
         }
 
         executables.addAll(tasks.mapIndexed { index, (name, task) ->
             DynamicTest.dynamicTest(name) {
+                @OptIn(ExperimentalCoroutinesApi::class)
                 runBlockingTest(coroutineDispatcher) {
 
                     try {

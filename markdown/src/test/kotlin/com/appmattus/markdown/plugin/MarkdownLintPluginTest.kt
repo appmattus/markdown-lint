@@ -491,6 +491,7 @@ private fun InputStream.toFile(file: File) {
 }
 
 private fun GradleRunner.withJaCoCo(): GradleRunner {
-    javaClass.classLoader.getResourceAsStream("testkit-gradle.properties").toFile(File(projectDir, "gradle.properties"))
+    javaClass.classLoader.getResourceAsStream("testkit-gradle.properties")!!
+        .toFile(File(projectDir, "gradle.properties"))
     return this
 }
