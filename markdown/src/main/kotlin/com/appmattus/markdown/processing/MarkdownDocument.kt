@@ -35,12 +35,12 @@ import com.vladsch.flexmark.util.ast.Node
 import com.vladsch.flexmark.util.ast.NodeVisitor
 import com.vladsch.flexmark.util.ast.VisitHandler
 import com.vladsch.flexmark.util.sequence.BasedSequence
-import java.io.File
+import java.nio.file.Path
 import kotlin.reflect.KClass
 
-class MarkdownDocument constructor(val file: File, val document: Document) {
+class MarkdownDocument constructor(val file: Path, val document: Document) {
 
-    val filename: String = file.name
+    val filename: String = file.fileName.toString()
 
     val headings: List<Heading> by lazy { document.find(Heading::class) }
     val htmlElements: List<Node> by lazy { document.find(HtmlBlock::class, HtmlInline::class) }

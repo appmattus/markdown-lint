@@ -4,8 +4,8 @@ import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.extensions.isEmail
-import java.io.File
 import java.net.URI
+import java.nio.file.Files
 
 /**
  * # Relative links exist
@@ -25,8 +25,8 @@ class ValidRelativeImagesRule(
         document.allImageUrls.forEach { url ->
             val uri = URI(url.toString())
 
-            if (uri.isRelative && uri.path.isNotEmpty() && !File(parentDir, uri.path).exists()) {
-                val expected = File(document.file.parent, uri.path).normalize().path
+            if (uri.isRelative && uri.path.isNotEmpty() && !Files.exists(parentDir.resolve(uri.path))) {
+                val expected = document.file.parent.resolve(uri.path).normalize().toString()
                 val description =
                     "Relative image does not exist, '$url', expected at '$expected'"
                 errorReporter.reportError(url.startOffset, url.endOffset, description)

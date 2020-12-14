@@ -18,7 +18,11 @@ object NoPunctuationFilenameRuleTest : Spek({
         }
 
         FilenameScenario("punctuation in filename", 1, rule) {
-            val whitespace = JFixture().create().fromList("_", ".", "?")
+            val whitespace = if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                JFixture().create().fromList("_", ".")
+            } else {
+                JFixture().create().fromList("_", ".", "?")
+            }
             "hello${whitespace}world.md"
         }
 

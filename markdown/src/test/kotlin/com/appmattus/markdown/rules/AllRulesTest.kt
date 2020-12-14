@@ -8,7 +8,7 @@ import mockDocument
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
-import java.io.File
+import java.nio.file.Paths
 
 object AllRulesTest : Spek({
     Feature("AllRules") {
@@ -91,19 +91,19 @@ object AllRulesTest : Spek({
 
             And("the specified rule does not trigger as expected") {
                 val rule = rules.filterIsInstance(NoPunctuationFilenameRule::class.java).first()
-                val errors = rule.processDocument(MarkdownDocument(File("Z"), mockDocument))
+                val errors = rule.processDocument(MarkdownDocument(Paths.get("Z"), mockDocument))
                 assertThat(errors).size().isZero
             }
 
             And("the specified rule triggers as expected") {
                 val rule = rules.filterIsInstance(NoPunctuationFilenameRule::class.java).first()
-                val errors = rule.processDocument(MarkdownDocument(File("A"), mockDocument))
+                val errors = rule.processDocument(MarkdownDocument(Paths.get("A"), mockDocument))
                 assertThat(errors).size().isOne
             }
 
             And("the specified rule result differs to default config") {
                 val rule = NoPunctuationFilenameRule()
-                val errors = rule.processDocument(MarkdownDocument(File("A"), mockDocument))
+                val errors = rule.processDocument(MarkdownDocument(Paths.get("A"), mockDocument))
                 assertThat(errors).size().isZero
             }
         }

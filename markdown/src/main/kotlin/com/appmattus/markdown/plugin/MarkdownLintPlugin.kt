@@ -26,7 +26,7 @@ class MarkdownLintPlugin : Plugin<Project> {
                     markdownlint.threshold, markdownlint.includes.toList(), markdownlint.excludes.toList()
                 )
 
-                RuleProcessor(projectDir, reportsDir).process(config, System.out)
+                RuleProcessor(projectDir.toPath(), reportsDir.toPath()).process(config, System.out)
             }
         }
     }
