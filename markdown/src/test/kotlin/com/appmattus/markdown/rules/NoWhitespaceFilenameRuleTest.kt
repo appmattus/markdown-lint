@@ -24,7 +24,7 @@ object NoWhitespaceFilenameRuleTest : Spek({
 
         FilenameScenario("whitespace in start of filename", 1, rule) {
             val whitespace = if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                JFixture().create().fromList(" ", "\t")
+                JFixture().create().fromList(" ")
             } else {
                 JFixture().create().fromList(" ", "\t", "\n", "\r")
             }
