@@ -8,7 +8,7 @@ private val eolRegex = "(\\r?\\n|\\n)".toRegex()
 
 fun loadDocumentUnixEol(filename: String) =
     MarkdownDocument(
-        File(MarkdownDocument::class.java.classLoader.getResource(filename).file),
+        File(MarkdownDocument::class.java.classLoader.getResource(filename).file).toPath(),
         ParserFactory.parser.parse(
             MarkdownDocument::class.java.classLoader.getResource(
                 filename
@@ -18,7 +18,7 @@ fun loadDocumentUnixEol(filename: String) =
 
 fun loadDocumentWindowsEol(filename: String) =
     MarkdownDocument(
-        File(MarkdownDocument::class.java.classLoader.getResource(filename).file),
+        File(MarkdownDocument::class.java.classLoader.getResource(filename).file).toPath(),
         ParserFactory.parser.parse(
             MarkdownDocument::class.java.classLoader.getResource(
                 filename

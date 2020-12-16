@@ -12,8 +12,12 @@ import com.appmattus.markdown.filter.MultiPathFilter
 import com.appmattus.markdown.plugin.BuildFailure
 import com.appmattus.markdown.rules.AllRules
 import java.io.ByteArrayOutputStream
-import java.io.File
 import java.io.PrintStream
+import java.nio.file.FileVisitResult
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.SimpleFileVisitor
+import java.nio.file.attribute.BasicFileAttributes
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.transform.TransformerFactory
 import javax.xml.transform.dom.DOMSource
@@ -21,7 +25,7 @@ import javax.xml.transform.stream.StreamResult
 import javax.xml.transform.stream.StreamSource
 
 @Suppress("TooManyFunctions")
-class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
+class RuleProcessor(private val rootDir: Path, private val reportsDir: Path) {
 
     fun process(config: Config, summaryStream: PrintStream? = null) {
         val markdownFiles = rootDir.listMarkdownFiles(config)
@@ -33,7 +37,7 @@ class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
 
         if (config.generateXmlReport()) {
             try {
-                val xmlFile = File(reportsDir, "markdownlint.xml")
+                val xmlFile = reportsDir.resolve("markdownlint.xml")
                 generateXmlReport(xmlFile, checkstyleXmlBytes)
                 summaryStream?.summariseXmlGeneration(xmlFile)
             } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
@@ -43,7 +47,7 @@ class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
 
         if (config.generateHtmlReport()) {
             try {
-                val htmlFile = File(reportsDir, "markdownlint.html")
+                val htmlFile = reportsDir.resolve("markdownlint.html")
                 generateHtmlReport(htmlFile, checkstyleXmlBytes)
                 summaryStream?.summariseHtmlGeneration(htmlFile)
             } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
@@ -57,17 +61,17 @@ class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
         }
     }
 
-    private fun PrintStream.summariseXmlGeneration(xmlFile: File) {
-        println("Successfully generated Checkstyle XML report at ${xmlFile.path}")
+    private fun PrintStream.summariseXmlGeneration(xmlFile: Path) {
+        println("Successfully generated Checkstyle XML report at $xmlFile")
     }
 
-    private fun PrintStream.summariseHtmlGeneration(htmlFile: File) {
-        println("Successfully generated HTML report at ${htmlFile.path}")
+    private fun PrintStream.summariseHtmlGeneration(htmlFile: Path) {
+        println("Successfully generated HTML report at $htmlFile")
     }
 
     private fun PrintStream.summariseErrors(
-        markdownFiles: List<File>,
-        fileErrors: Map<File, List<Error>>
+        markdownFiles: List<Path>,
+        fileErrors: Map<Path, List<Error>>
     ) {
         println("${markdownFiles.size} markdown files were analysed")
         println()
@@ -77,7 +81,7 @@ class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
             fileErrors.forEach { (file, errors) ->
                 errors.forEach { error ->
                     println(
-                        "    ${error.ruleClass.simpleName} at ${file.path}:${error.lineNumber}:${error.columnNumber}"
+                        "    ${error.ruleClass.simpleName} at $file:${error.lineNumber}:${error.columnNumber}"
                     )
                 }
             }
@@ -87,20 +91,20 @@ class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
         println()
     }
 
-    private fun List<File>.scanForErrors(config: Config): Map<File, List<Error>> {
+    private fun List<Path>.scanForErrors(config: Config): Map<Path, List<Error>> {
 
         val rules = AllRules(config).rules
 
         val parser = ParserFactory.parser
 
         return associateWith { file ->
-            val document = MarkdownDocument(file, parser.parse(file.readText(Charsets.UTF_8)))
+            val document = MarkdownDocument(file, parser.parse(String(Files.readAllBytes(file), Charsets.UTF_8)))
 
             rules.flatMap { rule ->
-                val includes = MultiPathFilter(rule.configuration.includes, rootDir.toPath())
-                val excludes = MultiPathFilter(rule.configuration.excludes, rootDir.toPath())
+                val includes = MultiPathFilter(rule.configuration.includes, rootDir)
+                val excludes = MultiPathFilter(rule.configuration.excludes, rootDir)
 
-                if (includes.matches(file.toPath()) && !excludes.matches(file.toPath())) {
+                if (includes.matches(file) && !excludes.matches(file)) {
                     rule.processDocument(document)
                 } else {
                     emptyList()
@@ -109,19 +113,43 @@ class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
         }.filterValues { it.isNotEmpty() }
     }
 
-    private fun File.listMarkdownFiles(config: Config): List<File> {
-        val includes = MultiPathFilter(config.includes, toPath())
-        val excludes = MultiPathFilter(config.excludes, toPath())
+    private fun Path.listMarkdownFiles(config: Config): List<Path> {
+        val includes = MultiPathFilter(config.includes, this)
+        val excludes = MultiPathFilter(config.excludes, this)
 
-        return walk()
-            .onEnter { it.name != "build" && !it.name.startsWith(".") }
-            .filter { it.isFile }
-            .filter { it.extension == "md" || it.extension == "markdown" }
-            .filter { includes.matches(it.toPath()) && !excludes.matches(it.toPath()) }
-            .toList()
+        val markdownFiles = mutableListOf<Path>()
+
+        Files.walkFileTree(this, object : SimpleFileVisitor<Path>() {
+            override fun preVisitDirectory(dir: Path?, attrs: BasicFileAttributes?): FileVisitResult {
+                return if (dir!!.fileName.toString() == "build" || dir.fileName.toString().startsWith(".")) {
+                    FileVisitResult.SKIP_SUBTREE
+                } else {
+                    FileVisitResult.CONTINUE
+                }
+            }
+
+            override fun visitFile(file: Path?, attrs: BasicFileAttributes?): FileVisitResult {
+                if (Files.isRegularFile(file!!) &&
+                        hasMarkdownExtension(file) &&
+                        matchesFilters(file)
+                ) {
+                    markdownFiles.add(file)
+                }
+                return FileVisitResult.CONTINUE
+            }
+
+            private fun hasMarkdownExtension(file: Path) =
+                    file.fileName.toString().run {
+                                endsWith(".md") || endsWith(".markdown")
+                            }
+
+            private fun matchesFilters(file: Path) =
+                includes.matches(file) && !excludes.matches(file)
+        })
+        return markdownFiles
     }
 
-    private fun Map<File, List<Error>>.mapErrorsToCheckstyleXmlBytes(): ByteArray {
+    private fun Map<Path, List<Error>>.mapErrorsToCheckstyleXmlBytes(): ByteArray {
         return ByteArrayOutputStream().use {
             val logger = XMLLogger(it, OutputStreamOptions.NONE)
 
@@ -129,7 +157,7 @@ class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
 
             forEach { (file, errors) ->
 
-                val filePath = file.path
+                val filePath = file.toString()
 
                 logger.fileStarted(AuditEvent(filePath))
 
@@ -151,12 +179,12 @@ class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
         }
     }
 
-    private fun generateXmlReport(xmlFile: File, checkstyleXmlBytes: ByteArray) {
-        xmlFile.writeBytes(checkstyleXmlBytes)
+    private fun generateXmlReport(xmlFile: Path, checkstyleXmlBytes: ByteArray) {
+        Files.write(xmlFile, checkstyleXmlBytes)
     }
 
     private fun generateHtmlReport(
-        htmlFile: File,
+        htmlFile: Path,
         checkstyleXmlBytes: ByteArray
     ) {
         val factory = DocumentBuilderFactory.newInstance()
@@ -167,7 +195,7 @@ class RuleProcessor(private val rootDir: File, private val reportsDir: File) {
 
         val transformer = TransformerFactory.newInstance().newTransformer(StreamSource(stylesheet))
 
-        val result = StreamResult(htmlFile.outputStream())
+        val result = StreamResult(Files.newOutputStream(htmlFile))
         transformer.transform(DOMSource(document), result)
     }
 

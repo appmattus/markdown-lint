@@ -9,6 +9,7 @@ import org.spekframework.spek2.style.gherkin.Feature
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.PrintStream
+import java.nio.file.Files
 
 object RuleProcessorTest : Spek({
     fun RuleProcessor.processAndReturnOutput(config: Config): String {
@@ -25,11 +26,11 @@ object RuleProcessorTest : Spek({
         }
 
         val rootDir by memoized {
-            temporaryFolder.newFolder("rootDir")
+            temporaryFolder.newFolder("rootDir").toPath()
         }
 
         val reportsDir by memoized {
-            temporaryFolder.newFolder("reportsDir")
+            temporaryFolder.newFolder("reportsDir").toPath()
         }
 
         val slash = Regex.escape(File.separator)
@@ -68,13 +69,13 @@ object RuleProcessorTest : Spek({
             Then("xml report generated") {
                 assertThat(output).contains("Successfully generated Checkstyle XML report")
                 assertThat(output).containsPattern(xmlReportPattern)
-                assertThat(File(reportsDir, "markdownlint.xml")).exists()
+                assertThat(reportsDir.resolve("markdownlint.xml")).exists()
             }
 
             And("html report generated") {
                 assertThat(output).contains("Successfully generated HTML report")
                 assertThat(output).containsPattern(htmlReportPattern)
-                assertThat(File(reportsDir, "markdownlint.html")).exists()
+                assertThat(reportsDir.resolve("markdownlint.html")).exists()
             }
         }
 
@@ -93,13 +94,13 @@ object RuleProcessorTest : Spek({
             Then("no xml report generated") {
                 assertThat(output).doesNotContain("Successfully generated Checkstyle XML report")
                 assertThat(output).doesNotContainPattern(xmlReportPattern)
-                assertThat(File(reportsDir, "markdownlint.xml")).doesNotExist()
+                assertThat(reportsDir.resolve("markdownlint.xml")).doesNotExist()
             }
 
             And("no html report generated") {
                 assertThat(output).doesNotContain("Successfully generated HTML report")
                 assertThat(output).doesNotContainPattern(htmlReportPattern)
-                assertThat(File(reportsDir, "markdownlint.html")).doesNotExist()
+                assertThat(reportsDir.resolve("markdownlint.html")).doesNotExist()
             }
         }
 
@@ -118,13 +119,13 @@ object RuleProcessorTest : Spek({
             Then("html report generated") {
                 assertThat(output).contains("Successfully generated HTML report")
                 assertThat(output).containsPattern(htmlReportPattern)
-                assertThat(File(reportsDir, "markdownlint.html")).exists()
+                assertThat(reportsDir.resolve("markdownlint.html")).exists()
             }
 
             And("no xml report generated") {
                 assertThat(output).doesNotContain("Successfully generated Checkstyle XML report")
                 assertThat(output).doesNotContainPattern(xmlReportPattern)
-                assertThat(File(reportsDir, "markdownlint.xml")).doesNotExist()
+                assertThat(reportsDir.resolve("markdownlint.xml")).doesNotExist()
             }
         }
 
@@ -143,13 +144,13 @@ object RuleProcessorTest : Spek({
             Then("xml report generated") {
                 assertThat(output).contains("Successfully generated Checkstyle XML report")
                 assertThat(output).containsPattern(xmlReportPattern)
-                assertThat(File(reportsDir, "markdownlint.xml")).exists()
+                assertThat(reportsDir.resolve("markdownlint.xml")).exists()
             }
 
             And("no html report generated") {
                 assertThat(output).doesNotContain("Successfully generated HTML report")
                 assertThat(output).doesNotContainPattern(htmlReportPattern)
-                assertThat(File(reportsDir, "markdownlint.html")).doesNotExist()
+                assertThat(reportsDir.resolve("markdownlint.html")).doesNotExist()
             }
         }
 
@@ -178,7 +179,7 @@ object RuleProcessorTest : Spek({
             lateinit var output: String
 
             Given("one markdown files") {
-                File(rootDir, "a-valid-file.md").writeText("# A valid file\n")
+                Files.write(rootDir.resolve("a-valid-file.md"), listOf("# A valid file"))
             }
 
             And("a default config") {
@@ -199,8 +200,8 @@ object RuleProcessorTest : Spek({
             lateinit var output: String
 
             Given("two markdown files") {
-                File(rootDir, "a-valid-file.md").writeText("# A valid file\n")
-                File(rootDir, "another-valid-file.md").writeText("# Another valid file\n")
+                Files.write(rootDir.resolve("a-valid-file.md"), listOf("# A valid file"))
+                Files.write(rootDir.resolve("another-valid-file.md"), listOf("# Another valid file"))
             }
 
             And("a default config") {
@@ -221,8 +222,8 @@ object RuleProcessorTest : Spek({
             lateinit var output: String
 
             Given("two markdown files") {
-                File(rootDir, "a-valid-file.md").writeText("# A valid file\n")
-                File(rootDir, "an-invalid-file.md").writeText("")
+                Files.write(rootDir.resolve("a-valid-file.md"), listOf("# A valid file"))
+                Files.write(rootDir.resolve("an-invalid-file.md"), listOf(""))
             }
 
             And("config with exclude rule") {
@@ -245,8 +246,8 @@ object RuleProcessorTest : Spek({
             lateinit var output: String
 
             Given("two markdown files") {
-                File(rootDir, "a-valid-file.md").writeText("# A valid file\n")
-                File(rootDir, "an-invalid-file.md").writeText("")
+                Files.write(rootDir.resolve("a-valid-file.md"), listOf("# A valid file"))
+                Files.write(rootDir.resolve("an-invalid-file.md"), listOf(""))
             }
 
             And("config with exclude rule") {
@@ -273,8 +274,8 @@ object RuleProcessorTest : Spek({
             lateinit var output: String
 
             Given("two markdown files") {
-                File(rootDir, "a-valid-file.md").writeText("# A valid file\n")
-                File(rootDir, "an-invalid-file.md").writeText("")
+                Files.write(rootDir.resolve("a-valid-file.md"), listOf("# A valid file"))
+                Files.write(rootDir.resolve("an-invalid-file.md"), listOf(""))
             }
 
             And("config with exclude rule") {
@@ -302,9 +303,9 @@ object RuleProcessorTest : Spek({
             lateinit var output: String
 
             Given("two markdown files") {
-                File(rootDir, "a-valid-file.md").writeText("# A valid file\n")
-                File(rootDir, "directory").mkdir()
-                File(rootDir, "directory/an-invalid-file.md").writeText("")
+                Files.write(rootDir.resolve("a-valid-file.md"), listOf("# A valid file"))
+                Files.createDirectory(rootDir.resolve("directory"))
+                Files.write(rootDir.resolve("directory/an-invalid-file.md"), listOf(""))
             }
 
             And("config with exclude rule") {
