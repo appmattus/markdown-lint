@@ -13,7 +13,7 @@ import java.nio.file.Paths
 object AllRulesTest : Spek({
     Feature("AllRules") {
         val mockDocument = mockDocument()
-        val scanResult = ClassGraph().enableAllInfo().whitelistPackages("com.appmattus.markdown").scan()
+        val scanResult = ClassGraph().enableAllInfo().acceptPackages("com.appmattus.markdown").scan()
         val allExpectedRules = scanResult.getSubclasses(Rule::class.java.name).loadClasses()
 
         Scenario("empty configuration returns all rules") {

@@ -120,31 +120,26 @@ class RuleProcessor(private val rootDir: Path, private val reportsDir: Path) {
         val markdownFiles = mutableListOf<Path>()
 
         Files.walkFileTree(this, object : SimpleFileVisitor<Path>() {
-            override fun preVisitDirectory(dir: Path?, attrs: BasicFileAttributes?): FileVisitResult {
-                return if (dir!!.fileName.toString() == "build" || dir.fileName.toString().startsWith(".")) {
+            override fun preVisitDirectory(dir: Path, attrs: BasicFileAttributes): FileVisitResult {
+                return if (dir.fileName.toString() == "build" || dir.fileName.toString().startsWith(".")) {
                     FileVisitResult.SKIP_SUBTREE
                 } else {
                     FileVisitResult.CONTINUE
                 }
             }
 
-            override fun visitFile(file: Path?, attrs: BasicFileAttributes?): FileVisitResult {
-                if (Files.isRegularFile(file!!) &&
-                        hasMarkdownExtension(file) &&
-                        matchesFilters(file)
-                ) {
+            override fun visitFile(file: Path, attrs: BasicFileAttributes): FileVisitResult {
+                if (Files.isRegularFile(file) && hasMarkdownExtension(file) && matchesFilters(file)) {
                     markdownFiles.add(file)
                 }
                 return FileVisitResult.CONTINUE
             }
 
-            private fun hasMarkdownExtension(file: Path) =
-                    file.fileName.toString().run {
-                                endsWith(".md") || endsWith(".markdown")
-                            }
+            private fun hasMarkdownExtension(file: Path) = file.fileName.toString().run {
+                endsWith(".md") || endsWith(".markdown")
+            }
 
-            private fun matchesFilters(file: Path) =
-                includes.matches(file) && !excludes.matches(file)
+            private fun matchesFilters(file: Path) = includes.matches(file) && !excludes.matches(file)
         })
         return markdownFiles
     }
