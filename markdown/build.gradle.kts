@@ -8,8 +8,8 @@ plugins {
 
     id("jacoco")
     id("com.github.kt3k.coveralls")
-    id("com.gradle.plugin-publish") version "0.11.0"
-    id("pl.droidsonroids.jacoco.testkit") version "1.0.6"
+    id("com.gradle.plugin-publish") version "0.12.0"
+    id("pl.droidsonroids.jacoco.testkit") version "1.0.7"
     id("com.android.lint")
 }
 
@@ -45,15 +45,15 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation(gradleTestKit())
-    testImplementation("junit:junit:4.13")
-    testImplementation("org.assertj:assertj-core:3.15.0")
-    testImplementation("org.mockito:mockito-core:3.3.3")
+    testImplementation("junit:junit:4.13.1")
+    testImplementation("org.assertj:assertj-core:3.18.1")
+    testImplementation("org.mockito:mockito-core:3.6.28")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
     testImplementation("com.flextrade.jfixture:jfixture:2.7.2")
-    testImplementation("io.github.classgraph:classgraph:4.8.78")
+    testImplementation("io.github.classgraph:classgraph:4.8.95")
 
-    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.10")
-    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.10")
+    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.15")
+    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.15")
     // spek requires kotlin-reflect, can be omitted if already in the classpath
     testRuntimeOnly(kotlin("reflect"))
 }
