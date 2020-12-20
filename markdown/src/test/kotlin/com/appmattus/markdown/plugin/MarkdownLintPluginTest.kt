@@ -481,6 +481,13 @@ private fun InputStream.toFile(file: File) {
 }
 
 private fun GradleRunner.withJaCoCo(): GradleRunner {
-    javaClass.classLoader.getResourceAsStream("testkit-gradle.properties").toFile(File(projectDir, "gradle.properties"))
+    /*
+     * When running under Windows, the forked Gradle VM will linger briefly and keep
+     * some files open, which interferes with Gradle snapshotting. As long as some
+     * OS runs JaCoCo coverage for statistics, it is good enough.
+     */
+    if (!System.getProperty("os.name").toLowerCase().contains("win")) {
+        javaClass.classLoader.getResourceAsStream("testkit-gradle.properties").toFile(File(projectDir, "gradle.properties"))
+    }
     return this
 }
