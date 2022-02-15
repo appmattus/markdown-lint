@@ -2,8 +2,8 @@ package com.appmattus.markdown.processing
 
 import com.appmattus.markdown.dsl.Config
 import com.appmattus.markdown.plugin.MarkdownLint
+import com.google.common.jimfs.Jimfs
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.rules.TemporaryFolder
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import java.io.ByteArrayOutputStream
@@ -19,18 +19,20 @@ object RuleProcessorTest : Spek({
     }
 
     Feature("RuleProcessor") {
-        val temporaryFolder by memoized {
-            TemporaryFolder().apply {
-                create()
-            }
+        val fileSystem by memoized {
+            Jimfs.newFileSystem()
         }
 
         val rootDir by memoized {
-            temporaryFolder.newFolder("rootDir").toPath()
+            fileSystem.getPath("rootDir").also {
+                Files.createDirectories(it)
+            }
         }
 
         val reportsDir by memoized {
-            temporaryFolder.newFolder("reportsDir").toPath()
+            fileSystem.getPath("reportsDir").also {
+                Files.createDirectories(it)
+            }
         }
 
         val slash = Regex.escape(File.separator)

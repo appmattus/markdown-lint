@@ -33,7 +33,7 @@ class SinglePathFilter(
     }
 
     override fun matches(path: Path): Boolean {
-        val relativePath = Paths.get(".").resolve(root.relativize(path).normalize())
+        val relativePath = path.fileSystem.getPath(".").resolve(root.relativize(path).normalize())
         return matcher.matches(relativePath)
     }
 }
