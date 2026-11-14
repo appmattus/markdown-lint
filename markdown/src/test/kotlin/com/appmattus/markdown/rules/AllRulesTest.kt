@@ -3,14 +3,13 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.dsl.Config
 import com.appmattus.markdown.plugin.MarkdownLint
 import com.appmattus.markdown.processing.MarkdownDocument
+import emptyDocument
 import io.github.classgraph.ClassGraph
-import mockDocument
 import org.assertj.core.api.Assertions.assertThat
 import java.nio.file.Paths
 import kotlin.test.Test
 
 class AllRulesTest {
-    private val mockDocument = mockDocument()
     private val scanResult = ClassGraph().enableAllInfo().acceptPackages("com.appmattus.markdown").scan()
     private val allExpectedRules = scanResult.getSubclasses(Rule::class.java.name).loadClasses()
 
@@ -82,16 +81,16 @@ class AllRulesTest {
 
         // And the specified rule does not trigger as expected
         val rule = rules.filterIsInstance(NoPunctuationFilenameRule::class.java).first()
-        val errorsForZ = rule.processDocument(MarkdownDocument(Paths.get("Z"), mockDocument))
+        val errorsForZ = rule.processDocument(MarkdownDocument(Paths.get("Z"), emptyDocument()))
         assertThat(errorsForZ).size().isZero
 
         // And the specified rule triggers as expected
-        val errorsForA = rule.processDocument(MarkdownDocument(Paths.get("A"), mockDocument))
+        val errorsForA = rule.processDocument(MarkdownDocument(Paths.get("A"), emptyDocument()))
         assertThat(errorsForA).size().isOne
 
         // And the specified rule result differs to default config
         val defaultRule = NoPunctuationFilenameRule()
-        val defaultErrors = defaultRule.processDocument(MarkdownDocument(Paths.get("A"), mockDocument))
+        val defaultErrors = defaultRule.processDocument(MarkdownDocument(Paths.get("A"), emptyDocument()))
         assertThat(defaultErrors).size().isZero
     }
 }

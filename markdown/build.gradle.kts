@@ -1,7 +1,6 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java-gradle-plugin")
@@ -47,8 +46,6 @@ dependencies {
     testImplementation(gradleTestKit())
     testImplementation(libs.junit)
     testImplementation(libs.assertj.core)
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.kotlin)
     testImplementation(libs.jfixture)
     testImplementation(libs.classgraph)
 }
@@ -95,14 +92,4 @@ kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_1_8)
     }
-}
-
-// Test dependencies such as mockito-kotlin require a newer JVM target than the published plugin
-tasks.named<JavaCompile>("compileTestJava") {
-    sourceCompatibility = JavaVersion.VERSION_17.toString()
-    targetCompatibility = JavaVersion.VERSION_17.toString()
-}
-
-tasks.named<KotlinCompile>("compileTestKotlin") {
-    compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
 }
