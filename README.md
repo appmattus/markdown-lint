@@ -1,6 +1,6 @@
 # markdown-lint for Gradle projects
 
-[![CircleCI](https://circleci.com/gh/appmattus/markdown-lint/tree/master.svg?style=svg)](https://circleci.com/gh/appmattus/markdown-lint/tree/master)
+[![Build](https://github.com/appmattus/markdown-lint/actions/workflows/android.yml/badge.svg)](https://github.com/appmattus/markdown-lint/actions/workflows/android.yml)
 [![Coverage Status](https://coveralls.io/repos/github/appmattus/markdown-lint/badge.svg?branch=master)](https://coveralls.io/github/appmattus/markdown-lint?branch=master)
 [![Plugin Portal](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/com/appmattus/markdown/com.appmattus.markdown.gradle.plugin/maven-metadata.xml.svg?label=plugin%20portal)](https://plugins.gradle.org/plugin/com.appmattus.markdown)
 

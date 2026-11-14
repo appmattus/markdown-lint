@@ -29,7 +29,7 @@ gradlePlugin {
     }
 }
 
-version = System.getenv("CIRCLE_TAG") ?: System.getProperty("CIRCLE_TAG") ?: "unknown"
+version = System.getenv("GITHUB_REF")?.substring(10) ?: System.getProperty("GITHUB_REF")?.substring(10) ?: "unknown"
 group = "com.appmattus"
 
 dependencies {
