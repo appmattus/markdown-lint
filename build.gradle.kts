@@ -1,63 +1,50 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import io.gitlab.arturbosch.detekt.Detekt
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-buildscript {
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.72")
-        classpath("org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.3")
-        classpath("com.android.tools.build:gradle:4.1.1")
-    }
-}
-
 plugins {
-    id("com.github.ben-manes.versions") version "0.36.0"
-    id("io.gitlab.arturbosch.detekt") version "1.14.2"
+    kotlin("jvm") version "2.4.21" apply false
+    id("com.github.kt3k.coveralls") version "2.12.2" apply false
+    id("com.android.lint") version "9.5.1" apply false
+    id("io.github.ben-manes.versions") version "0.67.0"
+    id("io.gitlab.arturbosch.detekt") version "1.23.8"
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral()
     }
 }
 
-task("clean", type = Delete::class) {
-    delete(rootProject.buildDir)
+tasks.register<Delete>("clean") {
+    delete(rootProject.layout.buildDirectory)
 }
 
-tasks.withType(DependencyUpdatesTask::class.java).all {
-    resolutionStrategy {
-        componentSelection {
-            all {
-                val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview")
-                    .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-]*") }
-                    .any { it.matches(candidate.version) }
-
-                if (rejected) {
-                    reject("Release candidate")
-                }
-            }
-        }
+tasks.withType<DependencyUpdatesTask>().configureEach {
+    rejectVersionIf {
+        listOf("alpha", "beta", "rc", "cr", "m", "preview")
+            .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-]*") }
+            .any { it.matches(candidate.version) }
     }
 }
 
 dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.14.2")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.8")
 }
 
 detekt {
-    input = files("$projectDir")
+    source.setFrom(files(projectDir))
 
     buildUponDefaultConfig = true
 
     // To override MaxLineLength:excludeCommentStatements
-    config = files("detekt-config.yml")
+    config.setFrom(files("detekt-config.yml"))
 
     autoCorrect = true
+}
+
+tasks.withType<Detekt>().configureEach {
+    exclude("**/build/**", "**/.gradle/**")
 }

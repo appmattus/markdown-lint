@@ -1,5 +1,6 @@
 package com.appmattus.markdown.processing
 
+import com.appmattus.markdown.rules.extensions.lineColumnAt
 import com.appmattus.markdown.rules.extensions.referenceUrl
 import com.appmattus.markdown.rules.extensions.splitIntoLines
 import com.vladsch.flexmark.ast.AutoLink
@@ -58,7 +59,7 @@ class MarkdownDocument constructor(val file: Path, val document: Document) {
     val fencedCodeBlocks: List<FencedCodeBlock> by lazy { document.find(FencedCodeBlock::class) }
     val codeBlocks: List<Block> by lazy { document.find(FencedCodeBlock::class, IndentedCodeBlock::class) }
     val inlineCode: List<Code> by lazy { document.find(Code::class) }
-    val allLinks: List<LinkNodeBase> by lazy {
+    val allLinks: List<Node> by lazy {
         document.find(Link::class, Reference::class, AutoLink::class, LinkRef::class)
     }
     val allLinkUrls: List<BasedSequence> by lazy {
@@ -66,21 +67,23 @@ class MarkdownDocument constructor(val file: Path, val document: Document) {
             when (link) {
                 is LinkRef -> link.referenceUrl()
                 is Reference -> null
-                else -> link.url
+                is LinkNodeBase -> link.url
+                else -> null
             }
         }
     }
     val allImageUrls: List<BasedSequence> by lazy {
         allImages.map { link ->
             when (link) {
-                is ImageRef -> link.getReferenceNode(document).url
-                else -> link.url
+                is ImageRef -> link.getReferenceNode(document)?.url ?: BasedSequence.NULL
+                is LinkNodeBase -> link.url
+                else -> BasedSequence.NULL
             }
         }
     }
     val links: List<Link> by lazy { document.find(Link::class) }
     val autoLinks: List<AutoLink> by lazy { document.find(AutoLink::class) }
-    val allImages: List<LinkNodeBase> by lazy { document.find(Image::class, ImageRef::class) }
+    val allImages: List<Node> by lazy { document.find(Image::class, ImageRef::class) }
     val tables: List<TableBlock> by lazy { document.find(TableBlock::class) }
     val blockQuotes: List<BlockQuote> by lazy { document.find(BlockQuote::class) }
     val horizontalRules: List<ThematicBreak> by lazy { document.find(ThematicBreak::class) }
@@ -94,7 +97,7 @@ class MarkdownDocument constructor(val file: Path, val document: Document) {
 
     fun getLineNumber(offset: Int) = document.getLineNumber(offset)
 
-    fun getColumnNumber(offset: Int) = chars.getColumnAtIndex(offset)
+    fun getColumnNumber(offset: Int) = chars.lineColumnAt(offset)
 
     private fun <T : Node> Document.find(vararg classes: KClass<out T>, visitChildren: Boolean = true): List<T> {
         val listItems = mutableListOf<T>()
@@ -102,7 +105,8 @@ class MarkdownDocument constructor(val file: Path, val document: Document) {
         lateinit var visitor: NodeVisitor
 
         visitor = classes.map {
-            VisitHandler<T>(it.java) { node ->
+            @Suppress("UNCHECKED_CAST")
+            VisitHandler(it.java as Class<T>) { node ->
                 listItems.add(node)
                 if (visitChildren) {
                     visitor.visitChildren(node)

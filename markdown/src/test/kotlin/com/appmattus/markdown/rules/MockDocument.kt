@@ -1,8 +1,8 @@
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
 import com.vladsch.flexmark.util.ast.Document
-import com.vladsch.flexmark.util.sequence.BasedSequenceImpl
+import com.vladsch.flexmark.util.sequence.BasedSequence
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 
 fun mockDocument() = mock<Document>().apply {
-    whenever(chars).thenReturn(BasedSequenceImpl.of(""))
+    whenever(chars).thenReturn(BasedSequence.of(""))
 }

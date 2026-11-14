@@ -22,7 +22,6 @@ class MissingLinkSchemeRule(
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-
         val urls = document.allLinkUrls + document.allImageUrls
 
         urls.forEach { url ->

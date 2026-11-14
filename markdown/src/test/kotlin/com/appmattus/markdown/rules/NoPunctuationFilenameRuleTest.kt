@@ -10,15 +10,15 @@ object NoPunctuationFilenameRuleTest : Spek({
         val rule = { NoPunctuationFilenameRule() }
 
         FilenameScenario("no punctuation in filename without extension", 0, rule) {
-            UUID.randomUUID().toString().toLowerCase()
+            UUID.randomUUID().toString().lowercase()
         }
 
         FilenameScenario("no punctuation in filename with extension", 0, rule) {
-            "${UUID.randomUUID().toString().toLowerCase()}.md"
+            "${UUID.randomUUID().toString().lowercase()}.md"
         }
 
         FilenameScenario("punctuation in filename", 1, rule) {
-            val whitespace = if (System.getProperty("os.name").toLowerCase().contains("win")) {
+            val whitespace = if (System.getProperty("os.name").lowercase().contains("win")) {
                 JFixture().create().fromList("_", ".")
             } else {
                 JFixture().create().fromList("_", ".", "?")

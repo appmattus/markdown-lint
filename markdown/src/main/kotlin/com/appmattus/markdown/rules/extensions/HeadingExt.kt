@@ -8,5 +8,5 @@ fun Heading.style(): HeaderStyle = when {
         if (closingMarker.contains("#")) HeaderStyle.AtxClosed else HeaderStyle.Atx
     }
     isSetextHeading -> HeaderStyle.Setext
-    else -> throw IllegalStateException()
+    else -> error("Unknown heading style")
 }

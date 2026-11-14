@@ -50,9 +50,9 @@ class LowerCaseFilenameRule(
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-        if (document.filename.toLowerCase() != document.filename && !exclusions.contains(document.filename)) {
-            val description = "Filenames must be all lowercase, for example ${document.filename.toLowerCase()}. " +
-                    "Configuration: exclusions=[…]."
+        if (document.filename.lowercase() != document.filename && !exclusions.contains(document.filename)) {
+            val description = "Filenames must be all lowercase, for example ${document.filename.lowercase()}. " +
+                "Configuration: exclusions=[…]."
             errorReporter.reportError(0, 0, description)
         }
     }

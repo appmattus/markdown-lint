@@ -50,7 +50,7 @@ class NoPunctuationFilenameRule(
             val extension = document.filename.replaceFirst(filename, "")
             val replacement = filename.replace(punctuationRegex, "-").replace(doubleHyphenRegex, "-") + extension
             val description = "Filenames must not contain punctuation, for example '$replacement'. Configuration: " +
-                    "punctuation=$punctuation."
+                "punctuation=$punctuation."
 
             errorReporter.reportError(0, 0, description)
         }

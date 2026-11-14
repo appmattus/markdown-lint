@@ -46,7 +46,7 @@ class UlStartLeftRule(
         document.topLevelListBlocks.forEach {
             if (it.indent() != 0) {
                 val description = "Start bullet list items at the start of the line, currently indented " +
-                        "${it.indent()} characters."
+                    "${it.indent()} characters."
 
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }

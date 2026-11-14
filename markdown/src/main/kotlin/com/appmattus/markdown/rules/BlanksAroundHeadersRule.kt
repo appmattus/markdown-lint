@@ -47,7 +47,7 @@ class BlanksAroundHeadersRule(
                 )
 
             val suffixLineNotEmpty = heading.endLineNumber < document.lines.size - 2 &&
-                    !document.lines[heading.endLineNumber + 1].matches(whitespaceRegex)
+                !document.lines[heading.endLineNumber + 1].matches(whitespaceRegex)
 
             val description = when {
                 prefixLineNotEmpty && suffixLineNotEmpty ->

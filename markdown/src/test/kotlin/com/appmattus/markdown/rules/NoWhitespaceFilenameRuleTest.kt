@@ -10,11 +10,11 @@ object NoWhitespaceFilenameRuleTest : Spek({
         val rule = { NoWhitespaceFilenameRule() }
 
         FilenameScenario("no whitespace filename", 0, rule) {
-            UUID.randomUUID().toString().toLowerCase()
+            UUID.randomUUID().toString().lowercase()
         }
 
         FilenameScenario("whitespace in filename", 1, rule) {
-            val whitespace = if (System.getProperty("os.name").toLowerCase().contains("win")) {
+            val whitespace = if (System.getProperty("os.name").lowercase().contains("win")) {
                 JFixture().create().fromList(" ")
             } else {
                 JFixture().create().fromList(" ", "\t", "\n", "\r")
@@ -23,7 +23,7 @@ object NoWhitespaceFilenameRuleTest : Spek({
         }
 
         FilenameScenario("whitespace in start of filename", 1, rule) {
-            val whitespace = if (System.getProperty("os.name").toLowerCase().contains("win")) {
+            val whitespace = if (System.getProperty("os.name").lowercase().contains("win")) {
                 JFixture().create().fromList(" ")
             } else {
                 JFixture().create().fromList(" ", "\t", "\n", "\r")
@@ -32,7 +32,7 @@ object NoWhitespaceFilenameRuleTest : Spek({
         }
 
         FilenameScenario("whitespace in filename before extension", 1, rule) {
-            val whitespace = if (System.getProperty("os.name").toLowerCase().contains("win")) {
+            val whitespace = if (System.getProperty("os.name").lowercase().contains("win")) {
                 JFixture().create().fromList(" ")
             } else {
                 JFixture().create().fromList(" ", "\t", "\n", "\r")
@@ -41,7 +41,7 @@ object NoWhitespaceFilenameRuleTest : Spek({
         }
 
         FilenameScenario("no whitespace filename", 0, rule) {
-            UUID.randomUUID().toString().toLowerCase()
+            UUID.randomUUID().toString().lowercase()
         }
 
         FilenameScenario("empty filename without extension", 0, rule) {

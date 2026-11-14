@@ -34,9 +34,10 @@ class SingleTrailingNewlineRule(
         if (lines.isNotEmpty()) {
             val lastLine = document.lines.last()
 
-            if (lastLine.baseSubSequence(lastLine.endOffset).eolLength() == 0) {
+            if (lastLine.baseSubSequence(lastLine.endOffset).eolEndLength() == 0) {
                 errorReporter.reportError(
-                    lastLine.startOffset, lastLine.endOffset,
+                    lastLine.startOffset,
+                    lastLine.endOffset,
                     "Files should end with a single newline character"
                 )
             }

@@ -29,13 +29,11 @@ class NoReversedLinksRule(
     @Suppress("NestedBlockDepth")
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.linkRefs.forEach { linkRef ->
-            if (linkRef.url.isEmpty) {
-                linkRef.previous?.let {
-                    regex.find(it.chars)?.let { match ->
-                        errorReporter.reportError(it.startOffset + match.range.first, linkRef.endOffset, description)
-                    } ?: errorReporter.reportError(linkRef.startOffset, linkRef.endOffset, description)
+            linkRef.previous?.let {
+                regex.find(it.chars)?.let { match ->
+                    errorReporter.reportError(it.startOffset + match.range.first, linkRef.endOffset, description)
                 } ?: errorReporter.reportError(linkRef.startOffset, linkRef.endOffset, description)
-            }
+            } ?: errorReporter.reportError(linkRef.startOffset, linkRef.endOffset, description)
         }
     }
 }

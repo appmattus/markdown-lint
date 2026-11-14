@@ -30,7 +30,7 @@ class NoBareUrlsRule(
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.autoLinks.forEach {
-            if (it.openingMarker.isEmpty && it.closingMarker.isEmpty) {
+            if (it.openingMarker.isEmpty() && it.closingMarker.isEmpty()) {
                 val description = "Wrap bare URL in angle brackets, for example '<${it.url}>'."
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }

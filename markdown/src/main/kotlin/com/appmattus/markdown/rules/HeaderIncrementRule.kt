@@ -41,7 +41,7 @@ class HeaderIncrementRule(
         document.headings.forEach { heading ->
             if (oldLevel?.let { heading.level > it + 1 } == true) {
                 val description = "Header levels should only increment one level at a time. This should be a level " +
-                        "${oldLevel!! + 1} header."
+                    "${oldLevel + 1} header."
                 errorReporter.reportError(heading.startOffset, heading.endOffset, description)
             }
             oldLevel = heading.level

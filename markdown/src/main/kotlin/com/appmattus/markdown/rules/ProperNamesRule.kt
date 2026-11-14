@@ -78,7 +78,7 @@ class ProperNamesRule(
                 }
 
                 val description = "Proper names should have the correct capitalization, for example '$expected' " +
-                        "instead of '$actual'. Configuration: codeBlocks=$codeBlocks, names=[…]."
+                    "instead of '$actual'. Configuration: codeBlocks=$codeBlocks, names=[…]."
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
         }
@@ -86,7 +86,7 @@ class ProperNamesRule(
 
     private fun BasedSequence.isLink(): Boolean {
         return linkExtractor.extractLinks(this).any() ||
-                !this.startsWithIgnoreCase("www.") && linkExtractor.extractLinks("www.$this").any()
+            !this.startsWithIgnoreCase("www.") && linkExtractor.extractLinks("www.$this").any()
     }
 
     companion object {

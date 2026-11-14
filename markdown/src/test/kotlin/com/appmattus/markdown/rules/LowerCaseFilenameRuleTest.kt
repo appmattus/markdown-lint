@@ -20,7 +20,7 @@ object LowerCaseFilenameRuleTest : Spek({
             lateinit var ruleErrors: List<Error>
 
             Given("a document with lowercase filename") {
-                val filename = UUID.randomUUID().toString().toLowerCase()
+                val filename = UUID.randomUUID().toString().lowercase()
                 document = MarkdownDocument(Paths.get(filename), mockDocument)
             }
 
@@ -38,7 +38,7 @@ object LowerCaseFilenameRuleTest : Spek({
             lateinit var ruleErrors: List<Error>
 
             Given("a document with uppercase filename") {
-                val filename = UUID.randomUUID().toString().toUpperCase()
+                val filename = UUID.randomUUID().toString().uppercase()
                 document = MarkdownDocument(Paths.get(filename), mockDocument)
             }
 

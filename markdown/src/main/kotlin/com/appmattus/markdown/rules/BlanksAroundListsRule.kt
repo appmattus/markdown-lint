@@ -54,7 +54,6 @@ class BlanksAroundListsRule(
 
     @Suppress("ComplexMethod", "NestedBlockDepth")
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-
         var inList = false
         var inCode = false
         var fence: String? = null
@@ -71,7 +70,6 @@ class BlanksAroundListsRule(
                 if (!inList && listMarker != null && !prevLine.contains(emptyRegEx)) {
                     missingBlankAbove = true
                 } else if (inList && listMarker == null && !line.contains(emptyRegEx)) {
-
                     val description = if (missingBlankAbove) {
                         "Lists should be surrounded by blank lines. Missing blank above and below this line."
                     } else {

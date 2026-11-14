@@ -32,7 +32,7 @@ class NoMissingSpaceAtxRule(
             if (heading.style() == HeaderStyle.Atx) {
                 if (heading.openingMarker.endOffset == heading.text.startOffset) {
                     val description = "No space after hash on atx style header, for example change to " +
-                            "'${heading.openingMarker} ${heading.text}'."
+                        "'${heading.openingMarker} ${heading.text}'."
                     errorReporter.reportError(heading.startOffset, heading.endOffset, description)
                 }
             }

@@ -6,7 +6,9 @@ import org.spekframework.spek2.style.gherkin.Feature
 
 object ConsistentUlStyleRuleTest : Spek({
     Feature("ConsistentUlStyleRule") {
-        FileRuleScenario(listOf("incorrect_bullet_style_asterisk.md")) { ConsistentUlStyleRule(UnorderedListStyle.Asterisk) }
+        FileRuleScenario(
+            listOf("incorrect_bullet_style_asterisk.md")
+        ) { ConsistentUlStyleRule(UnorderedListStyle.Asterisk) }
 
         FileRuleScenario(listOf("incorrect_bullet_style_dash.md")) { ConsistentUlStyleRule(UnorderedListStyle.Dash) }
 

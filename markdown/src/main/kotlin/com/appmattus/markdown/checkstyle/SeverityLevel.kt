@@ -34,14 +34,17 @@ enum class SeverityLevel {
      * Severity level ignore.
      */
     IGNORE,
+
     /**
      * Severity level info.
      */
     INFO,
+
     /**
      * Severity level warning.
      */
     WARNING,
+
     /**
      * Severity level error.
      */
@@ -53,7 +56,7 @@ enum class SeverityLevel {
      * @return the name of this severity level.
      */
     val value: String
-        get() = name.toLowerCase(Locale.ENGLISH)
+        get() = name.lowercase(Locale.ENGLISH)
 
     override fun toString(): String {
         return value

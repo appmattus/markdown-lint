@@ -33,7 +33,7 @@ class NoMultipleSpaceAtxRule(
             if (heading.style() == HeaderStyle.Atx) {
                 if (heading.text.startOffset - heading.openingMarker.endOffset > 1) {
                     val description = "Multiple spaces after hash on atx style header, for example change " +
-                            "to '${heading.openingMarker} ${heading.text}'."
+                        "to '${heading.openingMarker} ${heading.text}'."
                     errorReporter.reportError(heading.startOffset, heading.endOffset, description)
                 }
             }

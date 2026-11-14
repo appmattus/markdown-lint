@@ -38,7 +38,6 @@ class NoConsecutiveHyphensFilenameRule(
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-
         if (document.filename.contains("--")) {
             val replacement = document.filename.replace("-{2,}".toRegex(), "-")
             val description = "Filenames must not contain consecutive hyphens, for example $replacement."

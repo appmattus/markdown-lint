@@ -8,8 +8,10 @@ data class RuleSetup(
 
     class Builder {
         var active = true
+
         @Suppress("MemberVisibilityCanBePrivate")
         var includes: List<String> = listOf(".*")
+
         @Suppress("MemberVisibilityCanBePrivate")
         var excludes: List<String> = emptyList()
 

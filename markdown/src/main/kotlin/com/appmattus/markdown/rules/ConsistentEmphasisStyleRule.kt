@@ -4,8 +4,8 @@ import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.config.EmphasisStyle
-import com.vladsch.flexmark.ast.DelimitedNode
 import com.vladsch.flexmark.ast.Emphasis
+import com.vladsch.flexmark.util.ast.DelimitedNode
 
 /**
  * # Emphasis marker style
@@ -30,7 +30,6 @@ class ConsistentEmphasisStyleRule(
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-
         val allEmphasis = document.allEmphasis
 
         if (allEmphasis.isEmpty()) {
@@ -48,7 +47,7 @@ class ConsistentEmphasisStyleRule(
                 val actual = it.style().symbol().repeat(symbolCount)
 
                 val description = "$type text expected to use '$expected' emphasis markers but is '$actual', for " +
-                        "example $expected${it.text}$expected. Configuration: style=${style.description()}."
+                    "example $expected${it.text}$expected. Configuration: style=${style.description()}."
 
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
@@ -59,7 +58,7 @@ class ConsistentEmphasisStyleRule(
         return when {
             openingMarker.contains('*') -> EmphasisStyle.Asterisk
             openingMarker.contains('_') -> EmphasisStyle.Underscore
-            else -> throw IllegalStateException()
+            else -> error("Unknown emphasis marker $openingMarker")
         }
     }
 
@@ -67,7 +66,7 @@ class ConsistentEmphasisStyleRule(
         return when (this) {
             EmphasisStyle.Asterisk -> "*"
             EmphasisStyle.Underscore -> "_"
-            else -> throw IllegalStateException()
+            else -> error("Unknown emphasis style $this")
         }
     }
 

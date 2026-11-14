@@ -35,7 +35,6 @@ class ListIndentRule(
     private data class ItemLevel(val indentLevel: Int, var ordered: ItemLevel? = null, var unordered: ItemLevel? = null)
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-
         val bullets = document.listItems
 
         if (bullets.isEmpty()) {
@@ -53,13 +52,13 @@ class ListIndentRule(
                 cur = when (listItem) {
                     is BulletListItem -> (cur.unordered ?: ItemLevel(listItem.indent())).also { cur.unordered = it }
                     is OrderedListItem -> (cur.ordered ?: ItemLevel(listItem.indent())).also { cur.ordered = it }
-                    else -> throw IllegalStateException()
+                    else -> error("Unknown list item type")
                 }
             }
 
             if (cur.indentLevel != b.indent()) {
                 val description = "Expected list item indentation of ${cur.indentLevel} characters at the same " +
-                        "level but found ${b.indent()}."
+                    "level but found ${b.indent()}."
 
                 errorReporter.reportError(b.startOffset, b.endOffset, description)
             }

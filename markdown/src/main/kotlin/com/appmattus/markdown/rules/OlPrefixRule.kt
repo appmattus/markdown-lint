@@ -38,7 +38,7 @@ class OlPrefixRule(
                 document.orderedListItems.forEach {
                     if (it.openingMarker.toString() != "1.") {
                         val description = "Ordered list item prefix expected '1.' but was '${it.openingMarker}'. " +
-                                "Configuration: style=One."
+                            "Configuration: style=One."
                         errorReporter.reportError(it.openingMarker.startOffset, it.openingMarker.endOffset, description)
                     }
                 }
@@ -49,7 +49,7 @@ class OlPrefixRule(
 
                     if (it.openingMarker.toString() != "${startIndex + it.index()}.") {
                         val description = "Ordered list item prefix expected '${startIndex + it.index()}.' but was " +
-                                "'${it.openingMarker}'. Configuration: style=Ordered."
+                            "'${it.openingMarker}'. Configuration: style=Ordered."
                         errorReporter.reportError(it.openingMarker.startOffset, it.openingMarker.endOffset, description)
                     }
                 }

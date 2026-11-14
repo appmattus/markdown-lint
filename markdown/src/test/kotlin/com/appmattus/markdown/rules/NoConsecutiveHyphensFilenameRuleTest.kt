@@ -9,7 +9,7 @@ object NoConsecutiveHyphensFilenameRuleTest : Spek({
         val rule = { NoConsecutiveHyphensFilenameRule() }
 
         FilenameScenario("no consecutive hyphens in filename", 0, rule) {
-            UUID.randomUUID().toString().toLowerCase()
+            UUID.randomUUID().toString().lowercase()
         }
 
         FilenameScenario("2 hyphens in filename", 1, rule) {
