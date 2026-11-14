@@ -4,11 +4,13 @@ import io.gitlab.arturbosch.detekt.Detekt
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 plugins {
-    kotlin("jvm") version "2.4.21" apply false
-    id("com.github.kt3k.coveralls") version "2.12.2" apply false
-    id("com.android.lint") version "9.5.1" apply false
-    id("io.github.ben-manes.versions") version "0.67.0"
-    id("io.gitlab.arturbosch.detekt") version "1.23.8"
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.coverallsPlugin) apply false
+    alias(libs.plugins.androidLintPlugin) apply false
+    alias(libs.plugins.gradlePluginPublishPlugin) apply false
+    alias(libs.plugins.jacocoTestKitPlugin) apply false
+    alias(libs.plugins.gradleVersionsPlugin)
+    alias(libs.plugins.detektPlugin)
 }
 
 allprojects {
@@ -31,7 +33,7 @@ tasks.withType<DependencyUpdatesTask>().configureEach {
 }
 
 dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.8")
+    detektPlugins(libs.detekt.formatting)
 }
 
 detekt {

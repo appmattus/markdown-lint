@@ -1,0 +1,56 @@
+[versions]
+
+kotlin = "2.4.21"
+
+androidLintPlugin = "9.5.1"
+coverallsPlugin = "2.12.2"
+detekt = "1.23.8"
+gradlePluginPublishPlugin = "2.2.1"
+gradleVersionsPlugin = "0.67.0"
+jacoco = "0.8.16"
+jacocoTestKitPlugin = "1.0.12"
+
+flexmark = "0.64.8"
+
+# Testing
+assertj = "3.27.7"
+classgraph = "4.8.200"
+jfixture = "2.7.2"
+junit = "4.13.2"
+mockito = "5.24.0"
+mockitoKotlin = "6.4.0"
+spek = "2.0.19"
+
+[libraries]
+
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+
+flexmark-extAutolink = { module = "com.vladsch.flexmark:flexmark-ext-autolink", version.ref = "flexmark" }
+flexmark-extGfmStrikethrough = { module = "com.vladsch.flexmark:flexmark-ext-gfm-strikethrough", version.ref = "flexmark" }
+flexmark-extGfmTasklist = { module = "com.vladsch.flexmark:flexmark-ext-gfm-tasklist", version.ref = "flexmark" }
+flexmark-extTables = { module = "com.vladsch.flexmark:flexmark-ext-tables", version.ref = "flexmark" }
+
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+
+# Testing
+assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+classgraph = { module = "io.github.classgraph:classgraph", version.ref = "classgraph" }
+jfixture = { module = "com.flextrade.jfixture:jfixture", version.ref = "jfixture" }
+junit = { module = "junit:junit", version.ref = "junit" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
+spek-dslJvm = { module = "org.spekframework.spek2:spek-dsl-jvm", version.ref = "spek" }
+spek-runnerJunit5 = { module = "org.spekframework.spek2:spek-runner-junit5", version.ref = "spek" }
+
+[plugins]
+
+androidLintPlugin = { id = "com.android.lint", version.ref = "androidLintPlugin" }
+coverallsPlugin = { id = "com.github.kt3k.coveralls", version.ref = "coverallsPlugin" }
+detektPlugin = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+gradlePluginPublishPlugin = { id = "com.gradle.plugin-publish", version.ref = "gradlePluginPublishPlugin" }
+gradleVersionsPlugin = { id = "io.github.ben-manes.versions", version.ref = "gradleVersionsPlugin" }
+jacocoTestKitPlugin = { id = "pl.droidsonroids.jacoco.testkit", version.ref = "jacocoTestKitPlugin" }
+
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
