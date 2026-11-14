@@ -40,7 +40,7 @@ class RuleProcessor(private val rootDir: Path, private val reportsDir: Path) {
                 val xmlFile = reportsDir.resolve("markdownlint.xml")
                 generateXmlReport(xmlFile, checkstyleXmlBytes)
                 summaryStream?.summariseXmlGeneration(xmlFile)
-            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+            } catch (@Suppress("TooGenericExceptionCaught", "SwallowedException") e: Exception) {
                 // Ignore
             }
         }
@@ -50,12 +50,12 @@ class RuleProcessor(private val rootDir: Path, private val reportsDir: Path) {
                 val htmlFile = reportsDir.resolve("markdownlint.html")
                 generateHtmlReport(htmlFile, checkstyleXmlBytes)
                 summaryStream?.summariseHtmlGeneration(htmlFile)
-            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+            } catch (@Suppress("TooGenericExceptionCaught", "SwallowedException") e: Exception) {
                 // Ignore
             }
         }
 
-        val errors = fileErrors.values.sumBy { it.size }
+        val errors = fileErrors.values.sumOf { it.size }
         if (errors > config.threshold) {
             throw BuildFailure("Build failure threshold of ${config.threshold} reached with $errors errors!")
         }
@@ -92,7 +92,6 @@ class RuleProcessor(private val rootDir: Path, private val reportsDir: Path) {
     }
 
     private fun List<Path>.scanForErrors(config: Config): Map<Path, List<Error>> {
-
         val rules = AllRules(config).rules
 
         val parser = ParserFactory.parser
@@ -119,28 +118,31 @@ class RuleProcessor(private val rootDir: Path, private val reportsDir: Path) {
 
         val markdownFiles = mutableListOf<Path>()
 
-        Files.walkFileTree(this, object : SimpleFileVisitor<Path>() {
-            override fun preVisitDirectory(dir: Path, attrs: BasicFileAttributes): FileVisitResult {
-                return if (dir.fileName.toString() == "build" || dir.fileName.toString().startsWith(".")) {
-                    FileVisitResult.SKIP_SUBTREE
-                } else {
-                    FileVisitResult.CONTINUE
+        Files.walkFileTree(
+            this,
+            object : SimpleFileVisitor<Path>() {
+                override fun preVisitDirectory(dir: Path, attrs: BasicFileAttributes): FileVisitResult {
+                    return if (dir.fileName.toString() == "build" || dir.fileName.toString().startsWith(".")) {
+                        FileVisitResult.SKIP_SUBTREE
+                    } else {
+                        FileVisitResult.CONTINUE
+                    }
                 }
-            }
 
-            override fun visitFile(file: Path, attrs: BasicFileAttributes): FileVisitResult {
-                if (Files.isRegularFile(file) && hasMarkdownExtension(file) && matchesFilters(file)) {
-                    markdownFiles.add(file)
+                override fun visitFile(file: Path, attrs: BasicFileAttributes): FileVisitResult {
+                    if (Files.isRegularFile(file) && hasMarkdownExtension(file) && matchesFilters(file)) {
+                        markdownFiles.add(file)
+                    }
+                    return FileVisitResult.CONTINUE
                 }
-                return FileVisitResult.CONTINUE
-            }
 
-            private fun hasMarkdownExtension(file: Path) = file.fileName.toString().run {
-                endsWith(".md") || endsWith(".markdown")
-            }
+                private fun hasMarkdownExtension(file: Path) = file.fileName.toString().run {
+                    endsWith(".md") || endsWith(".markdown")
+                }
 
-            private fun matchesFilters(file: Path) = includes.matches(file) && !excludes.matches(file)
-        })
+                private fun matchesFilters(file: Path) = includes.matches(file) && !excludes.matches(file)
+            }
+        )
         return markdownFiles
     }
 
@@ -158,8 +160,11 @@ class RuleProcessor(private val rootDir: Path, private val reportsDir: Path) {
 
                 errors.forEach { error ->
                     val message = LocalizedMessage(
-                        error.lineNumber, error.columnNumber,
-                        error.errorMessage, SeverityLevel.ERROR, error.ruleClass
+                        error.lineNumber,
+                        error.columnNumber,
+                        error.errorMessage,
+                        SeverityLevel.ERROR,
+                        error.ruleClass
                     )
 
                     logger.addError(AuditEvent(filePath, message))

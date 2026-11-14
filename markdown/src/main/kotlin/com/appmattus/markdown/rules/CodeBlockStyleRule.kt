@@ -58,7 +58,7 @@ class CodeBlockStyleRule(
         codeBlocks.forEach {
             if (!it.matchesStyle(mainStyle)) {
                 val description = "Code block expected in ${mainStyle.description()} style but is " +
-                        "${it.styleDescription()}. Configuration: style=${style.description()}."
+                    "${it.styleDescription()}. Configuration: style=${style.description()}."
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
         }
@@ -84,7 +84,7 @@ class CodeBlockStyleRule(
         return when (this) {
             is FencedCodeBlock -> "Fenced"
             is IndentedCodeBlock -> "Indented"
-            else -> throw IllegalStateException("Unknown block type")
+            else -> error("Unknown block type")
         }
     }
 }

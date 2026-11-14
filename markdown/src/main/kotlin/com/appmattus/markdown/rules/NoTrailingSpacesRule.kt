@@ -31,7 +31,7 @@ class NoTrailingSpacesRule(
 
                 if (actual != 0 && actual != brSpaces) {
                     val description = "Remove $actual trailing spaces. Use $brSpaces spaces for a breaking space. " +
-                            "Configuration: brSpaces=$brSpaces."
+                        "Configuration: brSpaces=$brSpaces."
                     errorReporter.reportError(it.startOffset, it.endOffset, description)
                 }
             }

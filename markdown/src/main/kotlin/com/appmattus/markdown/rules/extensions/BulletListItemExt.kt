@@ -7,5 +7,5 @@ fun BulletListItem.style(): UnorderedListStyle = when (openingMarker.toString())
     "*" -> UnorderedListStyle.Asterisk
     "+" -> UnorderedListStyle.Plus
     "-" -> UnorderedListStyle.Dash
-    else -> throw IllegalStateException()
+    else -> error("Unknown bullet list marker")
 }

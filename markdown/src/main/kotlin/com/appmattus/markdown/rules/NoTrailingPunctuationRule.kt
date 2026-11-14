@@ -33,7 +33,7 @@ class NoTrailingPunctuationRule(
         }.forEach { heading ->
             val replacement = heading.text.replace("[${Regex.escape(punctuation)}]+$".toRegex(), "")
             val description = "Remove trailing punctuation in header, for example '$replacement'. Configuration: " +
-                    "punctuation=$punctuation."
+                "punctuation=$punctuation."
 
             errorReporter.reportError(heading.startOffset, heading.endOffset, description)
         }

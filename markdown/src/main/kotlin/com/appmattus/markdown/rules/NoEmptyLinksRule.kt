@@ -4,6 +4,7 @@ import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.extensions.referenceUrl
+import com.vladsch.flexmark.ast.LinkNodeBase
 import com.vladsch.flexmark.ast.LinkRef
 import com.vladsch.flexmark.ast.Reference
 
@@ -40,7 +41,8 @@ class NoEmptyLinksRule(
             when (link) {
                 is LinkRef -> link.referenceUrl()?.toString() ?: ""
                 is Reference -> null
-                else -> link.url.toString()
+                is LinkNodeBase -> link.url.toString()
+                else -> null
             }?.let { url ->
                 if (url.matches(emptyLinkRegex)) {
                     val description = "The link has no URL, '${link.chars}'."

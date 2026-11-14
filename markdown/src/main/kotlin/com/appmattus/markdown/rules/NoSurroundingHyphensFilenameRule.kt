@@ -38,7 +38,6 @@ class NoSurroundingHyphensFilenameRule(
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-
         val filename = document.filename.replace(Regex("\\.(md|markdown)$"), "")
 
         if (filename.startsWith("-") || filename.endsWith("-")) {

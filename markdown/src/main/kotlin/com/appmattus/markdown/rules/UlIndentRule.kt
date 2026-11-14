@@ -3,6 +3,7 @@ package com.appmattus.markdown.rules
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
+import com.appmattus.markdown.rules.extensions.lineColumnAt
 import com.vladsch.flexmark.ast.BulletListItem
 import com.vladsch.flexmark.ast.ListItem
 import com.vladsch.flexmark.ast.OrderedListItem
@@ -47,18 +48,17 @@ class UlIndentRule(
             val parentListItem = it.parentListItemOrNull()
 
             var expectedMarkerPos = parentListItem?.let {
-                document.chars.getColumnAtIndex(parentListItem.openingMarker.startOffset) + indent
+                document.chars.lineColumnAt(parentListItem.openingMarker.startOffset) + indent
             } ?: 0
 
             if (parentListItem is OrderedListItem) {
                 // When contained in an ordered list, align with it's content
-                expectedMarkerPos = document.chars.getColumnAtIndex(parentListItem.childChars.startOffset)
+                expectedMarkerPos = document.chars.lineColumnAt(parentListItem.childChars.startOffset)
             }
 
-            val actualMarkerPos = document.chars.getColumnAtIndex(it.openingMarker.startOffset)
+            val actualMarkerPos = document.chars.lineColumnAt(it.openingMarker.startOffset)
 
             if (expectedMarkerPos != actualMarkerPos) {
-
                 val description =
                     "Indent nested unordered list items $indent characters from their parent, for example '${" ".repeat(
                         expectedMarkerPos
@@ -72,7 +72,7 @@ class UlIndentRule(
     private fun BulletListItem.parentListItemOrNull(): ListItem? {
         var cur = parent
         while (cur !is Document) {
-            cur = cur.parent
+            cur = cur!!.parent
             if (cur is ListItem) {
                 return cur
             }

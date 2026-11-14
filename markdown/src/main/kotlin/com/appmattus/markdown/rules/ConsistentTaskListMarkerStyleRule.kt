@@ -30,7 +30,6 @@ class ConsistentTaskListMarkerStyleRule(
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-
         val doneMarkers = document.taskListItems.filter { it.isItemDoneMarker }
 
         if (doneMarkers.isEmpty()) {
@@ -42,7 +41,7 @@ class ConsistentTaskListMarkerStyleRule(
         doneMarkers.forEach {
             if (it.style() != docStyle) {
                 val description = "Task list marker expected in ${docStyle.description()} style but is " +
-                        "${it.style()?.description()}. Configuration: style=${style.description()}."
+                    "${it.style()?.description()}. Configuration: style=${style.description()}."
 
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }

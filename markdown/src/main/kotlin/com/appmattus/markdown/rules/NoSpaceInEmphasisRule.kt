@@ -45,7 +45,6 @@ class NoSpaceInEmphasisRule(
     private val endRegex = Regex("(\\*\\*?|__?)(.+)\\s\\1\\s")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-
         document.allText.filterNot {
             it.parent is FencedCodeBlock || it.parent is IndentedCodeBlock || it.parent is Code
         }.forEach {
@@ -56,7 +55,7 @@ class NoSpaceInEmphasisRule(
                 val marker = startMatch?.groupValues?.get(1) ?: endMatch?.groupValues?.get(1)
                 val content = (startMatch?.groupValues?.get(2) ?: endMatch?.groupValues?.get(2))!!.trim()
                 val description = "Avoid spaces inside emphasis markers, for example change to " +
-                        "'$marker$content$marker'."
+                    "'$marker$content$marker'."
 
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }

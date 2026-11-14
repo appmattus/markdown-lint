@@ -31,7 +31,7 @@ class FencedCodeLanguageRule(
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.fencedCodeBlocks.forEach {
-            if (it.info.isEmpty) {
+            if (it.info.isEmpty()) {
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }
         }

@@ -52,8 +52,8 @@ class NoDuplicateHeaderRule(
             document.headings.filterNot { it.parent is ListItem }.forEach { heading ->
                 if (headingsMap.contains(heading.text.toString())) {
                     val description = "Multiple headers with the same content, ${heading.text}. For changelogs " +
-                            "consider setting allowDifferentNesting to true. Configuration: " +
-                            "allowDifferentNesting=false."
+                        "consider setting allowDifferentNesting to true. Configuration: " +
+                        "allowDifferentNesting=false."
                     errorReporter.reportError(heading.startOffset, heading.endOffset, description)
                 } else {
                     headingsMap.add(heading.text.toString())
@@ -74,12 +74,12 @@ class NoDuplicateHeaderRule(
 
                 if ((0 until heading.level).any { stack[it].contains(text) }) {
                     val description = "Multiple headers with the same content, ${heading.text}. Configuration: " +
-                            "allowDifferentNesting=true."
+                        "allowDifferentNesting=true."
                     errorReporter.reportError(heading.startOffset, heading.endOffset, description)
                 } else {
                     stack[heading.level - 1].add(text)
                     @Suppress("MagicNumber")
-                    (heading.level until 6).forEach { stack[it] = mutableListOf() }
+                    for (i in heading.level until 6) stack[i] = mutableListOf()
                 }
             }
         }

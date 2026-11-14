@@ -13,7 +13,7 @@ fun ListItem.level(): Int {
         if (cur is ListBlock) {
             level++
         }
-        cur = cur.parent
+        cur = cur!!.parent
     }
     return level - 1
 }

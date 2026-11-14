@@ -35,7 +35,7 @@ class HeaderStartLeftRule(
 
             if (heading.indent() > 0) {
                 val description = "Headers must start at the beginning of the line. Remove the ${heading.indent()} " +
-                        "character indentation."
+                    "character indentation."
                 errorReporter.reportError(heading.startOffset, heading.endOffset, description)
             }
         }

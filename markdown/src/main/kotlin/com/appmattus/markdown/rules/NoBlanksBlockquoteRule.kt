@@ -45,7 +45,7 @@ class NoBlanksBlockquoteRule(
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.blockQuotes.filter { it.next is BlockQuote }.forEach {
-            errorReporter.reportError(it.startOffset, it.next.startOffset, description)
+            errorReporter.reportError(it.startOffset, it.next!!.startOffset, description)
         }
     }
 }

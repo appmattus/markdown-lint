@@ -14,8 +14,14 @@ object HrStyleRuleTest : Spek({
 
         FileRuleScenario(listOf("hr_style_underscores.md")) { HrStyleRule(style = HorizontalRuleStyle.Underscore) }
 
-        FileRuleScenario(exclude = listOf("hr_style_dashes.md", "hr_style_long.md", "hr_style_stars.md",
-            "hr_style_underscores.md")) {
+        FileRuleScenario(
+            exclude = listOf(
+                "hr_style_dashes.md",
+                "hr_style_long.md",
+                "hr_style_stars.md",
+                "hr_style_underscores.md"
+            )
+        ) {
             HrStyleRule(HorizontalRuleStyle.Consistent)
         }
     }

@@ -39,7 +39,7 @@ class SingleH1Rule(
 ) : Rule() {
 
     private val description = "Multiple top level $level headers in the same document, replace with a level " +
-            "${level + 1} header. Configuration: level=$level."
+        "${level + 1} header. Configuration: level=$level."
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val headers = document.headings.filterNot { it.parent is ListItem }.filter { it.level == level }

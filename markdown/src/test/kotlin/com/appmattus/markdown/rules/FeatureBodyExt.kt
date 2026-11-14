@@ -61,7 +61,7 @@ private fun FeatureBody.documentScenario(
 
                     val hasError = errorRange.any { line ->
                         document.lines[line].contains("{${rule::class.java.simpleName}}") ||
-                                document.chars.contains("{${rule::class.java.simpleName}:${line + 1}}")
+                            document.chars.contains("{${rule::class.java.simpleName}:${line + 1}}")
                     }
 
                     if (!hasError) {
@@ -84,7 +84,7 @@ private fun FeatureBody.documentScenario(
 
 @Suppress("TestFunctionName")
 fun FeatureBody.FilenameScenario(description: String, errors: Int, rules: () -> Rule, filename: () -> String) {
-    @Suppress("LocalVariableName")
+    @Suppress("LocalVariableName", "VariableNaming")
     val _filename = filename()
     val mockDocument = mockDocument()
 

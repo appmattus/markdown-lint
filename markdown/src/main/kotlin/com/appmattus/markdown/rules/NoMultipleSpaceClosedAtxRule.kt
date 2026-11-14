@@ -37,7 +37,7 @@ class NoMultipleSpaceClosedAtxRule(
                     (heading.closingMarker.startOffset - heading.text.endOffset > 1)
                 ) {
                     val description = "Multiple spaces inside hashes on closed atx style header, for example change " +
-                            "to '${heading.openingMarker} ${heading.text} ${heading.closingMarker}'."
+                        "to '${heading.openingMarker} ${heading.text} ${heading.closingMarker}'."
                     errorReporter.reportError(heading.startOffset, heading.endOffset, description)
                 }
             }

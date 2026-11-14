@@ -27,7 +27,7 @@ class NoInlineHtmlRule(
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.htmlElements.forEach {
             @Suppress("MoveVariableDeclarationIntoWhen")
-            val htmlTag = "^</?([a-zA-Z0-9]+)\\s*/?>".toRegex().find(it.chars)?.groupValues?.get(1)?.toLowerCase()
+            val htmlTag = "^</?([a-zA-Z0-9]+)\\s*/?>".toRegex().find(it.chars)?.groupValues?.get(1)?.lowercase()
 
             val example = when (htmlTag) {
                 "h1", "h2", "h3", "h4", "h5", "h6" -> {
@@ -36,7 +36,8 @@ class NoInlineHtmlRule(
                 }
                 "p" -> "Replace <p> with a whitespace line between paragraphs."
                 "b" -> "Replace <b> with strong emphasis, for example '**text**'."
-                "a" -> "Replace <a> with a link, for example '<http://example.com>' or " +
+                "a" ->
+                    "Replace <a> with a link, for example '<http://example.com>' or " +
                         "'[inline link](http://example.com)'."
                 "u" -> "Replace <u> with emphasis or strong emphasis, for example '*text*' or '**text**'."
                 "br" -> "Replace <br> with two trailing spaces at the end of a line, for example 'text  '."

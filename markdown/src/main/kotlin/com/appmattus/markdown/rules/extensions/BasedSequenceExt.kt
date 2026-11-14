@@ -1,10 +1,11 @@
 package com.appmattus.markdown.rules.extensions
 
+import com.vladsch.flexmark.util.misc.CharPredicate
+import com.vladsch.flexmark.util.misc.CharPredicate.WHITESPACE
 import com.vladsch.flexmark.util.sequence.BasedSequence
-import com.vladsch.flexmark.util.sequence.BasedSequence.WHITESPACE_CHARS
 
 fun BasedSequence.canTrim() =
-    countLeading(WHITESPACE_CHARS, 0, length) + countTrailing(WHITESPACE_CHARS, 0, length) != 0
+    countLeading(WHITESPACE, 0, length) + countTrailing(WHITESPACE, 0, length) != 0
 
 fun BasedSequence.splitIntoLines(): Array<BasedSequence> {
     var lastPos = 0
@@ -12,7 +13,7 @@ fun BasedSequence.splitIntoLines(): Array<BasedSequence> {
 
     while (lastPos < length) {
         val pos = endOfLineAnyEOL(lastPos)
-        val eolLength = eolLength(pos)
+        val eolLength = eolStartLength(pos)
 
         items += subSequence(lastPos, pos)
         lastPos = pos + eolLength
@@ -38,4 +39,10 @@ fun BasedSequence.indexOfAllList(s: CharSequence): List<Int> {
 
         currentIndex += s.length
     }
+}
+
+// flexmark's columnAtIndex returns an incorrect column for lines following a CRLF line ending
+fun BasedSequence.lineColumnAt(index: Int): Int {
+    val lineStart = lastIndexOfAny(CharPredicate.ANY_EOL, index)
+    return index - if (lineStart == -1) 0 else lineStart + 1
 }

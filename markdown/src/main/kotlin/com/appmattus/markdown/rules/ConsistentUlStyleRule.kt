@@ -34,7 +34,6 @@ class ConsistentUlStyleRule(
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-
         val bullets = document.unorderedListItems
 
         if (bullets.isEmpty()) {
@@ -46,7 +45,7 @@ class ConsistentUlStyleRule(
         bullets.forEach {
             if (it.style() != docStyle) {
                 val description = "Unordered list item expected in ${docStyle.description()} style but is " +
-                        "${it.style().description()}. Configuration: style=${style.description()}."
+                    "${it.style().description()}. Configuration: style=${style.description()}."
 
                 errorReporter.reportError(it.startOffset, it.endOffset, description)
             }

@@ -47,7 +47,6 @@ class BlanksAroundFencesRule(
     private val fenceRegEx = Regex("^(`{3,}|~{3,})")
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-
         var inCode = false
         var fence: String? = null
 

@@ -6,7 +6,9 @@ import org.spekframework.spek2.style.gherkin.Feature
 
 object ConsistentHeaderStyleRuleTest : Spek({
     Feature("ConsistentHeaderStyleRule") {
-        FileRuleScenario(listOf("headers_good_setext_with_atx.md")) { ConsistentHeaderStyleRule(HeaderStyle.SetextWithAtx) }
+        FileRuleScenario(
+            listOf("headers_good_setext_with_atx.md")
+        ) { ConsistentHeaderStyleRule(HeaderStyle.SetextWithAtx) }
 
         FileRuleScenario(listOf("incorrect_header_atx_closed.md")) { ConsistentHeaderStyleRule(HeaderStyle.AtxClosed) }
 

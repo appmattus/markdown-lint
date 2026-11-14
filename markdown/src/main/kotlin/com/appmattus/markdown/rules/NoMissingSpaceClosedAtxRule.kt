@@ -36,7 +36,7 @@ class NoMissingSpaceClosedAtxRule(
                     (heading.text.endOffset == heading.closingMarker.startOffset && !heading.text.endsWith("\\"))
                 ) {
                     val description = "No space inside hashes on closed atx style header, for example change to " +
-                            "'${heading.openingMarker} ${heading.text} ${heading.closingMarker}'."
+                        "'${heading.openingMarker} ${heading.text} ${heading.closingMarker}'."
                     errorReporter.reportError(heading.startOffset, heading.endOffset, description)
                 }
             }

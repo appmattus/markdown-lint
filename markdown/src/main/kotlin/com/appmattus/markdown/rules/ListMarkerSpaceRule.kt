@@ -71,7 +71,6 @@ class ListMarkerSpaceRule(
 
     @Suppress("ComplexMethod")
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-
         document.listBlocks.forEach { listBlock ->
             val single = listBlock.children.all {
                 it.firstChild == it.lastChild
@@ -82,7 +81,7 @@ class ListMarkerSpaceRule(
                 listBlock is OrderedList && !single -> olMulti
                 listBlock is BulletList && single -> ulSingle
                 listBlock is BulletList && !single -> ulMulti
-                else -> throw IllegalStateException()
+                else -> error("Unknown list block type")
             }
 
             listBlock.children.forEach { item ->
@@ -93,7 +92,7 @@ class ListMarkerSpaceRule(
 
                 if (startContent != null && startContent.startOffset - item.openingMarker.endOffset != indent) {
                     val description = "Ensure $indent spaces after list marker. Configuration: ulSingle=$ulSingle, " +
-                            "olSingle=$olSingle, ulMulti=$ulMulti, olMulti=$olMulti."
+                        "olSingle=$olSingle, ulMulti=$ulMulti, olMulti=$olMulti."
 
                     errorReporter.reportError(item.startOffset, item.endOffset, description)
                 }

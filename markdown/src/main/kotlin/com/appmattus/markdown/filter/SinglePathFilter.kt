@@ -28,7 +28,7 @@ class SinglePathFilter(
                 matcher = getPathMatcher("regex:$independentPattern")
             }
         } catch (exception: PatternSyntaxException) {
-            throw IllegalArgumentException("Provided regex is not valid: $pattern")
+            throw IllegalArgumentException("Provided regex is not valid: $pattern", exception)
         }
     }
 

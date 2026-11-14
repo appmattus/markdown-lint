@@ -87,8 +87,8 @@ class LineLengthRule(
 
         result.forEach { range ->
             val description = "Line length greater than $lineLength by ${range.last - range.first} " +
-                    "characters. Configuration: lineLength=$lineLength, codeBlocks=$codeBlocks, tables=$tables, " +
-                    "headings=$headings, punctuation=$punctuation."
+                "characters. Configuration: lineLength=$lineLength, codeBlocks=$codeBlocks, tables=$tables, " +
+                "headings=$headings, punctuation=$punctuation."
 
             errorReporter.reportError(range.first, range.last, description)
         }
@@ -98,7 +98,7 @@ class LineLengthRule(
         return allLinks.map {
             var item: Node = it
             while (item.parent is Emphasis || item.parent is StrongEmphasis) {
-                item = item.parent
+                item = item.parent!!
             }
 
             AllowedBlock(item.startOffset, item.endOffset, getLineNumber(item.startOffset))
@@ -113,7 +113,7 @@ class LineLengthRule(
 
     private fun MarkdownDocument.allowedInlineCodeWithNoBreaks(): List<AllowedBlock> {
         return inlineCode.flatMap { code ->
-            code.firstChild.chars.splitIntoLines().filterNot {
+            code.firstChild!!.chars.splitIntoLines().filterNot {
                 it.contains(" ")
             }.map {
                 val start = if (it.startOffset == code.openingMarker.endOffset) {

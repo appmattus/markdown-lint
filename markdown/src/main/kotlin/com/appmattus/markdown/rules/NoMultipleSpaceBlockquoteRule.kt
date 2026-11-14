@@ -30,7 +30,7 @@ class NoMultipleSpaceBlockquoteRule(
                 if (i > 0) {
                     val item = paragraph.contentLines[index]
                     val description = "Multiple spaces after blockquote symbol, for example change to " +
-                            "'> ${item.trim()}'."
+                        "'> ${item.trim()}'."
 
                     errorReporter.reportError(item.startOffset, item.endOffset, description)
                 }
