@@ -1,35 +1,43 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import kotlin.test.Test
 
-object ProperNamesRuleTest : Spek({
-    Feature("ProperNamesRule") {
-        FileRuleScenario(listOf("proper-names-codeblocks.md")) { ProperNamesRule(codeBlocks = true) }
-
-        FileRuleScenario(listOf("proper-names-ignore-codeblocks.md")) { ProperNamesRule(codeBlocks = false) }
-
-        FileRuleScenario(listOf("proper-names-projects.md")) {
-            ProperNamesRule(
-                names = listOf(
-                    "GitHub",
-                    "github.com",
-                    "github.com/about",
-                    "npm",
-                    "NPM",
-                    "Vuex",
-                    "Vue",
-                    "Vue.js",
-                    "vue-router"
-                ),
-                codeBlocks = false
-            )
-        }
-
-        FileRuleScenario(exclude = listOf("proper-names-projects.md")) { ProperNamesRule(codeBlocks = true) }
-
-        FileRuleScenario(listOf("proper-names-files.md")) {
-            ProperNamesRule(names = listOf("Gradle"), codeBlocks = false)
-        }
+class ProperNamesRuleTest {
+    @Test
+    fun `proper-names-codeblocks`() = fileRuleScenario(listOf("proper-names-codeblocks.md")) {
+        ProperNamesRule(codeBlocks = true)
     }
-})
+
+    @Test
+    fun `proper-names-ignore-codeblocks`() = fileRuleScenario(listOf("proper-names-ignore-codeblocks.md")) {
+        ProperNamesRule(codeBlocks = false)
+    }
+
+    @Test
+    fun `proper-names-projects`() = fileRuleScenario(listOf("proper-names-projects.md")) {
+        ProperNamesRule(
+            names = listOf(
+                "GitHub",
+                "github.com",
+                "github.com/about",
+                "npm",
+                "NPM",
+                "Vuex",
+                "Vue",
+                "Vue.js",
+                "vue-router"
+            ),
+            codeBlocks = false
+        )
+    }
+
+    @Test
+    fun `all files except proper-names-projects`() = fileRuleScenario(exclude = listOf("proper-names-projects.md")) {
+        ProperNamesRule(codeBlocks = true)
+    }
+
+    @Test
+    fun `proper-names-files`() = fileRuleScenario(listOf("proper-names-files.md")) {
+        ProperNamesRule(names = listOf("Gradle"), codeBlocks = false)
+    }
+}

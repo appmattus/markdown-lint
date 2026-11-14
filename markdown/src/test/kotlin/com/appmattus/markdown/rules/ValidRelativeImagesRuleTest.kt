@@ -1,10 +1,8 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import kotlin.test.Test
 
-object ValidRelativeImagesRuleTest : Spek({
-    Feature("ValidRelativeImagesRule") {
-        FileRuleScenario { ValidRelativeImagesRule() }
-    }
-})
+class ValidRelativeImagesRuleTest {
+    @Test
+    fun `all files`() = fileRuleScenario { ValidRelativeImagesRule() }
+}

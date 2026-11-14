@@ -1,19 +1,19 @@
 package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.rules.config.EmphasisStyle
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import kotlin.test.Test
 
-object ConsistentEmphasisStyleRuleTest : Spek({
-    Feature("ConsistentEmphasisStyleRule") {
-        FileRuleScenario(files = listOf("consistent_emphasis_asterisk.md")) {
-            ConsistentEmphasisStyleRule(EmphasisStyle.Asterisk)
-        }
-
-        FileRuleScenario(files = listOf("consistent_emphasis_underscore.md")) {
-            ConsistentEmphasisStyleRule(EmphasisStyle.Underscore)
-        }
-
-        FileRuleScenario { ConsistentEmphasisStyleRule(EmphasisStyle.Consistent) }
+class ConsistentEmphasisStyleRuleTest {
+    @Test
+    fun `consistent_emphasis_asterisk`() = fileRuleScenario(files = listOf("consistent_emphasis_asterisk.md")) {
+        ConsistentEmphasisStyleRule(EmphasisStyle.Asterisk)
     }
-})
+
+    @Test
+    fun `consistent_emphasis_underscore`() = fileRuleScenario(files = listOf("consistent_emphasis_underscore.md")) {
+        ConsistentEmphasisStyleRule(EmphasisStyle.Underscore)
+    }
+
+    @Test
+    fun `all files`() = fileRuleScenario { ConsistentEmphasisStyleRule(EmphasisStyle.Consistent) }
+}

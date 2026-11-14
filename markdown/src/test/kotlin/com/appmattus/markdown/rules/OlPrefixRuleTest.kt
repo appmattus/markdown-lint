@@ -1,15 +1,16 @@
 package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.rules.config.OrderedListStyle
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import kotlin.test.Test
 
-object OlPrefixRuleTest : Spek({
-    Feature("OlPrefixRule") {
-        FileRuleScenario(
-            listOf("ordered_list_item_prefix_ordered.md")
-        ) { OlPrefixRule(style = OrderedListStyle.Ordered) }
+class OlPrefixRuleTest {
+    @Test
+    fun `ordered_list_item_prefix_ordered`() = fileRuleScenario(
+        listOf("ordered_list_item_prefix_ordered.md")
+    ) { OlPrefixRule(style = OrderedListStyle.Ordered) }
 
-        FileRuleScenario(exclude = listOf("ordered_list_item_prefix_ordered.md")) { OlPrefixRule() }
-    }
-})
+    @Test
+    fun `all files except ordered_list_item_prefix_ordered`() = fileRuleScenario(
+        exclude = listOf("ordered_list_item_prefix_ordered.md")
+    ) { OlPrefixRule() }
+}

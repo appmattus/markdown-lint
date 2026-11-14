@@ -1,12 +1,11 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import kotlin.test.Test
 
-object MissingLinkSchemeRuleTest : Spek({
-    Feature("MissingLinkSchemeRule") {
-        FileRuleScenario(listOf("relative-links.md")) { MissingLinkSchemeRule() }
+class MissingLinkSchemeRuleTest {
+    @Test
+    fun `relative-links`() = fileRuleScenario(listOf("relative-links.md")) { MissingLinkSchemeRule() }
 
-        FileRuleScenario { MissingLinkSchemeRule() }
-    }
-})
+    @Test
+    fun `all files`() = fileRuleScenario { MissingLinkSchemeRule() }
+}

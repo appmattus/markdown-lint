@@ -1,14 +1,20 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import kotlin.test.Test
 
-object ListMarkerSpaceRuleTest : Spek({
-    Feature("ListMarkerSpaceRule") {
-        FileRuleScenario(listOf("task-list-marker.md")) { ListMarkerSpaceRule() }
+class ListMarkerSpaceRuleTest {
+    @Test
+    fun `task-list-marker`() = fileRuleScenario(listOf("task-list-marker.md")) { ListMarkerSpaceRule() }
 
-        FileRuleScenario(listOf("spaces_after_list_marker.md")) { ListMarkerSpaceRule(ulMulti = 3, olMulti = 2) }
-
-        FileRuleScenario(exclude = listOf("spaces_after_list_marker.md")) { ListMarkerSpaceRule() }
+    @Test
+    fun `spaces_after_list_marker`() = fileRuleScenario(listOf("spaces_after_list_marker.md")) {
+        ListMarkerSpaceRule(ulMulti = 3, olMulti = 2)
     }
-})
+
+    @Test
+    fun `all files except spaces_after_list_marker`() = fileRuleScenario(
+        exclude = listOf("spaces_after_list_marker.md")
+    ) {
+        ListMarkerSpaceRule()
+    }
+}
