@@ -4,7 +4,7 @@ import com.appmattus.markdown.errors.Error
 import com.appmattus.markdown.loadDocumentUnixEol
 import com.appmattus.markdown.loadDocumentWindowsEol
 import com.appmattus.markdown.processing.MarkdownDocument
-import mockDocument
+import emptyDocument
 import org.assertj.core.api.Assertions.assertThat
 import java.nio.file.Paths
 import kotlin.test.fail
@@ -87,13 +87,12 @@ private fun documentScenario(
  */
 fun filenameScenario(errors: Int, rules: () -> Rule, filename: () -> String) {
     val rule = rules()
-    val mockDocument = mockDocument()
 
     lateinit var document: MarkdownDocument
     lateinit var ruleErrors: List<Error>
 
     // Given a document with filename
-    document = MarkdownDocument(Paths.get(filename()), mockDocument)
+    document = MarkdownDocument(Paths.get(filename()), emptyDocument())
 
     // When we visit the document
     ruleErrors = rule.processDocument(document)
