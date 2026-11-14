@@ -43,6 +43,7 @@ dependencies {
     api(libs.flexmark.extGfmTasklist)
 
     testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotlin.testJunit)
     testImplementation(gradleTestKit())
     testImplementation(libs.junit)
     testImplementation(libs.assertj.core)
@@ -50,17 +51,10 @@ dependencies {
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.jfixture)
     testImplementation(libs.classgraph)
-
-    testImplementation(libs.spek.dslJvm)
-    testRuntimeOnly(libs.spek.runnerJunit5)
-    // spek requires kotlin-reflect, can be omitted if already in the classpath
-    testRuntimeOnly(libs.kotlin.reflect)
 }
 
 tasks.withType<Test> {
-    useJUnitPlatform {
-        includeEngines = setOf("spek2")
-    }
+    useJUnit()
 
     testLogging {
         events(TestLogEvent.SKIPPED, TestLogEvent.FAILED)

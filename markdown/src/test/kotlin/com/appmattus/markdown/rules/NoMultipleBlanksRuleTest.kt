@@ -1,10 +1,8 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import kotlin.test.Test
 
-object NoMultipleBlanksRuleTest : Spek({
-    Feature("NoMultipleBlanksRule") {
-        FileRuleScenario { NoMultipleBlanksRule() }
-    }
-})
+class NoMultipleBlanksRuleTest {
+    @Test
+    fun `all files`() = fileRuleScenario { NoMultipleBlanksRule() }
+}

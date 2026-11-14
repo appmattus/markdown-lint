@@ -1,10 +1,8 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import kotlin.test.Test
 
-object NoMultipleSpaceClosedAtxRuleTest : Spek({
-    Feature("NoMultipleSpaceClosedAtxRule") {
-        FileRuleScenario { NoMultipleSpaceClosedAtxRule() }
-    }
-})
+class NoMultipleSpaceClosedAtxRuleTest {
+    @Test
+    fun `all files`() = fileRuleScenario { NoMultipleSpaceClosedAtxRule() }
+}

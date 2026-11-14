@@ -19,7 +19,6 @@ jfixture = "2.7.2"
 junit = "4.13.2"
 mockito = "5.24.0"
 mockitoKotlin = "6.4.0"
-spek = "2.0.19"
 
 [libraries]
 
@@ -30,9 +29,9 @@ flexmark-extGfmStrikethrough = { module = "com.vladsch.flexmark:flexmark-ext-gfm
 flexmark-extGfmTasklist = { module = "com.vladsch.flexmark:flexmark-ext-gfm-tasklist", version.ref = "flexmark" }
 flexmark-extTables = { module = "com.vladsch.flexmark:flexmark-ext-tables", version.ref = "flexmark" }
 
-kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 
 # Testing
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
@@ -41,8 +40,6 @@ jfixture = { module = "com.flextrade.jfixture:jfixture", version.ref = "jfixture
 junit = { module = "junit:junit", version.ref = "junit" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
-spek-dslJvm = { module = "org.spekframework.spek2:spek-dsl-jvm", version.ref = "spek" }
-spek-runnerJunit5 = { module = "org.spekframework.spek2:spek-runner-junit5", version.ref = "spek" }
 
 [plugins]
 

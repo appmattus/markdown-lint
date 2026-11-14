@@ -1,26 +1,31 @@
 package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.rules.config.UnorderedListStyle
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import kotlin.test.Test
 
-object ConsistentUlStyleRuleTest : Spek({
-    Feature("ConsistentUlStyleRule") {
-        FileRuleScenario(
-            listOf("incorrect_bullet_style_asterisk.md")
-        ) { ConsistentUlStyleRule(UnorderedListStyle.Asterisk) }
+class ConsistentUlStyleRuleTest {
+    @Test
+    fun `incorrect_bullet_style_asterisk`() = fileRuleScenario(
+        listOf("incorrect_bullet_style_asterisk.md")
+    ) { ConsistentUlStyleRule(UnorderedListStyle.Asterisk) }
 
-        FileRuleScenario(listOf("incorrect_bullet_style_dash.md")) { ConsistentUlStyleRule(UnorderedListStyle.Dash) }
-
-        FileRuleScenario(listOf("incorrect_bullet_style_plus.md")) { ConsistentUlStyleRule(UnorderedListStyle.Plus) }
-
-        FileRuleScenario(
-            exclude = listOf(
-                "incorrect_bullet_style_asterisk.md",
-                "incorrect_bullet_style_dash.md",
-                "incorrect_bullet_style_plus.md",
-                "lists_without_blank_lines.md"
-            )
-        ) { ConsistentUlStyleRule(UnorderedListStyle.Consistent) }
+    @Test
+    fun `incorrect_bullet_style_dash`() = fileRuleScenario(listOf("incorrect_bullet_style_dash.md")) {
+        ConsistentUlStyleRule(UnorderedListStyle.Dash)
     }
-})
+
+    @Test
+    fun `incorrect_bullet_style_plus`() = fileRuleScenario(listOf("incorrect_bullet_style_plus.md")) {
+        ConsistentUlStyleRule(UnorderedListStyle.Plus)
+    }
+
+    @Test
+    fun `all files except incorrect_bullet_style_asterisk, incorrect_bullet_style_dash, incorrect_bullet_style_plus, lists_without_blank_lines`() = fileRuleScenario(
+        exclude = listOf(
+            "incorrect_bullet_style_asterisk.md",
+            "incorrect_bullet_style_dash.md",
+            "incorrect_bullet_style_plus.md",
+            "lists_without_blank_lines.md"
+        )
+    ) { ConsistentUlStyleRule(UnorderedListStyle.Consistent) }
+}

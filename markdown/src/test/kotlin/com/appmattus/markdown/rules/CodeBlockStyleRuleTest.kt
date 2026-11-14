@@ -1,15 +1,21 @@
 package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.rules.config.CodeBlockStyle
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import kotlin.test.Test
 
-object CodeBlockStyleRuleTest : Spek({
-    Feature("CodeBlockStyleRule") {
-        FileRuleScenario(listOf("code_block_consistency.md")) { CodeBlockStyleRule(style = CodeBlockStyle.Consistent) }
+class CodeBlockStyleRuleTest {
+    @Test
+    fun `code_block_consistency`() = fileRuleScenario(
+        listOf("code_block_consistency.md")
+    ) { CodeBlockStyleRule(style = CodeBlockStyle.Consistent) }
 
-        FileRuleScenario(listOf("code_block_fenced.md")) { CodeBlockStyleRule(style = CodeBlockStyle.Fenced) }
+    @Test
+    fun `code_block_fenced`() = fileRuleScenario(
+        listOf("code_block_fenced.md")
+    ) { CodeBlockStyleRule(style = CodeBlockStyle.Fenced) }
 
-        FileRuleScenario(listOf("code_block_indented.md")) { CodeBlockStyleRule(style = CodeBlockStyle.Indented) }
-    }
-})
+    @Test
+    fun `code_block_indented`() = fileRuleScenario(
+        listOf("code_block_indented.md")
+    ) { CodeBlockStyleRule(style = CodeBlockStyle.Indented) }
+}

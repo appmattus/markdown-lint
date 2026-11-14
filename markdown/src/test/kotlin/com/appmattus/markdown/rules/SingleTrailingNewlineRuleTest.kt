@@ -1,12 +1,11 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import kotlin.test.Test
 
-object SingleTrailingNewlineRuleTest : Spek({
-    Feature("SingleTrailingNewlineRule") {
-        FileRuleScenario(listOf("no_newline.md")) { SingleTrailingNewlineRule() }
+class SingleTrailingNewlineRuleTest {
+    @Test
+    fun `no_newline`() = fileRuleScenario(listOf("no_newline.md")) { SingleTrailingNewlineRule() }
 
-        FileRuleScenario(listOf("has_newline.md")) { SingleTrailingNewlineRule() }
-    }
-})
+    @Test
+    fun `has_newline`() = fileRuleScenario(listOf("has_newline.md")) { SingleTrailingNewlineRule() }
+}

@@ -1,12 +1,11 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import kotlin.test.Test
 
-object NoHardTabsRuleTest : Spek({
-    Feature("NoHardTabsRule") {
-        FileRuleScenario(listOf("nohardtabs_issues.md")) { NoHardTabsRule() }
+class NoHardTabsRuleTest {
+    @Test
+    fun `nohardtabs_issues`() = fileRuleScenario(listOf("nohardtabs_issues.md")) { NoHardTabsRule() }
 
-        FileRuleScenario { NoHardTabsRule() }
-    }
-})
+    @Test
+    fun `all files`() = fileRuleScenario { NoHardTabsRule() }
+}

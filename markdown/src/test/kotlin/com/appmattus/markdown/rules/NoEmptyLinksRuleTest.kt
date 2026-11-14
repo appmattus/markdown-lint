@@ -1,10 +1,10 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import kotlin.test.Test
 
-object NoEmptyLinksRuleTest : Spek({
-    Feature("NoEmptyLinksRule") {
-        FileRuleScenario(exclude = listOf("reversed_link.md")) { NoEmptyLinksRule() }
-    }
-})
+class NoEmptyLinksRuleTest {
+    @Test
+    fun `all files except reversed_link`() = fileRuleScenario(
+        exclude = listOf("reversed_link.md")
+    ) { NoEmptyLinksRule() }
+}

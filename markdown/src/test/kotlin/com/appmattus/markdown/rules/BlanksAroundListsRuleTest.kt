@@ -1,10 +1,10 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import kotlin.test.Test
 
-object BlanksAroundListsRuleTest : Spek({
-    Feature("BlanksAroundListsRule") {
-        FileRuleScenario(exclude = listOf("break-all-the-rules.md")) { BlanksAroundListsRule() }
-    }
-})
+class BlanksAroundListsRuleTest {
+    @Test
+    fun `all files except break-all-the-rules`() = fileRuleScenario(
+        exclude = listOf("break-all-the-rules.md")
+    ) { BlanksAroundListsRule() }
+}

@@ -1,39 +1,43 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
 import java.util.UUID
+import kotlin.test.Test
 
-object NoConsecutiveHyphensFilenameRuleTest : Spek({
-    Feature("NoConsecutiveHyphensFilenameRule") {
-        val rule = { NoConsecutiveHyphensFilenameRule() }
+class NoConsecutiveHyphensFilenameRuleTest {
+    private val rule = { NoConsecutiveHyphensFilenameRule() }
 
-        FilenameScenario("no consecutive hyphens in filename", 0, rule) {
-            UUID.randomUUID().toString().lowercase()
-        }
-
-        FilenameScenario("2 hyphens in filename", 1, rule) {
-            "hello--world.md"
-        }
-
-        FilenameScenario("3 hyphens in filename", 1, rule) {
-            "hello---.md"
-        }
-
-        FilenameScenario("4 hyphens in filename", 1, rule) {
-            "hello----.md"
-        }
-
-        FilenameScenario("2 hyphens twice in filename", 1, rule) {
-            "hello--world--.md"
-        }
-
-        FilenameScenario("empty filename without extension", 0, rule) {
-            ""
-        }
-
-        FilenameScenario("empty filename with markdown extension", 0, rule) {
-            ".md"
-        }
+    @Test
+    fun `no consecutive hyphens in filename`() = filenameScenario(0, rule) {
+        UUID.randomUUID().toString().lowercase()
     }
-})
+
+    @Test
+    fun `2 hyphens in filename`() = filenameScenario(1, rule) {
+        "hello--world.md"
+    }
+
+    @Test
+    fun `3 hyphens in filename`() = filenameScenario(1, rule) {
+        "hello---.md"
+    }
+
+    @Test
+    fun `4 hyphens in filename`() = filenameScenario(1, rule) {
+        "hello----.md"
+    }
+
+    @Test
+    fun `2 hyphens twice in filename`() = filenameScenario(1, rule) {
+        "hello--world--.md"
+    }
+
+    @Test
+    fun `empty filename without extension`() = filenameScenario(0, rule) {
+        ""
+    }
+
+    @Test
+    fun `empty filename with markdown extension`() = filenameScenario(0, rule) {
+        ".md"
+    }
+}

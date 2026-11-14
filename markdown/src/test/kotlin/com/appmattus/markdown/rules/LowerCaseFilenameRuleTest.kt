@@ -4,68 +4,58 @@ import com.appmattus.markdown.errors.Error
 import com.appmattus.markdown.processing.MarkdownDocument
 import mockDocument
 import org.assertj.core.api.Assertions.assertThat
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
 import java.nio.file.Paths
 import java.util.UUID
+import kotlin.test.Test
 
-object LowerCaseFilenameRuleTest : Spek({
+class LowerCaseFilenameRuleTest {
+    private val rule by lazy { LowerCaseFilenameRule() }
+    private val mockDocument = mockDocument()
 
-    Feature("LowerCaseFilenameRule") {
-        val rule by memoized { LowerCaseFilenameRule() }
-        val mockDocument = mockDocument()
+    @Test
+    fun `all lowercase filename`() {
+        lateinit var document: MarkdownDocument
+        lateinit var ruleErrors: List<Error>
 
-        Scenario("all lowercase filename") {
-            lateinit var document: MarkdownDocument
-            lateinit var ruleErrors: List<Error>
+        // Given a document with lowercase filename
+        val filename = UUID.randomUUID().toString().lowercase()
+        document = MarkdownDocument(Paths.get(filename), mockDocument)
 
-            Given("a document with lowercase filename") {
-                val filename = UUID.randomUUID().toString().lowercase()
-                document = MarkdownDocument(Paths.get(filename), mockDocument)
-            }
+        // When we visit the document
+        ruleErrors = rule.processDocument(document)
 
-            When("we visit the document") {
-                ruleErrors = rule.processDocument(document)
-            }
-
-            Then("we have no errors") {
-                assertThat(ruleErrors).isEmpty()
-            }
-        }
-
-        Scenario("uppercase in filename") {
-            lateinit var document: MarkdownDocument
-            lateinit var ruleErrors: List<Error>
-
-            Given("a document with uppercase filename") {
-                val filename = UUID.randomUUID().toString().uppercase()
-                document = MarkdownDocument(Paths.get(filename), mockDocument)
-            }
-
-            When("we visit the document") {
-                ruleErrors = rule.processDocument(document)
-            }
-
-            Then("we have 1 error") {
-                assertThat(ruleErrors).size().isOne
-            }
-        }
-
-        Scenario("empty filename") {
-            lateinit var document: MarkdownDocument
-            lateinit var ruleErrors: List<Error>
-
-            Given("a document with empty filename") {
-                document = MarkdownDocument(Paths.get(""), mockDocument)
-            }
-
-            When("we visit the document") {
-                ruleErrors = rule.processDocument(document)
-            }
-
-            Then("we have no errors") {
-                assertThat(ruleErrors).isEmpty()
-            }
-        }
+        // Then we have no errors
+        assertThat(ruleErrors).isEmpty()
     }
-})
+
+    @Test
+    fun `uppercase in filename`() {
+        lateinit var document: MarkdownDocument
+        lateinit var ruleErrors: List<Error>
+
+        // Given a document with uppercase filename
+        val filename = UUID.randomUUID().toString().uppercase()
+        document = MarkdownDocument(Paths.get(filename), mockDocument)
+
+        // When we visit the document
+        ruleErrors = rule.processDocument(document)
+
+        // Then we have 1 error
+        assertThat(ruleErrors).size().isOne
+    }
+
+    @Test
+    fun `empty filename`() {
+        lateinit var document: MarkdownDocument
+        lateinit var ruleErrors: List<Error>
+
+        // Given a document with empty filename
+        document = MarkdownDocument(Paths.get(""), mockDocument)
+
+        // When we visit the document
+        ruleErrors = rule.processDocument(document)
+
+        // Then we have no errors
+        assertThat(ruleErrors).isEmpty()
+    }
+}

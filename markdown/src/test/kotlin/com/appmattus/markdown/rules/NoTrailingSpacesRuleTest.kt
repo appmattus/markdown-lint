@@ -1,12 +1,15 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import kotlin.test.Test
 
-object NoTrailingSpacesRuleTest : Spek({
-    Feature("NoTrailingSpacesRule") {
-        FileRuleScenario(listOf("trailing_spaces_br.md")) { NoTrailingSpacesRule(brSpaces = 2) }
+class NoTrailingSpacesRuleTest {
+    @Test
+    fun `trailing_spaces_br`() = fileRuleScenario(
+        listOf("trailing_spaces_br.md")
+    ) { NoTrailingSpacesRule(brSpaces = 2) }
 
-        FileRuleScenario(exclude = listOf("trailing_spaces_br.md")) { NoTrailingSpacesRule() }
-    }
-})
+    @Test
+    fun `all files except trailing_spaces_br`() = fileRuleScenario(
+        exclude = listOf("trailing_spaces_br.md")
+    ) { NoTrailingSpacesRule() }
+}

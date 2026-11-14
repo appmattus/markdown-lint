@@ -1,46 +1,52 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import kotlin.test.Test
 
-object NoSurroundingHyphensFilenameRuleTest : Spek({
-    Feature("NoSurroundingHyphensFilenameRule") {
-        val rule = { NoSurroundingHyphensFilenameRule() }
+class NoSurroundingHyphensFilenameRuleTest {
+    private val rule = { NoSurroundingHyphensFilenameRule() }
 
-        FilenameScenario("no hyphens in filename", 0, rule) {
-            "abcdefgh.md"
-        }
-
-        FilenameScenario("hyphen at start of filename", 1, rule) {
-            "-hello world.md"
-        }
-
-        FilenameScenario("hyphen at end of filename with md extension", 1, rule) {
-            "hello world-.md"
-        }
-
-        FilenameScenario("hyphen at end of filename with markdown extension", 1, rule) {
-            "hello world-.markdown"
-        }
-
-        FilenameScenario("hyphen at end of filename without extension", 1, rule) {
-            "hello world-"
-        }
-
-        FilenameScenario("hyphen at start and end of filename with extension", 1, rule) {
-            "-hello world-.md"
-        }
-
-        FilenameScenario("hyphen at start and end of filename without extension", 1, rule) {
-            "-hello world-"
-        }
-
-        FilenameScenario("empty filename without extension", 0, rule) {
-            ""
-        }
-
-        FilenameScenario("empty filename with markdown extension", 0, rule) {
-            ".md"
-        }
+    @Test
+    fun `no hyphens in filename`() = filenameScenario(0, rule) {
+        "abcdefgh.md"
     }
-})
+
+    @Test
+    fun `hyphen at start of filename`() = filenameScenario(1, rule) {
+        "-hello world.md"
+    }
+
+    @Test
+    fun `hyphen at end of filename with md extension`() = filenameScenario(1, rule) {
+        "hello world-.md"
+    }
+
+    @Test
+    fun `hyphen at end of filename with markdown extension`() = filenameScenario(1, rule) {
+        "hello world-.markdown"
+    }
+
+    @Test
+    fun `hyphen at end of filename without extension`() = filenameScenario(1, rule) {
+        "hello world-"
+    }
+
+    @Test
+    fun `hyphen at start and end of filename with extension`() = filenameScenario(1, rule) {
+        "-hello world-.md"
+    }
+
+    @Test
+    fun `hyphen at start and end of filename without extension`() = filenameScenario(1, rule) {
+        "-hello world-"
+    }
+
+    @Test
+    fun `empty filename without extension`() = filenameScenario(0, rule) {
+        ""
+    }
+
+    @Test
+    fun `empty filename with markdown extension`() = filenameScenario(0, rule) {
+        ".md"
+    }
+}

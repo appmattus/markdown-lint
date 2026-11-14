@@ -1,10 +1,8 @@
 package com.appmattus.markdown.rules
 
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
+import kotlin.test.Test
 
-object NoBlanksBlockquoteRuleTest : Spek({
-    Feature("NoBlanksBlockquoteRule") {
-        FileRuleScenario { NoBlanksBlockquoteRule() }
-    }
-})
+class NoBlanksBlockquoteRuleTest {
+    @Test
+    fun `all files`() = fileRuleScenario { NoBlanksBlockquoteRule() }
+}

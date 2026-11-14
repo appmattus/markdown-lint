@@ -1,6 +1,6 @@
 style:
   MaxLineLength:
-    excludes: "**/test/**,**/androidTest/**,**/*.Test.kt,**/*.Spec.kt,**/*.Spek.kt"
+    excludes: "**/test/**,**/androidTest/**,**/*.Test.kt,**/*.Spec.kt"
     excludeCommentStatements: true
 
 formatting:
