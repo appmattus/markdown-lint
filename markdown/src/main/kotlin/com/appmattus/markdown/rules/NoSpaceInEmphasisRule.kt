@@ -38,7 +38,7 @@ import com.vladsch.flexmark.ast.IndentedCodeBlock
  * Based on [MD037](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class NoSpaceInEmphasisRule(
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     private val startRegex = Regex("\\s(\\*\\*?|__?)\\s(.+)\\1")

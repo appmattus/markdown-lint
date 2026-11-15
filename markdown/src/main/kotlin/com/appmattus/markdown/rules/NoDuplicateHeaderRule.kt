@@ -42,7 +42,7 @@ import com.vladsch.flexmark.ast.ListItem
  */
 class NoDuplicateHeaderRule(
     private val allowDifferentNesting: Boolean = false,
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     @Suppress("NestedBlockDepth")

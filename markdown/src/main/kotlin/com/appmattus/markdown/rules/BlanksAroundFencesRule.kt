@@ -41,7 +41,7 @@ import com.vladsch.flexmark.util.sequence.BasedSequence
  * Based on [MD031](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class BlanksAroundFencesRule(
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     private val fenceRegEx = Regex("^(`{3,}|~{3,})")

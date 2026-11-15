@@ -15,8 +15,14 @@ abstract class Rule {
         return errorReporter.errors
     }
 
+    /**
+     * The rule's setup as a lambda. Subclasses mark it @Transient so the configuration cache never stores it, as
+     * lambdas from a build script cannot be reliably restored; [configuration] holds the resolved value instead.
+     */
     protected abstract val config: RuleSetup.Builder.() -> Unit
 
-    val configuration
-        get() = RuleSetup.Builder().apply(config).build()
+    private var resolvedConfiguration: RuleSetup? = null
+
+    val configuration: RuleSetup
+        get() = resolvedConfiguration ?: RuleSetup.Builder().apply(config).build().also { resolvedConfiguration = it }
 }

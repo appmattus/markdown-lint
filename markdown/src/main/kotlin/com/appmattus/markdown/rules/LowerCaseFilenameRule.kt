@@ -46,7 +46,7 @@ class LowerCaseFilenameRule(
         "CODE_OF_CONDUCT.md",
         "NOTICE.md"
     ),
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {

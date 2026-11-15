@@ -24,7 +24,7 @@ import com.vladsch.flexmark.ast.ListItem
  */
 class NoTrailingPunctuationRule(
     private val punctuation: String = ".,;:!?",
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {

@@ -40,7 +40,7 @@ import com.vladsch.flexmark.util.ast.Document
  */
 class UlIndentRule(
     private val indent: Int = 2,
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {

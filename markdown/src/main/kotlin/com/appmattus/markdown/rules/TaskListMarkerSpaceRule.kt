@@ -21,7 +21,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  */
 class TaskListMarkerSpaceRule(
     private val indent: Int = 1,
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {

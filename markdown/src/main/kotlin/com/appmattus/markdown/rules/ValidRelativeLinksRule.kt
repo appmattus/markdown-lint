@@ -17,7 +17,7 @@ import java.nio.file.Files
  * To fix the violation, ensure the linked file exists.
  */
 class ValidRelativeLinksRule(
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {

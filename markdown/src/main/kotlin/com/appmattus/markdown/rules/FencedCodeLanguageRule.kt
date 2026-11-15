@@ -24,7 +24,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  * Based on [MD040](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class FencedCodeLanguageRule(
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     private val description = "Fenced code blocks should have a language specified, for example '```kotlin'."

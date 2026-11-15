@@ -29,7 +29,7 @@ import org.nibor.autolink.LinkExtractor
 class ProperNamesRule(
     private val names: List<String> = DefaultNames,
     private val codeBlocks: Boolean = false,
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     private val linkExtractor = LinkExtractor.builder().build()

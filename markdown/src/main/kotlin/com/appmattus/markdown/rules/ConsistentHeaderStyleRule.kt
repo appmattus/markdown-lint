@@ -43,7 +43,7 @@ import com.appmattus.markdown.rules.extensions.style
  */
 class ConsistentHeaderStyleRule(
     private val style: HeaderStyle = HeaderStyle.Atx,
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {

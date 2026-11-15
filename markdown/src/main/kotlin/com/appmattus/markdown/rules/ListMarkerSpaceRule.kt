@@ -66,7 +66,7 @@ class ListMarkerSpaceRule(
     private val olSingle: Int = 1,
     private val ulMulti: Int = 1,
     private val olMulti: Int = 1,
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     @Suppress("ComplexMethod")

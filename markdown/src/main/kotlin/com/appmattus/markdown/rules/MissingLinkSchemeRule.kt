@@ -18,7 +18,7 @@ import java.net.URI
  *     [a valid link](https://example.com/)
  */
 class MissingLinkSchemeRule(
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
