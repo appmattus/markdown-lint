@@ -35,7 +35,7 @@ val allFiles = listOf(
     "header_duplicate_content_different_nesting.md",
     "header_duplicate_content_no_different_nesting.md",
     "header_multiple_toplevel.md",
-    "header_mutliple_h1_no_toplevel.md",
+    "header_multiple_h1_no_toplevel.md",
     "header_trailing_punctuation.md",
     "header_trailing_punctuation_customized.md",
     "headers_bad.md",

@@ -47,6 +47,7 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.assertj.core)
     testImplementation(libs.jfixture)
+    testImplementation(libs.jimfs)
     testImplementation(libs.classgraph)
 }
 
