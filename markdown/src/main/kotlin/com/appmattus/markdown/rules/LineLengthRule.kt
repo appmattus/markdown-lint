@@ -95,15 +95,29 @@ class LineLengthRule(
     }
 
     private fun MarkdownDocument.allowedLinks(): List<AllowedBlock> {
-        return allLinks.map {
-            var item: Node = it
-            while (item.parent is Emphasis || item.parent is StrongEmphasis) {
-                item = item.parent!!
+        return allLinks.map { link ->
+            val lineNumber = getLineNumber(link.startOffset)
+
+            // Include emphasis markers wrapping the link, but only when the emphasis is on the same line, as emphasis
+            // spanning several lines would otherwise move the allowed block away from the link's line
+            var item: Node = link
+            while (true) {
+                val parent = item.parent
+                if (parent != null && parent.isEmphasis() && isOnLine(parent, lineNumber)) {
+                    item = parent
+                } else {
+                    break
+                }
             }
 
-            AllowedBlock(item.startOffset, item.endOffset, getLineNumber(item.startOffset))
+            AllowedBlock(item.startOffset, item.endOffset, lineNumber)
         }
     }
+
+    private fun Node.isEmphasis() = this is Emphasis || this is StrongEmphasis
+
+    private fun MarkdownDocument.isOnLine(node: Node, lineNumber: Int) =
+        getLineNumber(node.startOffset) == lineNumber && getLineNumber(node.endOffset) == lineNumber
 
     private fun MarkdownDocument.allowedImages(): List<AllowedBlock> {
         return allImages.map {
