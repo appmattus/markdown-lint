@@ -10,6 +10,9 @@ class LineLengthRuleTest {
     fun `long_lines_image`() = fileRuleScenario(listOf("long_lines_image.md")) { LineLengthRule() }
 
     @Test
+    fun `long_lines_emphasis`() = fileRuleScenario(listOf("long_lines_emphasis.md")) { LineLengthRule() }
+
+    @Test
     fun `long_lines_close`() = fileRuleScenario(listOf("long_lines_close.md")) { LineLengthRule() }
 
     @Test
