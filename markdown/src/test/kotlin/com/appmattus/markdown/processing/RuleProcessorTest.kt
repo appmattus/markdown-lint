@@ -2,9 +2,9 @@ package com.appmattus.markdown.processing
 
 import com.appmattus.markdown.dsl.Config
 import com.appmattus.markdown.plugin.MarkdownLint
+import com.google.common.jimfs.Jimfs
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Rule
-import org.junit.rules.TemporaryFolder
+import org.junit.After
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.PrintStream
@@ -18,15 +18,20 @@ class RuleProcessorTest {
         return byteArrayOutputStream.toByteArray().toString(Charsets.UTF_8)
     }
 
-    @get:Rule
-    val temporaryFolder = TemporaryFolder()
+    // An in-memory file system proves the processor doesn't depend on the default file system
+    private val fileSystem = Jimfs.newFileSystem()
 
     private val rootDir by lazy {
-        temporaryFolder.newFolder("rootDir").toPath()
+        Files.createDirectories(fileSystem.getPath("rootDir"))
     }
 
     private val reportsDir by lazy {
-        temporaryFolder.newFolder("reportsDir").toPath()
+        Files.createDirectories(fileSystem.getPath("reportsDir"))
+    }
+
+    @After
+    fun closeFileSystem() {
+        fileSystem.close()
     }
 
     private val slash = Regex.escape(File.separator)

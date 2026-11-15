@@ -122,7 +122,9 @@ class RuleProcessor(private val rootDir: Path, private val reportsDir: Path) {
             this,
             object : SimpleFileVisitor<Path>() {
                 override fun preVisitDirectory(dir: Path, attrs: BasicFileAttributes): FileVisitResult {
-                    return if (dir.fileName.toString() == "build" || dir.fileName.toString().startsWith(".")) {
+                    // fileName is null when dir is the root of the file system
+                    val name = dir.fileName?.toString()
+                    return if (name != null && (name == "build" || name.startsWith("."))) {
                         FileVisitResult.SKIP_SUBTREE
                     } else {
                         FileVisitResult.CONTINUE

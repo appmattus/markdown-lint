@@ -1,6 +1,5 @@
 package com.appmattus.markdown.filter
 
-import java.nio.file.FileSystems
 import java.nio.file.Path
 import java.nio.file.PathMatcher
 import java.nio.file.Paths
@@ -23,7 +22,7 @@ class SinglePathFilter(
         require(!pattern.isBlank()) { "Empty patterns aren't acceptable" }
 
         try {
-            FileSystems.getDefault().apply {
+            root.fileSystem.apply {
                 independentPattern = pattern.replace("/", Regex.escape(separator))
                 matcher = getPathMatcher("regex:$independentPattern")
             }
@@ -33,7 +32,7 @@ class SinglePathFilter(
     }
 
     override fun matches(path: Path): Boolean {
-        val relativePath = Paths.get(".").resolve(root.relativize(path).normalize())
+        val relativePath = path.fileSystem.getPath(".").resolve(root.relativize(path).normalize())
         return matcher.matches(relativePath)
     }
 }
