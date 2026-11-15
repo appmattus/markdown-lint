@@ -24,7 +24,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  *
  * Based on [MD012](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class NoMultipleBlanksRule(
+class NoMultipleBlanksRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

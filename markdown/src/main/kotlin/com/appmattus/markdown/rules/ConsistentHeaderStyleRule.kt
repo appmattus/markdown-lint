@@ -41,7 +41,7 @@ import com.appmattus.markdown.rules.extensions.style
  *
  * Based on [MD003](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class ConsistentHeaderStyleRule(
+class ConsistentHeaderStyleRule @JvmOverloads constructor(
     private val style: HeaderStyle = HeaderStyle.Atx,
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {

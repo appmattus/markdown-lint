@@ -25,7 +25,7 @@ import com.vladsch.flexmark.util.ast.Node
  *
  * Based on [MD013](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class LineLengthRule(
+class LineLengthRule @JvmOverloads constructor(
     private val lineLength: Int = 80,
     private val codeBlocks: Boolean = true,
     private val tables: Boolean = true,

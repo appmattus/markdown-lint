@@ -28,7 +28,7 @@ import com.vladsch.flexmark.util.ast.Node
  *
  * Based on [MD005](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class ListIndentRule(
+class ListIndentRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

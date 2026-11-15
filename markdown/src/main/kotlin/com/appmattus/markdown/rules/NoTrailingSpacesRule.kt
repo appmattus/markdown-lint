@@ -19,7 +19,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  *
  * Based on [MD009](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class NoTrailingSpacesRule(
+class NoTrailingSpacesRule @JvmOverloads constructor(
     private val brSpaces: Int = 2,
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {

@@ -44,7 +44,7 @@ import com.vladsch.flexmark.util.sequence.BasedSequence
  *
  * Based on [MD032](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class BlanksAroundListsRule(
+class BlanksAroundListsRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

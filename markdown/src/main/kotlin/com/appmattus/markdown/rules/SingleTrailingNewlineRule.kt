@@ -24,7 +24,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  *
  * Based on [MD047](https://github.com/DavidAnson/markdownlint/blob/master/lib/md047.js)
  */
-class SingleTrailingNewlineRule(
+class SingleTrailingNewlineRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

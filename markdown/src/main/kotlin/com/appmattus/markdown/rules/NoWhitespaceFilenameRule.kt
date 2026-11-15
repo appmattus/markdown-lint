@@ -33,7 +33,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  *
  * Based on [File name](https://www.cirosantilli.com/markdown-style-guide/#file-name)
  */
-class NoWhitespaceFilenameRule(
+class NoWhitespaceFilenameRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

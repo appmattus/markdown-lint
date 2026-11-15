@@ -37,7 +37,7 @@ import com.vladsch.flexmark.ast.IndentedCodeBlock
  *
  * Based on [MD037](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class NoSpaceInEmphasisRule(
+class NoSpaceInEmphasisRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

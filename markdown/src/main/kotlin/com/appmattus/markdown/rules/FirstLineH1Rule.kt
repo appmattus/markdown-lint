@@ -25,7 +25,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  *
  * Based on [MD041](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class FirstLineH1Rule(
+class FirstLineH1Rule @JvmOverloads constructor(
     private val level: Int = 1,
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {

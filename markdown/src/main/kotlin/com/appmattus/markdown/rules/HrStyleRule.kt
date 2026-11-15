@@ -34,7 +34,7 @@ import com.appmattus.markdown.rules.config.HorizontalRuleStyle
  *
  * Based on [MD035](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class HrStyleRule(
+class HrStyleRule @JvmOverloads constructor(
     private val style: HorizontalRuleStyle = HorizontalRuleStyle.Dash,
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {

@@ -24,7 +24,7 @@ import com.vladsch.flexmark.util.ast.DelimitedNode
  * Note: the configured emphasis marker style can be a specific symbol ([EmphasisStyle.Asterisk],
  * [EmphasisStyle.Underscore]), or simply require that the usage be [EmphasisStyle.Consistent] within the document.
  */
-class ConsistentEmphasisStyleRule(
+class ConsistentEmphasisStyleRule @JvmOverloads constructor(
     private val style: EmphasisStyle = EmphasisStyle.Asterisk,
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {

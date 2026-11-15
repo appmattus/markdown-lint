@@ -17,7 +17,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  *
  * Based on [MD039](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class NoSpaceInLinksRule(
+class NoSpaceInLinksRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

@@ -28,7 +28,7 @@ import com.appmattus.markdown.rules.extensions.style
  *
  * Based on [MD004](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class ConsistentUlStyleRule(
+class ConsistentUlStyleRule @JvmOverloads constructor(
     private val style: UnorderedListStyle = UnorderedListStyle.Dash,
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {

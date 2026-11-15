@@ -36,7 +36,7 @@ import com.vladsch.flexmark.ast.BlockQuote
  *
  * Based on [MD028](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class NoBlanksBlockquoteRule(
+class NoBlanksBlockquoteRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

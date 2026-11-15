@@ -20,7 +20,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  *
  * Based on [MD033](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class NoInlineHtmlRule(
+class NoInlineHtmlRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

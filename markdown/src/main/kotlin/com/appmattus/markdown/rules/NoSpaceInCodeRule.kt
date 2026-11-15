@@ -22,7 +22,7 @@ import com.appmattus.markdown.rules.extensions.canTrim
  *
  * Based on [MD038](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class NoSpaceInCodeRule(
+class NoSpaceInCodeRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
