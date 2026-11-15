@@ -34,7 +34,7 @@ import com.vladsch.flexmark.util.ast.Block
  *
  * Based on [MD046](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class CodeBlockStyleRule(
+class CodeBlockStyleRule @JvmOverloads constructor(
     private val style: CodeBlockStyle = CodeBlockStyle.Fenced,
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {

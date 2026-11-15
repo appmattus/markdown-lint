@@ -23,7 +23,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  *
  * Based on [MD040](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class FencedCodeLanguageRule(
+class FencedCodeLanguageRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

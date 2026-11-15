@@ -33,7 +33,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  *
  * Based on [File name](https://www.cirosantilli.com/markdown-style-guide/#file-name)
  */
-class NoPunctuationFilenameRule(
+class NoPunctuationFilenameRule @JvmOverloads constructor(
     private val punctuation: String = ".,;:!?_",
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {

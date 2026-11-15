@@ -23,7 +23,7 @@ import com.appmattus.markdown.rules.extensions.style
  *
  * Based on [MD018](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class NoMissingSpaceAtxRule(
+class NoMissingSpaceAtxRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

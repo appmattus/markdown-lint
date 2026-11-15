@@ -33,7 +33,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  *
  * Based on [File name](https://www.cirosantilli.com/markdown-style-guide/#file-name)
  */
-class LowerCaseFilenameRule(
+class LowerCaseFilenameRule @JvmOverloads constructor(
     private val exclusions: List<String> = listOf(
         "README.md",
         "CHANGELOG.md",

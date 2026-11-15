@@ -17,7 +17,7 @@ import java.net.URI
  *
  *     [a valid link](https://example.com/)
  */
-class MissingLinkSchemeRule(
+class MissingLinkSchemeRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

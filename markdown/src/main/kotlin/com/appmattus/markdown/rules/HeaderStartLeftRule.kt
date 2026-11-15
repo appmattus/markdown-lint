@@ -26,7 +26,7 @@ import com.vladsch.flexmark.ast.ListItem
  *
  * Based on [MD023](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class HeaderStartLeftRule(
+class HeaderStartLeftRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

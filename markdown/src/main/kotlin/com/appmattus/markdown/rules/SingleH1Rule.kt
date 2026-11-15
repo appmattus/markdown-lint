@@ -33,7 +33,7 @@ import com.vladsch.flexmark.util.ast.Document
  *
  * Based on [MD025](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class SingleH1Rule(
+class SingleH1Rule @JvmOverloads constructor(
     private val level: Int = 1,
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {

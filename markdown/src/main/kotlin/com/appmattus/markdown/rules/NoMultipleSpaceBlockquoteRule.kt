@@ -20,7 +20,7 @@ import com.vladsch.flexmark.ast.Paragraph
  *
  * Based on [MD027](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class NoMultipleSpaceBlockquoteRule(
+class NoMultipleSpaceBlockquoteRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

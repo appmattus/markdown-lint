@@ -19,7 +19,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  *
  * To fix this, ensure the correct number of spaces are used after task list markers for your selected document style.
  */
-class TaskListMarkerSpaceRule(
+class TaskListMarkerSpaceRule @JvmOverloads constructor(
     private val indent: Int = 1,
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {

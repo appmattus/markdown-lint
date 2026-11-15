@@ -23,6 +23,13 @@ abstract class Rule {
 
     private var resolvedConfiguration: RuleSetup? = null
 
+    /**
+     * Applies [setup] after the rule's own configuration, resolving the result immediately.
+     */
+    internal fun withSetup(setup: (RuleSetup.Builder) -> Unit) = apply {
+        resolvedConfiguration = RuleSetup.Builder().apply(config).also(setup).build()
+    }
+
     val configuration: RuleSetup
         get() = resolvedConfiguration ?: RuleSetup.Builder().apply(config).build().also { resolvedConfiguration = it }
 }

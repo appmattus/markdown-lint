@@ -38,7 +38,7 @@ import com.vladsch.flexmark.util.ast.DelimitedNode
  *
  * Based on [MD036](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class NoEmphasisAsHeaderRule(
+class NoEmphasisAsHeaderRule @JvmOverloads constructor(
     private val punctuation: String = ".,;:!?",
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {

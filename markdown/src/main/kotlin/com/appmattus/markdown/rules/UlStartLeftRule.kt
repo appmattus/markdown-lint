@@ -38,7 +38,7 @@ import com.appmattus.markdown.rules.extensions.indent
  *
  * Based on [MD006](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class UlStartLeftRule(
+class UlStartLeftRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

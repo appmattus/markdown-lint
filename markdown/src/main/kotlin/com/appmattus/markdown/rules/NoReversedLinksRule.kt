@@ -18,7 +18,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  *
  * Based on [MD011](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class NoReversedLinksRule(
+class NoReversedLinksRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

@@ -24,7 +24,7 @@ import com.appmattus.markdown.rules.extensions.style
  * [TaskListItemMarkerStyle.Uppercase]), or simply require that the usage be
  * [TaskListItemMarkerStyle.Consistent] within the document.
  */
-class ConsistentTaskListMarkerStyleRule(
+class ConsistentTaskListMarkerStyleRule @JvmOverloads constructor(
     private val style: TaskListItemMarkerStyle = TaskListItemMarkerStyle.Lowercase,
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {

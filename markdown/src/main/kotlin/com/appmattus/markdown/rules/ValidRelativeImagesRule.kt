@@ -16,7 +16,7 @@ import java.nio.file.Files
  *
  * To fix the violation, ensure the linked file exists.
  */
-class ValidRelativeImagesRule(
+class ValidRelativeImagesRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

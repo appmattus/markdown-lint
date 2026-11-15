@@ -26,7 +26,7 @@ import com.appmattus.markdown.rules.extensions.style
  *
  * Based on [MD021](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class NoMultipleSpaceClosedAtxRule(
+class NoMultipleSpaceClosedAtxRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

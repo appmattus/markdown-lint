@@ -27,7 +27,7 @@ import com.vladsch.flexmark.ast.OrderedList
  *
  * Based on [MD029](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class OlPrefixRule(
+class OlPrefixRule @JvmOverloads constructor(
     private val style: OrderedListStyle = OrderedListStyle.One,
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {

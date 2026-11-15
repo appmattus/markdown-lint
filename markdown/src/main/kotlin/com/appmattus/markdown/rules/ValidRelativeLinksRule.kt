@@ -16,7 +16,7 @@ import java.nio.file.Files
  *
  * To fix the violation, ensure the linked file exists.
  */
-class ValidRelativeLinksRule(
+class ValidRelativeLinksRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 

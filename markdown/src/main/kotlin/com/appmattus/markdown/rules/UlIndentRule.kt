@@ -38,7 +38,7 @@ import com.vladsch.flexmark.util.ast.Document
  * Based on [MD007](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb) and
  * [MD007](https://github.com/DavidAnson/markdownlint/blob/master/lib/md007.js)
  */
-class UlIndentRule(
+class UlIndentRule @JvmOverloads constructor(
     private val indent: Int = 2,
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {

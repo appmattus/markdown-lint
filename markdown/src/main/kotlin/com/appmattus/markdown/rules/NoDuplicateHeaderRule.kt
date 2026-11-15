@@ -40,7 +40,7 @@ import com.vladsch.flexmark.ast.ListItem
  *
  * Based on [MD024](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class NoDuplicateHeaderRule(
+class NoDuplicateHeaderRule @JvmOverloads constructor(
     private val allowDifferentNesting: Boolean = false,
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {

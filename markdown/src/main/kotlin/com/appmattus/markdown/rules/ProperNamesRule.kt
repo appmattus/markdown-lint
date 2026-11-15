@@ -26,7 +26,7 @@ import org.nibor.autolink.LinkExtractor
  *
  * Based on [MD044](https://github.com/DavidAnson/markdownlint/blob/master/lib/md044.js)
  */
-class ProperNamesRule(
+class ProperNamesRule @JvmOverloads constructor(
     private val names: List<String> = DefaultNames,
     private val codeBlocks: Boolean = false,
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}

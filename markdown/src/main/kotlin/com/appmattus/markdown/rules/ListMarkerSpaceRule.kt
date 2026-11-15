@@ -61,7 +61,7 @@ import com.vladsch.flexmark.ast.OrderedList
  *
  * Based on [MD030](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class ListMarkerSpaceRule(
+class ListMarkerSpaceRule @JvmOverloads constructor(
     private val ulSingle: Int = 1,
     private val olSingle: Int = 1,
     private val ulMulti: Int = 1,

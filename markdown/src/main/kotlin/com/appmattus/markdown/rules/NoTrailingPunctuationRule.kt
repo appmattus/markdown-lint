@@ -22,7 +22,7 @@ import com.vladsch.flexmark.ast.ListItem
  *
  * Based on [MD026](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class NoTrailingPunctuationRule(
+class NoTrailingPunctuationRule @JvmOverloads constructor(
     private val punctuation: String = ".,;:!?",
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {

@@ -318,6 +318,116 @@ class MarkdownLintPluginTest {
         assertThat(secondOutput).contains("No errors reported")
     }
 
+    @Test(timeout = TIMEOUT)
+    fun `groovy build script configures rules, filters and reports`() {
+        lateinit var output: String
+
+        // Given a groovy build script that disables a rule, filters files and generates only the html report
+        temporaryFolder.createGroovyBuildScript(
+            """
+            markdownlint {
+                rules {
+                    rule(new ConsistentHeaderStyleRule(HeaderStyle.Atx))
+
+                    rule(new SingleH1Rule()) {
+                        active = false
+                    }
+                }
+
+                includes = ['.*/docs/.*']
+                excludes = ['.*/excluded.md']
+
+                reports {
+                    html()
+                }
+
+                threshold = 10
+            }
+            """
+        )
+
+        // And bad markdown files inside and outside the included directory
+        temporaryFolder.newFolder("docs")
+        temporaryFolder.createMarkdownFileWithAnError("docs/README.md")
+        temporaryFolder.createMarkdownFileWithAnError("docs/excluded.md")
+        temporaryFolder.createMarkdownFileWithAnError("README.md")
+
+        // When we execute the markdownlint task
+        output = build(temporaryFolder, "markdownlint", "--stacktrace").output
+
+        // Then only the included file is analysed
+        assertThat(output).contains("1 markdown files were analysed")
+
+        // And the disabled rule reports no errors
+        assertThat(output).contains("No errors reported")
+
+        // And only the html report is generated
+        assertThat(File(temporaryFolder.root, "build/reports/markdownlint/markdownlint.html")).exists()
+        assertThat(File(temporaryFolder.root, "build/reports/markdownlint/markdownlint.xml")).doesNotExist()
+    }
+
+    @Test(timeout = TIMEOUT)
+    fun `groovy rule setup applies to that rule only`() {
+        lateinit var output: String
+
+        // Given a groovy build script that limits one rule to the docs directory
+        temporaryFolder.createGroovyBuildScript(
+            """
+            markdownlint {
+                rules {
+                    rule(new SingleH1Rule()) {
+                        includes = ['.*/docs/.*']
+                    }
+                }
+            }
+            """
+        )
+
+        // And bad markdown files inside and outside the docs directory
+        temporaryFolder.newFolder("docs")
+        temporaryFolder.createMarkdownFileWithAnError("docs/README.md")
+        temporaryFolder.createMarkdownFileWithAnError("README.md")
+
+        // When we execute the markdownlint task
+        output = buildAndFail(temporaryFolder, "markdownlint", "--stacktrace").output
+
+        // Then both files are analysed
+        assertThat(output).contains("2 markdown files were analysed")
+
+        // And the rule only reports the file in the docs directory
+        val errors = Regex("SingleH1Rule at .*").findAll(output).map { it.value }.toList()
+        assertThat(errors).hasSize(1)
+        assertThat(errors.single()).contains("docs")
+    }
+
+    @Test(timeout = TIMEOUT)
+    fun `groovy rule setup with an unknown property fails when configuring`() {
+        lateinit var output: String
+
+        // Given a groovy build script with a misspelt rule setup property
+        temporaryFolder.createGroovyBuildScript(
+            """
+            markdownlint {
+                rules {
+                    rule(new SingleH1Rule()) {
+                        activ = false
+                    }
+                }
+            }
+            """
+        )
+
+        // When we execute the markdownlint task
+        output = buildAndFail(temporaryFolder, "markdownlint", "--stacktrace").output
+
+        // Then the build script fails to evaluate
+        assertThat(output).contains("A problem occurred evaluating root project")
+
+        // And the correct property is suggested
+        assertThat(output).contains("No such property: activ")
+        assertThat(output).contains("Possible solutions: active")
+    }
+
     private companion object {
         const val TIMEOUT = 60_000L
     }
@@ -329,6 +439,19 @@ private fun TemporaryFolder.createBuildScriptWithDefaultConfig() = createFile("b
         id("com.appmattus.markdown")
     }
     """.trimIndent()
+}
+
+private fun TemporaryFolder.createGroovyBuildScript(markdownlint: String) = createFile("build.gradle") {
+    """
+    |import com.appmattus.markdown.rules.ConsistentHeaderStyleRule
+    |import com.appmattus.markdown.rules.SingleH1Rule
+    |import com.appmattus.markdown.rules.config.HeaderStyle
+    |
+    |plugins {
+    |    id 'com.appmattus.markdown'
+    |}
+    |
+    """.trimMargin() + markdownlint.trimIndent()
 }
 
 private fun TemporaryFolder.createBuildScriptWithNoReports() = createFile("build.gradle.kts") {

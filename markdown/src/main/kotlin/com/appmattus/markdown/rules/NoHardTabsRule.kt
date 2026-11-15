@@ -25,7 +25,7 @@ import com.appmattus.markdown.rules.extensions.indexOfAllList
  *
  * Based on [MD010](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
-class NoHardTabsRule(
+class NoHardTabsRule @JvmOverloads constructor(
     @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
