@@ -1,7 +1,7 @@
 package com.appmattus.markdown.processing
 
 import com.appmattus.markdown.dsl.Config
-import com.appmattus.markdown.plugin.MarkdownLint
+import com.appmattus.markdown.dsl.Report
 import com.google.common.jimfs.Jimfs
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
@@ -44,7 +44,7 @@ class RuleProcessorTest {
         lateinit var ruleProcessor: RuleProcessor
 
         // Given a default config
-        config = MarkdownLint().build()
+        config = Config()
 
         // When we create the rule processor
         ruleProcessor = RuleProcessor(rootDir, reportsDir)
@@ -59,7 +59,7 @@ class RuleProcessorTest {
         lateinit var output: String
 
         // Given a default config
-        config = MarkdownLint().build()
+        config = Config()
 
         // When we execute the rule processor
         output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
@@ -81,7 +81,7 @@ class RuleProcessorTest {
         lateinit var output: String
 
         // Given config disabling reports
-        config = MarkdownLint().reports { }.build()
+        config = Config(reports = emptySet())
 
         // When we execute the rule processor
         output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
@@ -103,7 +103,7 @@ class RuleProcessorTest {
         lateinit var output: String
 
         // Given config with html only
-        config = MarkdownLint().reports { html() }.build()
+        config = Config(reports = setOf(Report.Html))
 
         // When we execute the rule processor
         output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
@@ -125,7 +125,7 @@ class RuleProcessorTest {
         lateinit var output: String
 
         // Given config with xml only
-        config = MarkdownLint().reports { checkstyle() }.build()
+        config = Config(reports = setOf(Report.Checkstyle))
 
         // When we execute the rule processor
         output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
@@ -149,7 +149,7 @@ class RuleProcessorTest {
         // Given no markdown files
 
         // And a default config
-        config = MarkdownLint().build()
+        config = Config()
 
         // When we execute the rule processor
         output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
@@ -167,7 +167,7 @@ class RuleProcessorTest {
         Files.write(rootDir.resolve("a-valid-file.md"), listOf("# A valid file"))
 
         // And a default config
-        config = MarkdownLint().build()
+        config = Config()
 
         // When we execute the rule processor
         output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
@@ -186,7 +186,7 @@ class RuleProcessorTest {
         Files.write(rootDir.resolve("another-valid-file.md"), listOf("# Another valid file"))
 
         // And a default config
-        config = MarkdownLint().build()
+        config = Config()
 
         // When we execute the rule processor
         output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
@@ -205,9 +205,9 @@ class RuleProcessorTest {
         Files.write(rootDir.resolve("an-invalid-file.md"), listOf(""))
 
         // And config with exclude rule
-        config = MarkdownLint().apply {
+        config = Config(
             excludes = listOf(".*/an-invalid-file.md")
-        }.build()
+        )
 
         // When we execute the rule processor
         output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
@@ -226,9 +226,9 @@ class RuleProcessorTest {
         Files.write(rootDir.resolve("an-invalid-file.md"), listOf(""))
 
         // And config with exclude rule
-        config = MarkdownLint().apply {
+        config = Config(
             includes = listOf(".*/a-valid-file.md")
-        }.build()
+        )
 
         // When we execute the rule processor
         output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
@@ -250,10 +250,10 @@ class RuleProcessorTest {
         Files.write(rootDir.resolve("an-invalid-file.md"), listOf(""))
 
         // And config with exclude rule
-        config = MarkdownLint().apply {
-            includes = listOf(".*/a-valid-file.md")
+        config = Config(
+            includes = listOf(".*/a-valid-file.md"),
             excludes = listOf(".*/a-valid-file.md")
-        }.build()
+        )
 
         // When we execute the rule processor
         output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)
@@ -276,9 +276,9 @@ class RuleProcessorTest {
         Files.write(rootDir.resolve("directory/an-invalid-file.md"), listOf(""))
 
         // And config with exclude rule
-        config = MarkdownLint().apply {
+        config = Config(
             excludes = listOf(".*/directory/.*")
-        }.build()
+        )
 
         // When we execute the rule processor
         output = RuleProcessor(rootDir, reportsDir).processAndReturnOutput(config)

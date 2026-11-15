@@ -15,7 +15,7 @@ enum class Report {
             reports.add(Checkstyle)
         }
 
-        internal fun build(): Set<Report> {
+        fun build(): Set<Report> {
             return reports.toSet()
         }
     }

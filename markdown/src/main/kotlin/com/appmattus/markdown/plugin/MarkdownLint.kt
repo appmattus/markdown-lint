@@ -4,22 +4,21 @@ import com.appmattus.markdown.dsl.Config
 import com.appmattus.markdown.dsl.MarkdownDsl
 import com.appmattus.markdown.dsl.Report
 import com.appmattus.markdown.dsl.RulesBuilder
-import com.appmattus.markdown.dsl.configureWith
 import com.appmattus.markdown.rules.Rule
 import groovy.lang.Closure
 
 @MarkdownDsl
 open class MarkdownLint {
 
-    var rules: List<Rule> = emptyList()
+    var rules: List<Rule> = defaults.rules
         private set
 
-    var reports: Set<Report> = setOf(Report.Html, Report.Checkstyle)
+    var reports: Set<Report> = defaults.reports
         private set
 
-    var threshold: Int = 0
-    var includes: List<String> = listOf(".*")
-    var excludes: List<String> = emptyList()
+    var threshold: Int = defaults.threshold
+    var includes: List<String> = defaults.includes
+    var excludes: List<String> = defaults.excludes
 
     fun reports(body: Report.Builder.() -> Unit) = apply {
         reports = Report.Builder().apply(body).build()
@@ -38,7 +37,7 @@ open class MarkdownLint {
      * ```
      */
     fun rules(body: Closure<*>) = apply {
-        rules = RulesBuilder().configureWith(body).build()
+        rules = RulesBuilder().also { GroovyRulesBuilder(it).configureWith(body) }.build()
     }
 
     /**
@@ -50,4 +49,8 @@ open class MarkdownLint {
 
     internal fun build() =
         Config(rules.toList(), reports.toSet(), threshold, includes.toList(), excludes.toList())
+
+    private companion object {
+        val defaults = Config()
+    }
 }

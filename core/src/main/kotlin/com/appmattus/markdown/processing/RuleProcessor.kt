@@ -9,7 +9,6 @@ import com.appmattus.markdown.dsl.Config
 import com.appmattus.markdown.dsl.Report
 import com.appmattus.markdown.errors.Error
 import com.appmattus.markdown.filter.MultiPathFilter
-import com.appmattus.markdown.plugin.BuildFailure
 import com.appmattus.markdown.rules.AllRules
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
