@@ -26,7 +26,7 @@ import com.vladsch.flexmark.util.ast.DelimitedNode
  */
 class ConsistentEmphasisStyleRule(
     private val style: EmphasisStyle = EmphasisStyle.Asterisk,
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {

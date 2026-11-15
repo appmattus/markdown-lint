@@ -23,7 +23,7 @@ import com.appmattus.markdown.rules.extensions.canTrim
  * Based on [MD038](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class NoSpaceInCodeRule(
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {

@@ -27,7 +27,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  */
 class FirstLineH1Rule(
     private val level: Int = 1,
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     private val description = "First line in file should be a level $level header. Configuration: level=$level."

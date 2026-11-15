@@ -26,7 +26,7 @@ import com.appmattus.markdown.rules.extensions.indexOfAllList
  * Based on [MD010](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class NoHardTabsRule(
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     private val description = "Replace hard tab characters with spaces."

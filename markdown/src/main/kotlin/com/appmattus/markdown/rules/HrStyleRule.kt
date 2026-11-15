@@ -36,7 +36,7 @@ import com.appmattus.markdown.rules.config.HorizontalRuleStyle
  */
 class HrStyleRule(
     private val style: HorizontalRuleStyle = HorizontalRuleStyle.Dash,
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {

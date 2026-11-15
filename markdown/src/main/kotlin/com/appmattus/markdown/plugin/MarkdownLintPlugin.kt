@@ -1,6 +1,5 @@
 package com.appmattus.markdown.plugin
 
-import com.appmattus.markdown.dsl.Config
 import com.appmattus.markdown.processing.RuleProcessor
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -17,18 +16,21 @@ class MarkdownLintPlugin : Plugin<Project> {
 
             it.outputs.upToDateWhen { false }
 
+            // Capture only what the action needs, as the configuration cache cannot serialize the Project
+            val projectDir = projectDir
+            val reportsDirectory = layout.buildDirectory.dir("reports/markdownlint")
+
+            // Evaluated when the configuration cache is stored, so each rule's setup lambda is resolved beforehand
+            val config = providers.provider {
+                markdownlint.build().also { config ->
+                    config.rules.forEach { rule -> rule.configuration }
+                }
+            }
+
             it.doLast {
-                val reportsDir = layout.buildDirectory.dir("reports/markdownlint").get().asFile.apply { mkdirs() }
+                val reportsDir = reportsDirectory.get().asFile.apply { mkdirs() }
 
-                val config = Config(
-                    markdownlint.rules.toList(),
-                    markdownlint.reports.toSet(),
-                    markdownlint.threshold,
-                    markdownlint.includes.toList(),
-                    markdownlint.excludes.toList()
-                )
-
-                RuleProcessor(projectDir.toPath(), reportsDir.toPath()).process(config, System.out)
+                RuleProcessor(projectDir.toPath(), reportsDir.toPath()).process(config.get(), System.out)
             }
         }
     }

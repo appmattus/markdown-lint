@@ -33,7 +33,7 @@ import com.vladsch.flexmark.ast.ListItem
  * Based on [MD022](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class BlanksAroundHeadersRule(
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     private val whitespaceRegex = Regex("\\s*")

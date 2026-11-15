@@ -24,7 +24,7 @@ import com.appmattus.markdown.rules.extensions.style
  * Based on [MD018](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class NoMissingSpaceAtxRule(
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {

@@ -35,7 +35,7 @@ import com.vladsch.flexmark.util.ast.Document
  */
 class SingleH1Rule(
     private val level: Int = 1,
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     private val description = "Multiple top level $level headers in the same document, replace with a level " +

@@ -40,7 +40,7 @@ import com.vladsch.flexmark.util.ast.DelimitedNode
  */
 class NoEmphasisAsHeaderRule(
     private val punctuation: String = ".,;:!?",
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     @Suppress("NestedBlockDepth")

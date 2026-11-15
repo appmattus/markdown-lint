@@ -27,7 +27,7 @@ import com.vladsch.flexmark.ast.ListItem
  * Based on [MD023](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class HeaderStartLeftRule(
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {

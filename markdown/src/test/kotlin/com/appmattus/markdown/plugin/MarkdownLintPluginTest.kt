@@ -292,6 +292,32 @@ class MarkdownLintPluginTest {
         assertThat(output).doesNotContain("Build failure")
     }
 
+    @Test(timeout = TIMEOUT)
+    fun `task is compatible with the configuration cache`() {
+        lateinit var firstOutput: String
+        lateinit var secondOutput: String
+
+        // Given a build script with a rule disabled through its configuration lambda
+        temporaryFolder.createBuildScriptWithConfigDisablingRule()
+
+        // And a markdown file that would break the disabled rule
+        temporaryFolder.createMarkdownFileWithAnError("README.md")
+
+        // When we execute the markdownlint task twice with the configuration cache
+        firstOutput = build(temporaryFolder, "markdownlint", "--configuration-cache", "--stacktrace").output
+        secondOutput = build(temporaryFolder, "markdownlint", "--configuration-cache", "--stacktrace").output
+
+        // Then the configuration cache entry is stored
+        assertThat(firstOutput).contains("Configuration cache entry stored")
+
+        // And the configuration cache entry is reused
+        assertThat(secondOutput).contains("Configuration cache entry reused")
+
+        // And the rule configuration is kept when the configuration cache is reused
+        assertThat(firstOutput).contains("No errors reported")
+        assertThat(secondOutput).contains("No errors reported")
+    }
+
     private companion object {
         const val TIMEOUT = 60_000L
     }

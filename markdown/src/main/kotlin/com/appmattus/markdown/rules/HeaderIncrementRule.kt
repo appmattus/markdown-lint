@@ -32,7 +32,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  * Based on [MD001](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class HeaderIncrementRule(
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {

@@ -29,7 +29,7 @@ import com.vladsch.flexmark.ast.OrderedList
  */
 class OlPrefixRule(
     private val style: OrderedListStyle = OrderedListStyle.One,
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {

@@ -25,7 +25,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  * Based on [MD047](https://github.com/DavidAnson/markdownlint/blob/master/lib/md047.js)
  */
 class SingleTrailingNewlineRule(
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {

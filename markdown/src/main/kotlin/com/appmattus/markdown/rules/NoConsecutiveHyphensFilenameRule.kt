@@ -34,7 +34,7 @@ import com.appmattus.markdown.processing.MarkdownDocument
  * Based on [File name](https://www.cirosantilli.com/markdown-style-guide/#file-name)
  */
 class NoConsecutiveHyphensFilenameRule(
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {

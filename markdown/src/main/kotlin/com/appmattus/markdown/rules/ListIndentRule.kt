@@ -29,7 +29,7 @@ import com.vladsch.flexmark.util.ast.Node
  * Based on [MD005](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class ListIndentRule(
-    override val config: RuleSetup.Builder.() -> Unit = {}
+    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule() {
 
     private data class ItemLevel(val indentLevel: Int, var ordered: ItemLevel? = null, var unordered: ItemLevel? = null)
