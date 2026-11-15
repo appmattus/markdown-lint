@@ -81,6 +81,57 @@ markdownlint {
 }
 ```
 
+### Groovy build scripts
+
+In a Groovy `build.gradle` script, add rules with `rule(...)` instead of `+`,
+and pass any rule settings as a closure after it:
+
+```groovy
+import com.appmattus.markdown.rules.config.HeaderStyle
+import com.appmattus.markdown.rules.ConsistentHeaderStyleRule
+import com.appmattus.markdown.rules.NoDuplicateHeaderRule
+import com.appmattus.markdown.rules.SingleH1Rule
+
+markdownlint {
+    // Optional - Use to override settings for individual rules or add in custom rules
+    rules {
+        // Change the default settings of a rule
+        rule(new ConsistentHeaderStyleRule(HeaderStyle.Atx))
+
+        rule(new NoDuplicateHeaderRule()) {
+            // Include files using RegEx for this rule, default=".*" (i.e. all files)
+            includes = ['.*/directory_to_include/.*']
+
+            // Exclude files using RegEx for this rule, default=empty (i.e. exclude nothing)
+            excludes = ['.*/a_file_to_exclude.md']
+        }
+
+        // Disable a rule by setting active to false
+        rule(new SingleH1Rule()) {
+            active = false
+        }
+    }
+
+    // Optional - Include files using RegEx for ALL rules, default=".*" (i.e. all files in root project directory)
+    includes = ['.*/directory_to_include/.*']
+
+    // Optional - Exclude files using RegEx for ALL rules, default=empty (i.e. exclude nothing)
+    excludes = ['.*/a_file_to_exclude.md']
+
+    // Optional - Specify the reports to generate, default=html,checkstyle
+    reports {
+        html()
+        checkstyle()
+    }
+
+    // Optional - Specify the error count threshold that triggers a failed build, default=0
+    threshold = 10
+}
+```
+
+Pass rule settings in the closure after `rule(...)` rather than to the rule's
+constructor, so that `includes`, `excludes` and `active` apply to that rule.
+
 ## Contributing
 
 Please fork this repository and contribute back using [pull requests](https://github.com/appmattus/markdown-lint/pulls).
