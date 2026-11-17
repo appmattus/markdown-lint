@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
 
     id("jacoco")
-    alias(libs.plugins.coverallsPlugin)
     alias(libs.plugins.gradlePluginPublishPlugin)
     alias(libs.plugins.jacocoTestKitPlugin)
     alias(libs.plugins.androidLintPlugin)
@@ -36,19 +35,14 @@ dependencies {
 
     implementation(libs.kotlin.stdlib)
 
-    api(libs.flexmark.extTables)
-    api(libs.flexmark.extGfmStrikethrough)
-    api(libs.flexmark.extAutolink)
-    api(libs.flexmark.extGfmTasklist)
+    // Rule classes are referenced directly from build scripts, so the analyzer is part of the plugin's API
+    api(project(":core"))
 
     testImplementation(libs.kotlin.test)
     testImplementation(libs.kotlin.testJunit)
     testImplementation(gradleTestKit())
     testImplementation(libs.junit)
     testImplementation(libs.assertj.core)
-    testImplementation(libs.jfixture)
-    testImplementation(libs.jimfs)
-    testImplementation(libs.classgraph)
 }
 
 tasks.withType<Test> {
@@ -74,15 +68,6 @@ tasks.withType<JacocoReport> {
         html.required.set(true)
     }
 }
-
-coveralls {
-    sourceDirs = sourceSets.main.get().allSource.srcDirs.map { it.path }
-    jacocoReportPath = layout.buildDirectory.file("reports/jacoco/test/jacocoTestReport.xml").get().asFile.path
-}
-
-tasks.getByName("jacocoTestReport").finalizedBy(tasks.getByName("coveralls"))
-
-tasks.getByName("coveralls").onlyIf { System.getenv("CI")?.isNotEmpty() == true }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8

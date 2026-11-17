@@ -1,7 +1,7 @@
 package com.appmattus.markdown.rules
 
 import com.appmattus.markdown.dsl.Config
-import com.appmattus.markdown.plugin.MarkdownLint
+import com.appmattus.markdown.dsl.RulesBuilder
 import com.appmattus.markdown.processing.MarkdownDocument
 import emptyDocument
 import io.github.classgraph.ClassGraph
@@ -19,9 +19,7 @@ class AllRulesTest {
         lateinit var rules: List<Rule>
 
         // Given an empty rule config
-        config = MarkdownLint().apply {
-            rules { }
-        }.build()
+        config = Config(rules = RulesBuilder().build())
 
         // When we ask for the rules
         rules = AllRules(config).rules
@@ -43,13 +41,13 @@ class AllRulesTest {
         lateinit var rules: List<Rule>
 
         // Given config disables one rule
-        config = MarkdownLint().apply {
-            rules {
+        config = Config(
+            rules = RulesBuilder().apply {
                 +BlanksAroundFencesRule {
                     active = false
                 }
-            }
-        }.build()
+            }.build()
+        )
 
         // When we ask for the rules
         rules = AllRules(config).rules
@@ -67,11 +65,11 @@ class AllRulesTest {
         lateinit var rules: List<Rule>
 
         // Given we configure one rule
-        config = MarkdownLint().apply {
-            rules {
+        config = Config(
+            rules = RulesBuilder().apply {
                 +NoPunctuationFilenameRule(punctuation = "ABC")
-            }
-        }.build()
+            }.build()
+        )
 
         // When we ask for the rules
         rules = AllRules(config).rules

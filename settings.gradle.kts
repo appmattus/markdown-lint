@@ -9,5 +9,6 @@ pluginManagement {
 rootProject.name = "markdown-lint"
 
 include(
+    "core",
     "markdown"
 )
