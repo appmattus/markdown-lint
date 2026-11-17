@@ -6,6 +6,7 @@ androidLintPlugin = "9.5.1"
 coverallsPlugin = "2.12.2"
 detekt = "1.23.8"
 gradlePluginPublishPlugin = "2.2.1"
+gradleMavenPublishPlugin = "0.37.0"
 gradleVersionsPlugin = "0.67.0"
 jacoco = "0.8.16"
 jacocoTestKitPlugin = "1.0.12"
@@ -45,6 +46,7 @@ androidLintPlugin = { id = "com.android.lint", version.ref = "androidLintPlugin"
 coverallsPlugin = { id = "com.github.kt3k.coveralls", version.ref = "coverallsPlugin" }
 detektPlugin = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 gradlePluginPublishPlugin = { id = "com.gradle.plugin-publish", version.ref = "gradlePluginPublishPlugin" }
+gradleMavenPublishPlugin = { id = "com.vanniktech.maven.publish", version.ref = "gradleMavenPublishPlugin" }
 gradleVersionsPlugin = { id = "io.github.ben-manes.versions", version.ref = "gradleVersionsPlugin" }
 jacocoTestKitPlugin = { id = "pl.droidsonroids.jacoco.testkit", version.ref = "jacocoTestKitPlugin" }
 

@@ -132,6 +132,39 @@ markdownlint {
 Pass rule settings in the closure after `rule(...)` rather than to the rule's
 constructor, so that `includes`, `excludes` and `active` apply to that rule.
 
+## Using the analyzer without Gradle
+
+The rules and processor are published separately to Maven Central, so they can
+be used from other tools or to write custom rules:
+
+```kotlin
+dependencies {
+    implementation("com.appmattus.markdownlint:core:<latestVersion>")
+}
+```
+
+```kotlin
+import com.appmattus.markdown.dsl.Config
+import com.appmattus.markdown.dsl.RulesBuilder
+import com.appmattus.markdown.processing.RuleProcessor
+import com.appmattus.markdown.rules.SingleH1Rule
+import java.nio.file.Paths
+
+val config = Config(
+    // Optional - Override settings for individual rules, as in the plugin's rules block
+    rules = RulesBuilder().apply {
+        +SingleH1Rule {
+            active = false
+        }
+    }.build()
+)
+
+// Analyses markdown files under the root directory, writes the reports and prints a summary.
+// Throws BuildFailure when the error count reaches the configured threshold.
+RuleProcessor(rootDir = Paths.get("."), reportsDir = Paths.get("build/reports/markdownlint"))
+    .process(config, System.out)
+```
+
 ## Contributing
 
 Please fork this repository and contribute back using [pull requests](https://github.com/appmattus/markdown-lint/pulls).

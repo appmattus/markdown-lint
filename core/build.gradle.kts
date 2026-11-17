@@ -1,3 +1,5 @@
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinJvm
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -9,10 +11,22 @@ plugins {
     id("jacoco")
     alias(libs.plugins.coverallsPlugin)
     alias(libs.plugins.androidLintPlugin)
+    alias(libs.plugins.gradleMavenPublishPlugin)
 }
 
 version = System.getenv("GITHUB_REF")?.substring(10) ?: System.getProperty("GITHUB_REF")?.substring(10) ?: "unknown"
-group = "com.appmattus"
+group = "com.appmattus.markdownlint"
+
+// Published to Maven Central so the analyzer can be used without the Gradle plugin, and so the plugin can resolve it
+mavenPublishing {
+    configure(KotlinJvm(javadocJar = JavadocJar.Empty(), sourcesJar = true))
+    coordinates("com.appmattus.markdownlint", "core", version.toString())
+
+    pom {
+        name.set("com.appmattus.markdownlint:core")
+        description.set("Markdown linting rules and processor used by the com.appmattus.markdown Gradle plugin")
+    }
+}
 
 dependencies {
     implementation(libs.kotlin.stdlib)
