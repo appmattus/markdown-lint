@@ -21,8 +21,8 @@ import com.appmattus.markdown.processing.MarkdownDocument
  */
 class NoTrailingSpacesRule @JvmOverloads constructor(
     private val brSpaces: Int = 2,
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.lines.forEach {

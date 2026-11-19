@@ -18,8 +18,8 @@ import com.appmattus.markdown.processing.MarkdownDocument
  * Based on [MD039](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class NoSpaceInLinksRule @JvmOverloads constructor(
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     private val openingMarkerRegex = "\\[\\s+".toRegex()
     private val closingMarkerRegex = "\\s+]".toRegex()

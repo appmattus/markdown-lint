@@ -30,8 +30,8 @@ import com.appmattus.markdown.rules.extensions.style
  */
 class ConsistentUlStyleRule @JvmOverloads constructor(
     private val style: UnorderedListStyle = UnorderedListStyle.Dash,
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val bullets = document.unorderedListItems

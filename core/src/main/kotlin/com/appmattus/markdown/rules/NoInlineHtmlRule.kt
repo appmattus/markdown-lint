@@ -21,8 +21,8 @@ import com.appmattus.markdown.processing.MarkdownDocument
  * Based on [MD033](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class NoInlineHtmlRule @JvmOverloads constructor(
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.htmlElements.forEach {

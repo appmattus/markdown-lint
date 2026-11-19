@@ -31,8 +31,8 @@ class LineLengthRule @JvmOverloads constructor(
     private val tables: Boolean = true,
     private val headings: Boolean = true,
     private val punctuation: String = ".,;:!?) ",
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     private val terminatingPunctuationRegex = Regex("[${Regex.escape(punctuation)}]?\\s*")
 
