@@ -29,8 +29,8 @@ import com.vladsch.flexmark.ast.OrderedList
  */
 class OlPrefixRule @JvmOverloads constructor(
     private val style: OrderedListStyle = OrderedListStyle.One,
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         when (style) {

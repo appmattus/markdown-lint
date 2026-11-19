@@ -42,8 +42,8 @@ import com.vladsch.flexmark.ast.ListItem
  */
 class NoDuplicateHeaderRule @JvmOverloads constructor(
     private val allowDifferentNesting: Boolean = false,
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     @Suppress("NestedBlockDepth")
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {

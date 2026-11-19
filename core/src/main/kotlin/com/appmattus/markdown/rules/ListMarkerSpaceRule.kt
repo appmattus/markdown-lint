@@ -66,8 +66,8 @@ class ListMarkerSpaceRule @JvmOverloads constructor(
     private val olSingle: Int = 1,
     private val ulMulti: Int = 1,
     private val olMulti: Int = 1,
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     @Suppress("ComplexMethod")
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {

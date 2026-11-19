@@ -81,6 +81,57 @@ markdownlint {
 }
 ```
 
+### Writing a custom rule
+
+Extend `Rule`, implement `visitDocument` and report problems with the
+`ErrorReporter`. Taking a `config` parameter and passing it to `Rule` lets users
+set `active`, `includes` and `excludes` for your rule like any other:
+
+```kotlin
+import com.appmattus.markdown.dsl.RuleSetup
+import com.appmattus.markdown.errors.ErrorReporter
+import com.appmattus.markdown.processing.MarkdownDocument
+import com.appmattus.markdown.rules.Rule
+
+class NoTodoRule(config: RuleSetup.Builder.() -> Unit = {}) : Rule(config) {
+    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
+        document.lines.filter { it.contains("TODO") }.forEach { line ->
+            errorReporter.reportError(line.startOffset, line.endOffset, "Remove TODOs before publishing.")
+        }
+    }
+}
+```
+
+Rules can be written in `buildSrc` with a dependency on the analyzer:
+
+```kotlin
+// buildSrc/build.gradle.kts
+plugins {
+    `kotlin-dsl`
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("com.appmattus.markdownlint:core:<latestVersion>")
+}
+```
+
+Then add the rule in the `rules` block, where it runs alongside the built-in
+rules:
+
+```kotlin
+markdownlint {
+    rules {
+        +NoTodoRule {
+            excludes = listOf(".*/CHANGELOG.md")
+        }
+    }
+}
+```
+
 ### Groovy build scripts
 
 In a Groovy `build.gradle` script, add rules with `rule(...)` instead of `+`,

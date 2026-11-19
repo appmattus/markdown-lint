@@ -18,8 +18,8 @@ import java.net.URI
  *     [a valid link](https://example.com/)
  */
 class MissingLinkSchemeRule @JvmOverloads constructor(
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val urls = document.allLinkUrls + document.allImageUrls

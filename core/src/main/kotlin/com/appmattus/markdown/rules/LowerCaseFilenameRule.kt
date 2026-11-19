@@ -46,8 +46,8 @@ class LowerCaseFilenameRule @JvmOverloads constructor(
         "CODE_OF_CONDUCT.md",
         "NOTICE.md"
     ),
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         if (document.filename.lowercase() != document.filename && !exclusions.contains(document.filename)) {

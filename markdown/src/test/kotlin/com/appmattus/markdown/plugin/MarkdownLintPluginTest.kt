@@ -428,6 +428,29 @@ class MarkdownLintPluginTest {
         assertThat(output).contains("Possible solutions: active")
     }
 
+    @Test(timeout = TIMEOUT)
+    fun `custom rule defined in a build script is applied with its setup`() {
+        lateinit var output: String
+
+        // Given a build script defining a custom rule that is configured with a lambda
+        temporaryFolder.createBuildScriptWithCustomRule()
+
+        // And markdown files that break the custom rule, one of them excluded by its setup
+        temporaryFolder.createFile("README.md") { "# Title\n\nTODO write this\n" }
+        temporaryFolder.createFile("ignored.md") { "# Title\n\nTODO write this too\n" }
+
+        // When we execute the markdownlint task
+        output = buildAndFail(temporaryFolder, "markdownlint", "--stacktrace").output
+
+        // Then the custom rule runs alongside the built-in rules
+        assertThat(output).contains("2 markdown files were analysed")
+
+        // And it only reports the file its setup doesn't exclude
+        val errors = Regex("NoTodoRule at .*").findAll(output).map { it.value }.toList()
+        assertThat(errors).hasSize(1)
+        assertThat(errors.single()).contains("README.md")
+    }
+
     private companion object {
         const val TIMEOUT = 60_000L
     }
@@ -452,6 +475,35 @@ private fun TemporaryFolder.createGroovyBuildScript(markdownlint: String) = crea
     |}
     |
     """.trimMargin() + markdownlint.trimIndent()
+}
+
+private fun TemporaryFolder.createBuildScriptWithCustomRule() = createFile("build.gradle.kts") {
+    """
+    import com.appmattus.markdown.dsl.RuleSetup
+    import com.appmattus.markdown.errors.ErrorReporter
+    import com.appmattus.markdown.processing.MarkdownDocument
+    import com.appmattus.markdown.rules.Rule
+
+    plugins {
+        id("com.appmattus.markdown")
+    }
+
+    class NoTodoRule(config: RuleSetup.Builder.() -> Unit = {}) : Rule(config) {
+        override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
+            document.lines.filter { it.contains("TODO") }.forEach { line ->
+                errorReporter.reportError(line.startOffset, line.endOffset, "Remove TODOs")
+            }
+        }
+    }
+
+    markdownlint {
+        rules {
+            +NoTodoRule {
+                excludes = listOf(".*/ignored.md")
+            }
+        }
+    }
+    """.trimIndent()
 }
 
 private fun TemporaryFolder.createBuildScriptWithNoReports() = createFile("build.gradle.kts") {

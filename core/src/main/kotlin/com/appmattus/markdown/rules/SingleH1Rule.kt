@@ -35,8 +35,8 @@ import com.vladsch.flexmark.util.ast.Document
  */
 class SingleH1Rule @JvmOverloads constructor(
     private val level: Int = 1,
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     private val description = "Multiple top level $level headers in the same document, replace with a level " +
         "${level + 1} header. Configuration: level=$level."

@@ -30,8 +30,8 @@ import com.vladsch.flexmark.ast.Reference
  * Based on [MD042](https://github.com/DavidAnson/markdownlint/blob/master/lib/md042.js)
  */
 class NoEmptyLinksRule @JvmOverloads constructor(
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     private val emptyLinkRegex = Regex("#?|(?:<>)")
 

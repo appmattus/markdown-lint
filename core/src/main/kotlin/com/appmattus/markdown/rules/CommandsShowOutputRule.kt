@@ -37,8 +37,8 @@ import com.appmattus.markdown.processing.MarkdownDocument
  * Based on [MD014](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class CommandsShowOutputRule @JvmOverloads constructor(
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     private val description = "Remove dollar sign prefix in code blocks when not showing output."
 

@@ -5,7 +5,16 @@ import com.appmattus.markdown.errors.Error
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
 
-abstract class Rule {
+/**
+ * Base class for markdown rules. Implement [visitDocument] and report problems with the [ErrorReporter].
+ *
+ * Pass [setup] to the constructor to let users change `active`, `includes` and `excludes` for the rule, for example
+ * `class MyRule(config: RuleSetup.Builder.() -> Unit = {}) : Rule(config)`. A rule without settings can use `Rule()`.
+ *
+ * The setup is resolved into [configuration] before the Gradle configuration cache is stored, so the lambda itself is
+ * kept in a transient field.
+ */
+abstract class Rule(@Transient private val setup: RuleSetup.Builder.() -> Unit = {}) {
 
     protected abstract fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter)
 
@@ -16,10 +25,11 @@ abstract class Rule {
     }
 
     /**
-     * The rule's setup as a lambda. Subclasses mark it @Transient so the configuration cache never stores it, as
-     * lambdas from a build script cannot be reliably restored; [configuration] holds the resolved value instead.
+     * The rule's setup, which defaults to the setup passed to the constructor. Rules written before the setup could be
+     * passed to the constructor override this instead, which is still supported.
      */
-    protected abstract val config: RuleSetup.Builder.() -> Unit
+    protected open val config: RuleSetup.Builder.() -> Unit
+        get() = setup
 
     private var resolvedConfiguration: RuleSetup? = null
 
@@ -27,9 +37,13 @@ abstract class Rule {
      * Applies [setup] after the rule's own configuration, resolving the result immediately.
      */
     internal fun withSetup(setup: (RuleSetup.Builder) -> Unit) = apply {
-        resolvedConfiguration = RuleSetup.Builder().apply(config).also(setup).build()
+        resolvedConfiguration = RuleSetup.Builder().apply(ownSetup()).also(setup).build()
     }
 
     val configuration: RuleSetup
-        get() = resolvedConfiguration ?: RuleSetup.Builder().apply(config).build().also { resolvedConfiguration = it }
+        get() = resolvedConfiguration ?: RuleSetup.Builder().apply(ownSetup()).build().also {
+            resolvedConfiguration = it
+        }
+
+    private fun ownSetup(): RuleSetup.Builder.() -> Unit = config
 }
