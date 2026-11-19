@@ -1,5 +1,5 @@
-// Outside the library package, as custom rules are, so only public API is used
-package com.example.customrule
+// A separate package from the rules, as custom rules are, so only public API is used
+package com.appmattus.example.customrule
 
 import com.appmattus.markdown.dsl.Config
 import com.appmattus.markdown.dsl.RuleSetup
