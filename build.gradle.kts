@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.coverallsPlugin) apply false
     alias(libs.plugins.androidLintPlugin) apply false
     alias(libs.plugins.gradlePluginPublishPlugin) apply false
+    alias(libs.plugins.gradleMavenPublishPlugin) apply false
     alias(libs.plugins.jacocoTestKitPlugin) apply false
     alias(libs.plugins.gradleVersionsPlugin)
     alias(libs.plugins.detektPlugin)
