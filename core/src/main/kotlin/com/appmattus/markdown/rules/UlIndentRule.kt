@@ -40,8 +40,8 @@ import com.vladsch.flexmark.util.ast.Document
  */
 class UlIndentRule @JvmOverloads constructor(
     private val indent: Int = 2,
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.unorderedListItems.forEach {

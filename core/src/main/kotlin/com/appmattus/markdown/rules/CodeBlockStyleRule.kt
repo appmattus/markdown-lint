@@ -36,8 +36,8 @@ import com.vladsch.flexmark.util.ast.Block
  */
 class CodeBlockStyleRule @JvmOverloads constructor(
     private val style: CodeBlockStyle = CodeBlockStyle.Fenced,
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val codeBlocks = document.codeBlocks

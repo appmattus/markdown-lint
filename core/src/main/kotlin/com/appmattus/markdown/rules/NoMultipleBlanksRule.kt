@@ -25,8 +25,8 @@ import com.appmattus.markdown.processing.MarkdownDocument
  * Based on [MD012](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class NoMultipleBlanksRule @JvmOverloads constructor(
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     private val description = "Replace multiple consecutive blank lines with a single blank line."
 

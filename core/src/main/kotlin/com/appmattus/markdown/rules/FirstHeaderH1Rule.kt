@@ -23,8 +23,8 @@ import com.appmattus.markdown.processing.MarkdownDocument
  */
 class FirstHeaderH1Rule @JvmOverloads constructor(
     private val level: Int = 1,
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     private val description = "First header should be a level $level header. Configuration: level=$level."
 

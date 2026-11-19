@@ -26,8 +26,8 @@ import com.appmattus.markdown.rules.extensions.style
  * Based on [MD020](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class NoMissingSpaceClosedAtxRule @JvmOverloads constructor(
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         document.headings.forEach { heading ->

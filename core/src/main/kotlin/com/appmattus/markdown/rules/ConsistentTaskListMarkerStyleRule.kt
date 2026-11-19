@@ -26,8 +26,8 @@ import com.appmattus.markdown.rules.extensions.style
  */
 class ConsistentTaskListMarkerStyleRule @JvmOverloads constructor(
     private val style: TaskListItemMarkerStyle = TaskListItemMarkerStyle.Lowercase,
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         val doneMarkers = document.taskListItems.filter { it.isItemDoneMarker }

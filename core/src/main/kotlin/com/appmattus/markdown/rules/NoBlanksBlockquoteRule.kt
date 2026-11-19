@@ -37,8 +37,8 @@ import com.vladsch.flexmark.ast.BlockQuote
  * Based on [MD028](https://github.com/markdownlint/markdownlint/blob/master/lib/mdl/rules.rb)
  */
 class NoBlanksBlockquoteRule @JvmOverloads constructor(
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     private val description =
         "Blank line between blockquotes. Either turn into a single blockquote or separate with text."

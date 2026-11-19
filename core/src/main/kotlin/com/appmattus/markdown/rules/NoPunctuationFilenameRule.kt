@@ -35,8 +35,8 @@ import com.appmattus.markdown.processing.MarkdownDocument
  */
 class NoPunctuationFilenameRule @JvmOverloads constructor(
     private val punctuation: String = ".,;:!?_",
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     private val punctuationRegex = Regex("[${Regex.escape(punctuation)}]")
     private val doubleHyphenRegex = "-{2,}".toRegex()

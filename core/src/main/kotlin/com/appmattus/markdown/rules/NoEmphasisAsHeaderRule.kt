@@ -40,8 +40,8 @@ import com.vladsch.flexmark.util.ast.DelimitedNode
  */
 class NoEmphasisAsHeaderRule @JvmOverloads constructor(
     private val punctuation: String = ".,;:!?",
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+    config: RuleSetup.Builder.() -> Unit = {}
+) : Rule(config) {
 
     @Suppress("NestedBlockDepth")
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
