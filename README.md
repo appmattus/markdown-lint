@@ -83,11 +83,69 @@ markdownlint {
 
 ### Writing a custom rule
 
-Extend `Rule`, implement `visitDocument` and report problems with the
-`ErrorReporter`. Taking a `config` parameter and passing it to `Rule` lets users
-set `active`, `includes` and `excludes` for your rule like any other:
+You can keep custom rules in a local `markdownRules` module and add them to the
+build-script classpath without publishing a JAR or changing the plugin. Use a
+[Gradle included build](https://docs.gradle.org/current/userguide/composite_builds.html)
+so Gradle builds the rules before compiling the consuming build script.
+
+Create this directory structure:
+
+```text
+.
+├── settings.gradle.kts
+├── build.gradle.kts
+└── markdownRules/
+    ├── settings.gradle.kts
+    ├── build.gradle.kts
+    └── src/main/kotlin/com/example/markdown/NoTodoRule.kt
+```
+
+Add the included build to your root `settings.gradle.kts`:
 
 ```kotlin
+includeBuild("markdownRules")
+```
+
+Use `includeBuild("markdownRules")`, rather than `include(":markdownRules")`:
+the rules are build logic needed to compile your build script, so they must be
+built independently of the consuming project's configuration.
+
+In `markdownRules/settings.gradle.kts`, give the build its dependency name:
+
+```kotlin
+rootProject.name = "markdownRules"
+```
+
+In `markdownRules/build.gradle.kts`, compile against the analyzer API. Replace
+`<kotlinVersion>` with a compatible Kotlin version, and `<latestVersion>` with
+the same markdown-lint version used by your consuming build:
+
+```kotlin
+plugins {
+    kotlin("jvm") version "<kotlinVersion>"
+}
+
+group = "com.example"
+version = "1.0"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly("com.appmattus.markdownlint:core:<latestVersion>")
+}
+```
+
+Use `compileOnly` because the Markdown plugin supplies the analyzer at runtime.
+The included build has its own settings and repositories; it does not inherit
+those from your root build.
+
+Create `markdownRules/src/main/kotlin/com/example/markdown/NoTodoRule.kt`:
+
+```kotlin
+package com.example.markdown
+
 import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
@@ -95,41 +153,62 @@ import com.appmattus.markdown.rules.Rule
 
 class NoTodoRule(config: RuleSetup.Builder.() -> Unit = {}) : Rule(config) {
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-        document.lines.filter { it.contains("TODO") }.forEach { line ->
-            errorReporter.reportError(line.startOffset, line.endOffset, "Remove TODOs before publishing.")
+        Regex("\\bTODO\\b").findAll(document.chars.toString()).forEach { match ->
+            errorReporter.reportError(
+                match.range.first,
+                match.range.last + 1,
+                "Resolve TODO markers before publishing."
+            )
         }
     }
 }
 ```
 
-Rules can be written in `buildSrc` with a dependency on the analyzer:
+This example checks the raw Markdown text, including code blocks. Extend `Rule`,
+implement `visitDocument` and report problems with the `ErrorReporter`. Passing
+`config` to `Rule` lets users set `active`, `includes` and `excludes` as they would
+for a built-in rule; the base class handles configuration-cache compatibility.
+
+Finally, add the dependency and register the rule in your root `build.gradle.kts`:
 
 ```kotlin
-// buildSrc/build.gradle.kts
+import com.example.markdown.NoTodoRule
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.example:markdownRules:1.0")
+    }
+}
+
 plugins {
-    `kotlin-dsl`
+    id("com.appmattus.markdown") version "<latestVersion>"
 }
 
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation("com.appmattus.markdownlint:core:<latestVersion>")
-}
-```
-
-Then add the rule in the `rules` block, where it runs alongside the built-in
-rules:
-
-```kotlin
 markdownlint {
     rules {
         +NoTodoRule {
-            excludes = listOf(".*/CHANGELOG.md")
+            excludes = listOf(".*/drafts/.*")
         }
     }
 }
+```
+
+Gradle substitutes `com.example:markdownRules` with the included build using its
+`group` and `rootProject.name`, and builds the rules automatically. Maven Central
+resolves external dependencies such as the Kotlin standard library; the rules
+themselves are loaded locally. No separate build or publish step is required.
+Use these coordinates instead of `project(":markdownRules")`, since included
+builds are separate from the root project's subprojects.
+
+Adding the classpath dependency makes the rule available to import; adding
+`+NoTodoRule { ... }` enables it alongside the built-in rules. No service provider
+file is needed. Run the checks as usual:
+
+```bash
+./gradlew markdownlint
 ```
 
 ### Groovy build scripts
