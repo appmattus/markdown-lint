@@ -83,108 +83,6 @@ markdownlint {
 
 ### Writing a custom rule
 
-Extend `Rule`, implement `visitDocument` and report problems with the
-`ErrorReporter`. Taking a `config` parameter and passing it to `Rule` lets users
-set `active`, `includes` and `excludes` for your rule like any other:
-
-```kotlin
-import com.appmattus.markdown.dsl.RuleSetup
-import com.appmattus.markdown.errors.ErrorReporter
-import com.appmattus.markdown.processing.MarkdownDocument
-import com.appmattus.markdown.rules.Rule
-
-class NoTodoRule(config: RuleSetup.Builder.() -> Unit = {}) : Rule(config) {
-    override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
-        document.lines.filter { it.contains("TODO") }.forEach { line ->
-            errorReporter.reportError(line.startOffset, line.endOffset, "Remove TODOs before publishing.")
-        }
-    }
-}
-```
-
-Rules can be written in `buildSrc` with a dependency on the analyzer:
-
-```kotlin
-// buildSrc/build.gradle.kts
-plugins {
-    `kotlin-dsl`
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation("com.appmattus.markdownlint:core:<latestVersion>")
-}
-```
-
-Then add the rule in the `rules` block, where it runs alongside the built-in
-rules:
-
-```kotlin
-markdownlint {
-    rules {
-        +NoTodoRule {
-            excludes = listOf(".*/CHANGELOG.md")
-        }
-    }
-}
-```
-
-### Groovy build scripts
-
-In a Groovy `build.gradle` script, add rules with `rule(...)` instead of `+`,
-and pass any rule settings as a closure after it:
-
-```groovy
-import com.appmattus.markdown.rules.config.HeaderStyle
-import com.appmattus.markdown.rules.ConsistentHeaderStyleRule
-import com.appmattus.markdown.rules.NoDuplicateHeaderRule
-import com.appmattus.markdown.rules.SingleH1Rule
-
-markdownlint {
-    // Optional - Use to override settings for individual rules or add in custom rules
-    rules {
-        // Change the default settings of a rule
-        rule(new ConsistentHeaderStyleRule(HeaderStyle.Atx))
-
-        rule(new NoDuplicateHeaderRule()) {
-            // Include files using RegEx for this rule, default=".*" (i.e. all files)
-            includes = ['.*/directory_to_include/.*']
-
-            // Exclude files using RegEx for this rule, default=empty (i.e. exclude nothing)
-            excludes = ['.*/a_file_to_exclude.md']
-        }
-
-        // Disable a rule by setting active to false
-        rule(new SingleH1Rule()) {
-            active = false
-        }
-    }
-
-    // Optional - Include files using RegEx for ALL rules, default=".*" (i.e. all files in root project directory)
-    includes = ['.*/directory_to_include/.*']
-
-    // Optional - Exclude files using RegEx for ALL rules, default=empty (i.e. exclude nothing)
-    excludes = ['.*/a_file_to_exclude.md']
-
-    // Optional - Specify the reports to generate, default=html,checkstyle
-    reports {
-        html()
-        checkstyle()
-    }
-
-    // Optional - Specify the error count threshold that triggers a failed build, default=0
-    threshold = 10
-}
-```
-
-Pass rule settings in the closure after `rule(...)` rather than to the rule's
-constructor, so that `includes`, `excludes` and `active` apply to that rule.
-
-## Custom rules in a local module
-
 You can keep custom rules in a local `markdownRules` module and add them to the
 build-script classpath without publishing a JAR or changing the plugin. Use a
 [Gradle included build](https://docs.gradle.org/current/userguide/composite_builds.html)
@@ -253,9 +151,7 @@ import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
 import com.appmattus.markdown.rules.Rule
 
-class NoTodoRule(
-    @Transient override val config: RuleSetup.Builder.() -> Unit = {}
-) : Rule() {
+class NoTodoRule(config: RuleSetup.Builder.() -> Unit = {}) : Rule(config) {
     override fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter) {
         Regex("\\bTODO\\b").findAll(document.chars.toString()).forEach { match ->
             errorReporter.reportError(
@@ -268,10 +164,10 @@ class NoTodoRule(
 }
 ```
 
-This example checks the raw Markdown text, including code blocks. The `config`
-property supports the same `active`, `includes` and `excludes` settings as the
-built-in rules. Marking it `@Transient` follows the built-in rules' pattern for
-configuration-cache compatibility.
+This example checks the raw Markdown text, including code blocks. Extend `Rule`,
+implement `visitDocument` and report problems with the `ErrorReporter`. Passing
+`config` to `Rule` lets users set `active`, `includes` and `excludes` as they would
+for a built-in rule; the base class handles configuration-cache compatibility.
 
 Finally, add the dependency and register the rule in your root `build.gradle.kts`:
 
@@ -314,6 +210,57 @@ file is needed. Run the checks as usual:
 ```bash
 ./gradlew markdownlint
 ```
+
+### Groovy build scripts
+
+In a Groovy `build.gradle` script, add rules with `rule(...)` instead of `+`,
+and pass any rule settings as a closure after it:
+
+```groovy
+import com.appmattus.markdown.rules.config.HeaderStyle
+import com.appmattus.markdown.rules.ConsistentHeaderStyleRule
+import com.appmattus.markdown.rules.NoDuplicateHeaderRule
+import com.appmattus.markdown.rules.SingleH1Rule
+
+markdownlint {
+    // Optional - Use to override settings for individual rules or add in custom rules
+    rules {
+        // Change the default settings of a rule
+        rule(new ConsistentHeaderStyleRule(HeaderStyle.Atx))
+
+        rule(new NoDuplicateHeaderRule()) {
+            // Include files using RegEx for this rule, default=".*" (i.e. all files)
+            includes = ['.*/directory_to_include/.*']
+
+            // Exclude files using RegEx for this rule, default=empty (i.e. exclude nothing)
+            excludes = ['.*/a_file_to_exclude.md']
+        }
+
+        // Disable a rule by setting active to false
+        rule(new SingleH1Rule()) {
+            active = false
+        }
+    }
+
+    // Optional - Include files using RegEx for ALL rules, default=".*" (i.e. all files in root project directory)
+    includes = ['.*/directory_to_include/.*']
+
+    // Optional - Exclude files using RegEx for ALL rules, default=empty (i.e. exclude nothing)
+    excludes = ['.*/a_file_to_exclude.md']
+
+    // Optional - Specify the reports to generate, default=html,checkstyle
+    reports {
+        html()
+        checkstyle()
+    }
+
+    // Optional - Specify the error count threshold that triggers a failed build, default=0
+    threshold = 10
+}
+```
+
+Pass rule settings in the closure after `rule(...)` rather than to the rule's
+constructor, so that `includes`, `excludes` and `active` apply to that rule.
 
 ## Using the analyzer without Gradle
 
