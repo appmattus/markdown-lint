@@ -1,27 +1,17 @@
 package com.appmattus.markdown.processing
 
-import com.appmattus.markdown.checkstyle.AuditEvent
-import com.appmattus.markdown.checkstyle.LocalizedMessage
-import com.appmattus.markdown.checkstyle.OutputStreamOptions
-import com.appmattus.markdown.checkstyle.SeverityLevel
-import com.appmattus.markdown.checkstyle.XMLLogger
 import com.appmattus.markdown.dsl.Config
 import com.appmattus.markdown.dsl.Report
 import com.appmattus.markdown.errors.Error
 import com.appmattus.markdown.filter.MultiPathFilter
+import com.appmattus.markdown.reporting.ReportGenerator
 import com.appmattus.markdown.rules.AllRules
-import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 import java.nio.file.FileVisitResult
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.SimpleFileVisitor
 import java.nio.file.attribute.BasicFileAttributes
-import javax.xml.parsers.DocumentBuilderFactory
-import javax.xml.transform.TransformerFactory
-import javax.xml.transform.dom.DOMSource
-import javax.xml.transform.stream.StreamResult
-import javax.xml.transform.stream.StreamSource
 
 @Suppress("TooManyFunctions")
 class RuleProcessor(private val rootDir: Path, private val reportsDir: Path) {
@@ -32,12 +22,10 @@ class RuleProcessor(private val rootDir: Path, private val reportsDir: Path) {
 
         summaryStream?.summariseErrors(markdownFiles, fileErrors)
 
-        val checkstyleXmlBytes = fileErrors.mapErrorsToCheckstyleXmlBytes()
-
         if (config.generateXmlReport()) {
             try {
                 val xmlFile = reportsDir.resolve("markdownlint.xml")
-                generateXmlReport(xmlFile, checkstyleXmlBytes)
+                Files.write(xmlFile, ReportGenerator.checkstyleXml(fileErrors).toByteArray(Charsets.UTF_8))
                 summaryStream?.summariseXmlGeneration(xmlFile)
             } catch (@Suppress("TooGenericExceptionCaught", "SwallowedException") e: Exception) {
                 // Ignore
@@ -47,7 +35,7 @@ class RuleProcessor(private val rootDir: Path, private val reportsDir: Path) {
         if (config.generateHtmlReport()) {
             try {
                 val htmlFile = reportsDir.resolve("markdownlint.html")
-                generateHtmlReport(htmlFile, checkstyleXmlBytes)
+                Files.write(htmlFile, ReportGenerator.html(fileErrors).toByteArray(Charsets.UTF_8))
                 summaryStream?.summariseHtmlGeneration(htmlFile)
             } catch (@Suppress("TooGenericExceptionCaught", "SwallowedException") e: Exception) {
                 // Ignore
@@ -145,59 +133,6 @@ class RuleProcessor(private val rootDir: Path, private val reportsDir: Path) {
             }
         )
         return markdownFiles
-    }
-
-    private fun Map<Path, List<Error>>.mapErrorsToCheckstyleXmlBytes(): ByteArray {
-        return ByteArrayOutputStream().use {
-            val logger = XMLLogger(it, OutputStreamOptions.NONE)
-
-            logger.auditStarted()
-
-            forEach { (file, errors) ->
-
-                val filePath = file.toString()
-
-                logger.fileStarted(AuditEvent(filePath))
-
-                errors.forEach { error ->
-                    val message = LocalizedMessage(
-                        error.lineNumber,
-                        error.columnNumber,
-                        error.errorMessage,
-                        SeverityLevel.ERROR,
-                        error.ruleClass
-                    )
-
-                    logger.addError(AuditEvent(filePath, message))
-                }
-
-                logger.fileFinished(AuditEvent(filePath))
-            }
-
-            logger.auditFinished()
-
-            it.toByteArray()
-        }
-    }
-
-    private fun generateXmlReport(xmlFile: Path, checkstyleXmlBytes: ByteArray) {
-        Files.write(xmlFile, checkstyleXmlBytes)
-    }
-
-    private fun generateHtmlReport(
-        htmlFile: Path,
-        checkstyleXmlBytes: ByteArray
-    ) {
-        val factory = DocumentBuilderFactory.newInstance()
-        val builder = factory.newDocumentBuilder()
-        val document = builder.parse(checkstyleXmlBytes.inputStream())
-
-        val stylesheet = RuleProcessor::class.java.classLoader.getResourceAsStream("checkstyle-noframes-sorted.xsl")
-
-        val transformer = TransformerFactory.newInstance().newTransformer(StreamSource(stylesheet))
-
-        val result = StreamResult(Files.newOutputStream(htmlFile))
-        transformer.transform(DOMSource(document), result)
     }
 
     private fun Config.generateXmlReport() = reports.contains(Report.Checkstyle)
