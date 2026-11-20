@@ -1,4 +1,4 @@
-package com.appmattus.markdown.processing
+package com.appmattus.markdown.reporting
 
 import com.appmattus.markdown.errors.Error
 import com.appmattus.markdown.rules.Rule

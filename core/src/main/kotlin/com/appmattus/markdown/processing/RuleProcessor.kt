@@ -4,6 +4,7 @@ import com.appmattus.markdown.dsl.Config
 import com.appmattus.markdown.dsl.Report
 import com.appmattus.markdown.errors.Error
 import com.appmattus.markdown.filter.MultiPathFilter
+import com.appmattus.markdown.reporting.ReportGenerator
 import com.appmattus.markdown.rules.AllRules
 import java.io.PrintStream
 import java.nio.file.FileVisitResult
