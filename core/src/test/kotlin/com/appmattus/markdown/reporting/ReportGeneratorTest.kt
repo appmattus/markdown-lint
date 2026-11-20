@@ -12,9 +12,10 @@ class ReportGeneratorTest {
 
     @Test
     fun `checkstyle report is compatible XML and escapes attributes`() {
+        val filePath = Paths.get("docs", "a&b'.md")
         val report = ReportGenerator.checkstyleXml(
             linkedMapOf(
-                Paths.get("docs/a&b\"'.md") to listOf(
+                filePath to listOf(
                     error(message = "Use <tag> & \"quotes\", 'apostrophes' and 😺\non the next line")
                 )
             )
@@ -26,7 +27,7 @@ class ReportGeneratorTest {
 
         assertThat(document.documentElement.tagName).isEqualTo("checkstyle")
         assertThat(document.documentElement.attributes.getNamedItem("version").nodeValue).isEqualTo("8.18")
-        assertThat(file.attributes.getNamedItem("name").nodeValue).isEqualTo("docs/a&b\"'.md")
+        assertThat(file.attributes.getNamedItem("name").nodeValue).isEqualTo(filePath.toString())
         assertThat(finding.attributes.getNamedItem("line").nodeValue).isEqualTo("3")
         assertThat(finding.attributes.getNamedItem("column").nodeValue).isEqualTo("5")
         assertThat(finding.attributes.getNamedItem("severity").nodeValue).isEqualTo("error")
@@ -37,12 +38,14 @@ class ReportGeneratorTest {
 
     @Test
     fun `html report contains summary files and escaped violations`() {
+        val escapedFilePath = Paths.get("docs", "a&b.md").toString().replace("&", "&amp;")
+        val moreErrorsPath = Paths.get("docs", "more-errors.md").toString()
         val report = ReportGenerator.html(
             linkedMapOf(
-                Paths.get("docs/a&b.md") to listOf(
+                Paths.get("docs", "a&b.md") to listOf(
                     error(message = "Use <tag> & \"quotes\"")
                 ),
-                Paths.get("docs/more-errors.md") to listOf(
+                Paths.get("docs", "more-errors.md") to listOf(
                     error(line = 8, message = "Second"),
                     error(line = 2, message = "First")
                 )
@@ -54,9 +57,9 @@ class ReportGeneratorTest {
         assertThat(document.documentElement.tagName).isEqualTo("html")
         assertThat(report).contains("<title>Markdown Lint Report</title>")
         assertThat(report).contains("<tr><td>2</td><td>3</td></tr>")
-        assertThat(report).contains("docs/a&amp;b.md")
+        assertThat(report).contains(escapedFilePath)
         assertThat(report).contains("Use &lt;tag&gt; &amp; &quot;quotes&quot;")
-        assertThat(report.indexOf("docs/more-errors.md")).isLessThan(report.indexOf("docs/a&amp;b.md"))
+        assertThat(report.indexOf(moreErrorsPath)).isLessThan(report.indexOf(escapedFilePath))
         assertThat(report.indexOf("First")).isLessThan(report.indexOf("Second"))
     }
 
