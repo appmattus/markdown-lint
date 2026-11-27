@@ -295,6 +295,20 @@ RuleProcessor(rootDir = Paths.get("."), reportsDir = Paths.get("build/reports/ma
     .process(config, System.out)
 ```
 
+To lint content you already have, without finding files or writing reports,
+use `MarkdownLinter`. The file path is used for filename rules and to match each
+rule's `includes` and `excludes` against the root directory, but isn't read:
+
+```kotlin
+import com.appmattus.markdown.processing.MarkdownLinter
+
+val linter = MarkdownLinter(rootDir = Paths.get("."), config = config)
+
+linter.lint(Paths.get("docs/guide.md"), content).forEach { error ->
+    println("${error.ruleClass.simpleName} at ${error.lineNumber}:${error.columnNumber}: ${error.errorMessage}")
+}
+```
+
 ## Contributing
 
 Please fork this repository and contribute back using [pull requests](https://github.com/appmattus/markdown-lint/pulls).

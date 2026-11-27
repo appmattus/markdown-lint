@@ -5,7 +5,6 @@ import com.appmattus.markdown.dsl.Report
 import com.appmattus.markdown.errors.Error
 import com.appmattus.markdown.filter.MultiPathFilter
 import com.appmattus.markdown.reporting.ReportGenerator
-import com.appmattus.markdown.rules.AllRules
 import java.io.PrintStream
 import java.nio.file.FileVisitResult
 import java.nio.file.Files
@@ -79,23 +78,10 @@ class RuleProcessor(private val rootDir: Path, private val reportsDir: Path) {
     }
 
     private fun List<Path>.scanForErrors(config: Config): Map<Path, List<Error>> {
-        val rules = AllRules(config).rules
-
-        val parser = ParserFactory.parser
+        val linter = MarkdownLinter(rootDir, config)
 
         return associateWith { file ->
-            val document = MarkdownDocument(file, parser.parse(String(Files.readAllBytes(file), Charsets.UTF_8)))
-
-            rules.flatMap { rule ->
-                val includes = MultiPathFilter(rule.configuration.includes, rootDir)
-                val excludes = MultiPathFilter(rule.configuration.excludes, rootDir)
-
-                if (includes.matches(file) && !excludes.matches(file)) {
-                    rule.processDocument(document)
-                } else {
-                    emptyList()
-                }
-            }
+            linter.lint(file, String(Files.readAllBytes(file), Charsets.UTF_8))
         }.filterValues { it.isNotEmpty() }
     }
 
