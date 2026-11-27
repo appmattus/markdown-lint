@@ -299,9 +299,45 @@ spotless {
 }
 ```
 
-The step uses the built-in rules with their default settings and never
-changes files. `spotlessCheck` and `spotlessApply` fail while there are errors,
-which are reported with the file, line, rule and column:
+`MarkdownLintStep.create()` uses the built-in rules with their default
+settings. To configure rules, pass the project directory and a `rules` block,
+as in the plugin's configuration. Each rule's `includes` and `excludes` are
+matched against the project directory:
+
+```kotlin
+addStep(MarkdownLintStep.create(projectDir) {
+    // Change the default settings of a rule
+    +LineLengthRule(lineLength = 120)
+
+    // Limit or disable a rule
+    +SingleH1Rule {
+        excludes = listOf(".*/docs/.*")
+    }
+    +NoBareUrlsRule {
+        active = false
+    }
+
+    // Add a custom rule
+    +NoTodoRule()
+})
+```
+
+In a Groovy build script, pass the rules as a list:
+
+```groovy
+addStep(MarkdownLintStep.create(projectDir, [
+    new LineLengthRule(120),
+    new SingleH1Rule(1, { it.excludes = ['.*/docs/.*'] })
+]))
+```
+
+Spotless stores the rules, so custom rules used with the step must take their
+setup through the `Rule` constructor, as shown in
+[Writing a custom rule](#writing-a-custom-rule), and any fields they add must be
+serializable.
+
+The step never changes files. `spotlessCheck` and `spotlessApply` fail while
+there are errors, which are reported with the file, line, rule and column:
 
 ```text
 README.md:L3 markdownlint(SingleH1Rule) Multiple top level 1 headers in the same document, … (column 1)

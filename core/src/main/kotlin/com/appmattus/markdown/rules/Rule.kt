@@ -4,6 +4,7 @@ import com.appmattus.markdown.dsl.RuleSetup
 import com.appmattus.markdown.errors.Error
 import com.appmattus.markdown.errors.ErrorReporter
 import com.appmattus.markdown.processing.MarkdownDocument
+import java.io.Serializable
 
 /**
  * Base class for markdown rules. Implement [visitDocument] and report problems with the [ErrorReporter].
@@ -13,8 +14,11 @@ import com.appmattus.markdown.processing.MarkdownDocument
  *
  * The setup is resolved into [configuration] before the Gradle configuration cache is stored, so the lambda itself is
  * kept in a transient field.
+ *
+ * Rules are [Serializable] so that tools such as the Spotless step can store them. A rule's own fields need to be
+ * serializable too, and its setup must be passed to the constructor rather than by overriding [config].
  */
-abstract class Rule(@Transient private val setup: RuleSetup.Builder.() -> Unit = {}) {
+abstract class Rule(@Transient private val setup: RuleSetup.Builder.() -> Unit = {}) : Serializable {
 
     protected abstract fun visitDocument(document: MarkdownDocument, errorReporter: ErrorReporter)
 
@@ -46,4 +50,8 @@ abstract class Rule(@Transient private val setup: RuleSetup.Builder.() -> Unit =
         }
 
     private fun ownSetup(): RuleSetup.Builder.() -> Unit = config
+
+    private companion object {
+        private const val serialVersionUID = 1L
+    }
 }
