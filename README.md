@@ -262,6 +262,54 @@ markdownlint {
 Pass rule settings in the closure after `rule(...)` rather than to the rule's
 constructor, so that `includes`, `excludes` and `active` apply to that rule.
 
+## Spotless
+
+To report markdown-lint errors from [Spotless](https://github.com/diffplug/spotless),
+add the markdown-lint step to the build script classpath and to a Spotless
+format:
+
+```kotlin
+import com.appmattus.markdown.spotless.MarkdownLintStep
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.appmattus.markdownlint:spotless:<latestVersion>")
+    }
+}
+
+plugins {
+    id("com.diffplug.spotless") version "<spotlessVersion>"
+}
+
+spotless {
+    format("markdown") {
+        target("**/*.md", "**/*.markdown")
+        // Add it after any steps that change markdown files, so it checks their final content
+        addStep(MarkdownLintStep.create())
+
+        // Optional - Suppress a rule, using its class name
+        suppressLintsFor {
+            step = MarkdownLintStep.NAME
+            shortCode = "SingleH1Rule"
+        }
+    }
+}
+```
+
+The step uses the built-in rules with their default settings and never
+changes files. `spotlessCheck` and `spotlessApply` fail while there are errors,
+which are reported with the file, line, rule and column:
+
+```text
+README.md:L3 markdownlint(SingleH1Rule) Multiple top level 1 headers in the same document, … (column 1)
+```
+
+Errors can be suppressed by rule, path or for the whole step with
+`suppressLintsFor`. There's no equivalent of the plugin's `threshold`.
+
 ## Using the analyzer without Gradle
 
 The rules and processor are published separately to Maven Central, so they can

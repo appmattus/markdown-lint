@@ -10,5 +10,6 @@ rootProject.name = "markdown-lint"
 
 include(
     "core",
-    "markdown"
+    "markdown",
+    "spotless"
 )

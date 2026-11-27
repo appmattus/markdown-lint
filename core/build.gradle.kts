@@ -28,6 +28,13 @@ mavenPublishing {
     }
 }
 
+// Lets tools such as the Spotless step tell which version of the rules they're running
+tasks.jar {
+    manifest {
+        attributes("Implementation-Version" to project.version)
+    }
+}
+
 dependencies {
     implementation(libs.kotlin.stdlib)
 
