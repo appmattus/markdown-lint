@@ -12,6 +12,7 @@ jacoco = "0.8.16"
 jacocoTestKitPlugin = "1.0.12"
 
 flexmark = "0.64.8"
+spotlessLib = "4.12.0"
 
 # Testing
 assertj = "3.27.7"
@@ -28,6 +29,8 @@ flexmark-extAutolink = { module = "com.vladsch.flexmark:flexmark-ext-autolink", 
 flexmark-extGfmStrikethrough = { module = "com.vladsch.flexmark:flexmark-ext-gfm-strikethrough", version.ref = "flexmark" }
 flexmark-extGfmTasklist = { module = "com.vladsch.flexmark:flexmark-ext-gfm-tasklist", version.ref = "flexmark" }
 flexmark-extTables = { module = "com.vladsch.flexmark:flexmark-ext-tables", version.ref = "flexmark" }
+
+spotless-lib = { module = "com.diffplug.spotless:spotless-lib", version.ref = "spotlessLib" }
 
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }

@@ -52,9 +52,9 @@ jobs:
         echo "$GPG_SIGNING_SECRET_KEY_RING_FILE_BASE64" | base64 -d > "$HOME/.gradle/sonatype-appmattus-keys.gpg"
         echo "$GPG_GRADLE_PROPERTIES" > "$HOME/.gradle/gradle.properties"
 
-    # The plugin depends on core, so core goes to Maven Central first
-    - name: Upload core to Maven Central
-      run: ./gradlew :core:publishAllPublicationsToMavenCentral -P"signing.secretKeyRingFile=$HOME/.gradle/sonatype-appmattus-keys.gpg"
+    # The plugin depends on core, so core goes to Maven Central first, along with the Spotless step
+    - name: Upload core and the Spotless step to Maven Central
+      run: ./gradlew :core:publishAllPublicationsToMavenCentral :spotless:publishAllPublicationsToMavenCentral -P"signing.secretKeyRingFile=$HOME/.gradle/sonatype-appmattus-keys.gpg"
 
     # Maven Central can take a while to make a release downloadable; publishing the plugin before then would leave
     # users with a plugin whose dependency can't be resolved
