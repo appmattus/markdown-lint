@@ -32,8 +32,6 @@ class ProperNamesRule @JvmOverloads constructor(
     config: RuleSetup.Builder.() -> Unit = {}
 ) : Rule(config) {
 
-    private val linkExtractor = LinkExtractor.builder().build()
-
     // Order of the names matters
     private val escapedList = names.sortedDescending().joinToString(separator = "|") { Regex.escape(it) }
     private val notWordChar = "[^\\pL\\pM\\p{Nd}\\p{Nl}\\p{Pc}[\\p{InEnclosedAlphanumerics}&&\\p{So}]]"
@@ -90,6 +88,9 @@ class ProperNamesRule @JvmOverloads constructor(
     }
 
     companion object {
+        // Immutable and shared, which also keeps it out of the serialized rule
+        private val linkExtractor = LinkExtractor.builder().build()
+
         val DefaultNames = listOf(
             "markdownlint",
             "JavaScript",
